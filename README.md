@@ -1,9 +1,5 @@
 # Source Code Classification
-This is an old repo of NL2ML-project of the Laboratory of Big Data Analysis of Higher School of Economics (HSE LAMBDA).
-
 The project page - https://www.notion.so/NL2ML-Corpus-1ed964c08eb049b383c73b9728c3a231
-
-The repo is currently migrating to the HSE LAMBDA GitLab - https://gitlab.com/lambda-hse/nl2ml
 
 ## Project Goals:
 
