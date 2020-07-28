@@ -1,0 +1,61 @@
+pre-preprocessing.ipynb - ноутбук с препроцессингом (код -> функции и тд)
+
+code2vec.py             - файл, который создает/загружает модель (исп. в train.sh)
+common.py 		- всякие утилиты
+interactive_predict.py	- файл для предикта на конкретном своем примере
+
+
+config.py               - файл с (гипер)параметрами модели
+preprocess.sh    	- скрипт для препроцессинга (фукнции -> ast, с помощью jb cli)
+train.sh         	- скрипт для обучения
+
+my_predict.sh		- Make predictions for files in pred_files directory
+my_get_embeddings.sh	- saves targets and tokens embeddings to models directory
+save_predicted.sh	- запускает my_predict.sh, но в отдельный файл сохраняет выводы
+my_find_synonym.py	- находит наиболее похожий
+
+
+code2vec/cli.jar 	- cli от JB для парсинга
+code2vec/EMBEDDINGS.txt	- создается при запуске my_get_embeddings.sh
+
+code2vec/python/my_*	- каталог с функциями в отдельных файлах (создаются в pre-preprocessing.ipynb)
+code2vec/python/real_validation		- каталог для файлов для интерактивного предсказания (не создается)
+
+
+data/my_dataset/* 	- создается автоматически при preprocess.sh, это всякие специальные представления ast для c2v
+
+models/* 		- ну тут сами модельки хранятся под своими названиями
+
+my_dataset_*
+
+pred_files/*		- здесь лежат .py файлы для интерактивного предсказания
+
+
+
+
+---------------------------------------
+у меня на гитхабе github.com/Kirili4ik/code2vec или в README подробно написано как запускать по шагам (Steps), но приведу тут кратко без пояснений
+1) изменить preprocess.sh под себя, там инструкции
+>source preprocess.sh
+2) изменить train.sh под свои директории
+изменить config.py под свои параметры моделей
+>source train.sh
+3) Эвалюэйшн:
+> python3 code2vec.py --framework keras --load models/my_first_model/saved_model --test data/my_dataset/my_dataset.test.c2v
+
+
+Для проверки на своем файле (интерактивной):
+4) >source my_predict.sh
+Изменяете файл в соответствии с инструкциями и жмете энтер
+комплит
+
+Чтобы найти синонимы: 
+>python3 my_find_synonim.py --label 'linear|algebra' 
+(Or any other tag and look at the closest to it.)
+
+Чтобы эмбеддинги выгрузить:
+>source my_get_embeddings.sh
+
+Удачи!
+
+
