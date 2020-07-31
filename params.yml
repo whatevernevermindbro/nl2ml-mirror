@@ -1,1 +1,5 @@
-{}
+DATASET_PATH: ./data/code_blocks_regex_nocomments_30.csv
+max_df: 0.3
+min_df: 5
+nrows: 76243
+smooth_idf: true
