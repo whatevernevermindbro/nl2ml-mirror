@@ -1,0 +1,500 @@
+38.13         fillna    -5.08model_selection
+35.71         concat    -3.49feature_extraction
+30.18  preprocessing    -3.31       read_csv
+26.36          merge    -3.02            pie
+18.58      normalize    -2.89       n_splits
+18.12    concatenate    -2.57           drop
+15.83      test_size    -2.51           show
+15.48train_test_split    -2.44          check
+14.95     font_scale    -2.41         pandas
+14.57          scale    -2.40            tts
+13.86 standardscaler    -2.26           head
+13.59         resize    -2.03rf_model_on_full_data
+12.62         scaler    -2.01      countplot
+12.10color_continuous_scale    -1.85            bar
+11.13     colorscale    -1.84        metrics
+10.69         encode    -1.75       describe
+10.44     preprocess    -1.73        figsize
+8.58 x_train_scaled    -1.72     lag_months
+8.46         merged    -1.70        ipython
+8.05countvectorizer    -1.69         on_key
+7.86   preprocessor    -1.68lag_features_list
+7.58         yscale    -1.66           corr
+7.39       x_scaled    -1.59randomforestclassifier
+7.36register_matplotlib_converters    -1.58color_discrete_sequence
+7.14             pd    -1.55         to_csv
+7.07            how    -1.55   shufflesplit
+6.75  x_test_scaled    -1.51            any
+6.68     set_yscale    -1.50    get_dummies
+6.48             on    -1.48logisticregression
+6.45        rescale    -1.46        scatter
+6.42        convert    -1.45       __init__
+6.40imagedatagenerator    -1.44           loss
+6.21scale_pos_weight    -1.42          print
+6.18tfidfvectorizer    -1.40        kdeplot
+6.04     normalized    -1.40        inplace
+5.96amount_spent_per_room_night_scaled    -1.38randomforestregressor
+5.82  fit_transform    -1.38          numpy
+5.80   random_state    -1.37           tree
+5.71      df_merged    -1.35           rows
+5.67        left_on    -1.33       affected
+5.46      merged_df    -1.32     transforms
+5.42merge_app_prev_data    -1.32      jointplot
+5.40       right_on    -1.32           nltk
+5.37    merged_data    -1.30    to_datetime
+5.22wordnetlemmatizer    -1.30   value_counts
+5.21           left    -1.29      facetgrid
+5.19         scaled    -1.28            box
+5.06preprocess_input    -1.28       distplot
+5.01 json_normalize    -1.27         unique
+4.72       df_merge    -1.25     set_option
+4.54     generation    -1.24        options
+4.45      transform    -1.23           kind
+4.42     concat_sub    -1.20     word_index
+4.24     data_merge    -1.20         dropna
+4.10   reversescale    -1.19texts_to_sequences
+4.07inverse_transform    -1.19         argmax
+4.07           axis    -1.19     totensorv2
+4.00   augmentation    -1.19           vmax
+3.93  porterstemmer    -1.18confusion_matrix
+3.87x_train_normalized    -1.17          worst
+3.86   labelencoder    -1.15            csv
+3.85     kut_merged    -1.15   fit_on_texts
+3.81      df_concat    -1.15         trace1
+3.80           true    -1.15            df1
+3.80train2_logscale    -1.14validation_data
+3.79      scaled_df    -1.13            dpi
+3.75   minmaxscaler    -1.12        correct
+3.73      grayscale    -1.12        __len__
+3.72      converted    -1.12train_test_data
+3.71        contrib    -1.11  update_traces
+3.66preprocess_image    -1.11             as
+3.64   train_scaled    -1.10           line
+3.64     choropleth    -1.10           hist
+3.64    ngram_range    -1.09            400
+3.60    data_scaled    -1.09         fastai
+3.58            log    -1.08        catplot
+3.57     vectorizer    -1.08       pairplot
+3.56      showscale    -1.06         epochs
+3.54        english    -1.06          churn
+3.50            cv2    -1.05        boxplot
+3.47         xscale    -1.05stratifiedshufflesplit
+3.44      tokenizer    -1.03    include_top
+3.41     merge_data    -1.02            url
+3.31train_data_merge    -1.01      add_trace
+3.26          tfidf    -1.01       textinfo
+3.26        stemmer    -1.01           info
+3.25   scaled_train    -1.00     incubation
+3.24      input_ids    -1.00    run_example
+3.24combined_merged    -1.00     dataloader
+3.24pycountry_convert    -1.00      image_ids
+3.24       stemming    -0.99missing_values_check
+3.22        resized    -0.99     plot_model
+3.22    scaled_test    -0.99    __getitem__
+3.20       stratify    -0.99decisiontreeclassifier
+3.12      emergency    -0.98  fit_one_cycle
+3.10      concat_df    -0.98       imagenet
+3.07   df_log_scale    -0.98      nrowsread
+3.07        cnt_srs    -0.98     parameters
+3.07           crop    -0.98          shade
+3.06    right_index    -0.98     drop_first
+3.05          image    -0.97 lgbmclassifier
+3.05           stem    -0.96    torchvision
+3.02     class_name    -0.96         impute
+3.02merged_train_df    -0.96             10
+3.01      df_scaled    -0.96         series
+3.01simple_preprocess    -0.95           tail
+2.97     hover_data    -0.94          theta
+2.95          inner    -0.94          annot
+2.93manhattan_merged    -0.93     read_excel
+2.92            def    -0.93    naive_bayes
+2.91 toronto_merged    -0.93         n_iter
+2.91       plotting    -0.91        softmax
+2.90    scaled_data    -0.91 attention_mask
+2.83       pipeline    -0.91    most_common
+2.82x_test_normalized    -0.91   best_kernels
+2.81polynomialfeatures    -0.90          upper
+2.81      autoscale    -0.90          spacy
+2.78            img    -0.90     my_imputer
+2.78      client_id    -0.90sample_submission
+2.78         append    -0.90          italy
+2.77     left_index    -0.90           nrow
+2.76       analyzer    -0.90         dtypes
+2.73   formated_gdf    -0.89decisiontreeregressor
+2.72           fill    -0.89       word2vec
+2.71   scaled_close    -0.89           logs
+2.71       sentance    -0.89       evaluate
+2.70 kolkata_merged    -0.89       solution
+2.69      lemmatize    -0.88   confirmed_df
+2.67    generations    -0.88            bmi
+2.66         rename    -0.88init_notebook_mode
+2.65scaled_training    -0.88     submission
+2.65     total_text    -0.88            vif
+2.64         min_df    -0.87             l1
+2.63            alt    -0.87         kaggle
+2.63             im    -0.87min_samples_leaf
+2.61     lemmatizer    -0.87         string
+2.61            dcm    -0.86         sharey
+2.60   pd_merge_all    -0.86            idd
+2.60           from    -0.86     plot_count
+2.60       tx_merge    -0.86steps_per_epoch
+2.59         base64    -0.86            sum
+2.59   locationmode    -0.86     add_lag_v3
+2.57         angles    -0.86 query_topicvec
+2.56          ffill    -0.85            sql
+2.55            xfc    -0.85       comments
+2.55     geo_merged    -0.85         step_3
+2.53        percent    -0.84       f1_score
+2.50 scale_and_plot    -0.83          c_max
+2.50  onehotencoder    -0.83        efforts
+2.49        padding    -0.83    data_loader
+2.47   image_resize    -0.83          c_min
+2.46fold_importance_df    -0.83    print_score
+2.45preprocessed_dataset    -0.82         imshow
+2.44data_new_scaled2    -0.82        overall
+2.43convert_to_tensor    -0.82          epoch
+2.42             to    -0.82    passengerid
+2.37      locations    -0.82           gray
+2.37 regular_encode    -0.82            add
+2.36             gg    -0.82     classifier
+2.36     stop_words    -0.81    citytracker
+2.35preprocess_data    -0.81          optim
+2.34     converters    -0.81        revenue
+2.31normalize_train_df    -0.81      max_depth
+2.31    reset_index    -0.81           cmap
+2.31             ps    -0.80      dataframe
+2.26     iowa_model    -0.80         thresh
+2.25        nthread    -0.80imputed_x_train
+2.24count_vectorizer    -0.79     test_index
+2.23   x_test_scale    -0.79             rf
+2.23data_new_scaled    -0.79  datetimeindex
+2.21            224    -0.79         isnull
+2.21   preprocessed    -0.79       datasets
+2.20           mask    -0.79             12
+2.20        payload    -0.79    scatterplot
+2.20  fit_intercept    -0.79feature_importances_
+2.19             q0    -0.78      num_words
+2.19            grp    -0.78 to_categorical
+2.18             io    -0.78        n_folds
+2.17          chart    -0.78         growth
+2.17       sentence    -0.78           mark
+2.17      converter    -0.78     set_xticks
+2.17       scaleddf    -0.78     showlegend
+2.17            and    -0.78          log_y
+2.16           vect    -0.78       r2_score
+2.15           none    -0.77             wv
+2.15    d_df_merged    -0.77     num_epochs
+2.14          zfill    -0.77         step_4
+2.13     matched_df    -0.77           sqrt
+2.13     train_prep    -0.77        learner
+2.12            cfg    -0.77    max_columns
+2.12            enc    -0.77          sepal
+2.12         gensim    -0.77      filenames
+2.11            loc    -0.77      oob_score
+2.10       atom_idx    -0.77          death
+2.09convert_tokens_to_ids    -0.77inference_albert_and_display_results
+2.08data_concatenado    -0.77        findall
+2.07       portland    -0.76          mnist
+2.06            pgm    -0.76     num_leaves
+2.06           albu    -0.76           rmse
+2.03risk_factor_normalized    -0.76imputed_x_valid
+2.02snowballstemmer    -0.76      pred_list
+2.02          steps    -0.76      histogram
+2.01            255    -0.76       max_rows
+2.01         window    -0.76        session
+2.01  current_batch    -0.75        compose
+2.00             if    -0.75  df_traintest8
+1.99       upsample    -0.75   marker_color
+1.99          false    -0.75          train
+1.97        x_scale    -0.75    __version__
+1.97        viridis    -0.75       totensor
+1.96    range_color    -0.75             lg
+1.96    target_size    -0.75           isna
+1.95          tight    -0.74          dados
+1.95       y_scaler    -0.74 accuracy_score
+1.94changepoint_prior_scale    -0.74      customers
+1.93           json    -0.74         number
+1.92         layout    -0.74          vocab
+1.92 min_max_scaler    -0.74         domain
+1.92school_reg_merged    -0.74       contours
+1.92          atoms    -0.74          regex
+1.92            rgb    -0.74        test_ds
+1.91       df_panel    -0.73      ascending
+1.89         config    -0.73         step_2
+1.89             hm    -0.73        variety
+1.89       day_wise    -0.73         models
+1.88  make_pipeline    -0.73    latest_data
+1.88           isin    -0.73           pass
+1.87  scaled_test_x    -0.72             20
+1.85   dst_non_crop    -0.72             13
+1.85             px    -0.72        regplot
+1.84  feature_range    -0.72             yy
+1.83       function    -0.72         spines
+1.83train_purch_merged    -0.72from_pretrained
+1.83         teamid    -0.72           lang
+1.81preprocessed_documents    -0.72      criterion
+1.81preprocessed_reviews    -0.72plot_categorical_feature
+1.81    new_history    -0.72          dict_
+1.81            int    -0.71          procs
+1.80    set_context    -0.71categorical_features
+1.80        scaling    -0.71background_gradient
+1.79columntransformer    -0.71classification_report
+1.79tfidf_vectorizer    -0.71latentdirichletallocation
+1.79   ignore_index    -0.70   bagging_seed
+1.79   country_wise    -0.70     df_covid19
+1.79         max_df    -0.69    defaultdict
+1.79     words_freq    -0.69  final_x_valid
+1.79         hidden    -0.69    x_train_new
+1.78             cr    -0.69   twitter_data
+1.78lstm_predictions_scaled    -0.69         actual
+1.77      crop_size    -0.69       pairwise
+1.77   gridsearchcv    -0.69          lines
+1.77             np    -0.69   create_model
+1.76train_samples_count    -0.69  submission_df
+1.76          shift    -0.69y_train_pred_final
+1.76          outer    -0.68         expand
+1.76  scaled_inputs    -0.68  gleason_score
+1.76             py    -0.68  final_imputer
+1.75weight_average_score_hybrid    -0.68  final_x_train
+1.75      component    -0.68         mylist
+1.74          val_x    -0.68       textfont
+1.74       img_size    -0.67     gaussiannb
+1.73   y_validation    -0.67     add_legend
+1.73  x_train_scale    -0.67      edgecolor
+1.73         margin    -0.67   max_colwidth
+1.72    generation1    -0.67         pclass
+1.72   my_generator    -0.67    pred_test_y
+1.72 max_seq_length    -0.67 color_bgr2gray
+1.71           drug    -0.67         circle
+1.71      annot_kws    -0.66categorical_feature
+1.71           self    -0.66      test_imgs
+1.71   scale_factor    -0.66         add_to
+1.70   applications    -0.66        barmode
+1.70min_child_weight    -0.66             fi
+1.70     time_start    -0.66      x_reduced
+1.70preprocess_text    -0.66            run
+1.70feature_columns    -0.66         salary
+1.69          keras    -0.65   only_covid19
+1.69             re    -0.65        stacked
+1.69df_benchmark_panel    -0.65   plot_bgcolor
+1.69         totals    -0.65       accuracy
+1.69        max_len    -0.65   y_prediction
+1.68combined_train_test    -0.65    coronavirus
+1.68            bow    -0.65           pink
+1.68      token_ids    -0.65        reviews
+1.68          cmap1    -0.65     test_preds
+1.68         tokens    -0.65       val_loss
+1.67         df_aux    -0.65           hole
+1.67  molecule_name    -0.64 adjusted_dates
+1.67         ystart    -0.64           lens
+1.67        val_mae    -0.64  requires_grad
+1.67           with    -0.64            365
+1.66           day_    -0.64             sm
+1.66        rainbow    -0.64        species
+1.66  techindicator    -0.64     factorplot
+1.66sample_augmentations    -0.63     input_path
+1.64        unstack    -0.63             os
+1.64          tweet    -0.63             is
+1.64   minneighbors    -0.63   weekly_sales
+1.64    scalefactor    -0.63    y_pred_test
+1.63emergency_vehicle    -0.63covariate_shift
+1.63   minmax_scale    -0.63          x_new
+1.63         review    -0.62     checkpoint
+1.63  test_x_scaled    -0.62           xlsx
+1.63legendary_generation3    -0.62      covariate
+1.63scaled_train_data    -0.62infer_datetime_format
+1.62unscaled_inputs    -0.62            df5
+1.62data_preprocessed    -0.62           spam
+1.61unnormalize_transform    -0.62      encrypted
+1.60       tokens_a    -0.62    train_sizes
+1.60         onehot    -0.62          embed
+1.60     bubbleplot    -0.61            dot
+1.60      regr_dict    -0.61      temp_dict
+1.60            roi    -0.61           case
+1.60        reshape    -0.61        df_iris
+1.60prediction_arima_log    -0.61        matcher
+1.59 lr_best_scaled    -0.61       datewise
+1.59      mlp_train    -0.61         xlabel
+1.59            tmp    -0.61min_samples_split
+1.59          ascii    -0.61             xm
+1.59             pc    -0.61param_distributions
+1.59            512    -0.61       infected
+1.59        sklearn    -0.61         df_can
+1.59        indexes    -0.61         aspect
+1.59         conv1d    -0.61  titanic_train
+1.59    my_pipeline    -0.61          entry
+1.58 scaled_testing    -0.60            kde
+1.58         astype    -0.60             53
+1.58scalar_coupling_constant    -0.60         mydata
+1.58       x_merged    -0.60            225
+1.58         marker    -0.60        lengths
+1.58plot_with_augmentation    -0.60      df_credit
+1.58globalaveragepooling1d    -0.60            are
+1.57     class_mode    -0.60    corr_matrix
+1.57     image_size    -0.60             nn
+1.57       suffixes    -0.60 plot_numerical
+1.57        cropped    -0.60       test_raw
+1.57         train2    -0.60       forecast
+1.56text_preprocessing    -0.60    parse_dates
+1.56     motorcycle    -0.60          there
+1.56          uint8    -0.60    grid_search
+1.56           runs    -0.60        monitor
+1.56        df_temp    -0.59     extraction
+1.55      lowercase    -0.59            229
+1.55 ordinalencoder    -0.59       stopword
+1.55       concated    -0.59          cache
+1.55           into    -0.59    todays_date
+1.55val_predictions    -0.59          fgvc7
+1.54 show_wordcloud    -0.59          rmsle
+1.54     df_merged2    -0.59    logarithmic
+1.54  risk_with_inj    -0.59          input
+1.53      subsample    -0.59    correlation
+1.53     vocab_file    -0.59        gstatic
+1.53         val_df    -0.59       patience
+1.53            df_    -0.59        average
+1.53preprocessing_function    -0.58    public_test
+1.53       load_img    -0.58       df_train
+1.53      timesteps    -0.58         traces
+1.52        cluster    -0.58      meta_data
+1.52       cropping    -0.58          sizes
+1.52   resize_image    -0.58      json_file
+1.52     color_mode    -0.58             kf
+1.52        site_id    -0.58        data_df
+1.52        context    -0.58days_of_pace_keep
+1.52      df_output    -0.58    xaxis_title
+1.52     scrollzoom    -0.58     best_alpha
+1.52        df_path    -0.58      freq_dict
+1.51         method    -0.58      from_dict
+1.51             0f    -0.58      stripplot
+1.51         scales    -0.58       model_ft
+1.50  movies_scaled    -0.58           tbn0
+1.50       statesdf    -0.58    fillmissing
+1.50     hover_name    -0.58    components_
+1.50       x_column    -0.57transformermixin
+1.50     set_xscale    -0.57          df_tr
+1.50         train3    -0.57          wheat
+1.50   datashifting    -0.57             ex
+1.50   convert_dict    -0.57samplewise_std_normalization
+1.49           pipe    -0.57           iris
+1.49    retinopathy    -0.57           club
+1.49      crops_dir    -0.57   append_trace
+1.49      variables    -0.57        daterep
+1.49           sent    -0.57         zomato
+1.48y_log_normalized    -0.57   tight_layout
+1.48test_linear_pred    -0.57            485
+1.48     split_text    -0.57     embed_size
+1.48preprocessed_df    -0.57     categorify
+1.48             ft    -0.57            tbn
+1.48        treemap    -0.56      delimiter
+1.48            str    -0.56            rfc
+1.47    train_clean    -0.56   check_output
+1.47     sort_index    -0.56       bigquery
+1.47         maxlen    -0.56  mean_encoding
+1.47 tokenized_text    -0.56        to_drop
+1.47 merged_test_df    -0.56            800
+1.47       lightgbm    -0.56           seri
+1.46  df_normalized    -0.56           rate
+1.46     convertnum    -0.56            cut
+1.46      matchtype    -0.56          tarih
+1.46       scaler_x    -0.56 input_word_ids
+1.46    bert_encode    -0.56    performance
+1.46tests_merged_notna    -0.56             va
+1.45        country    -0.55         bottom
+1.45   comment_text    -0.55             t0
+1.45correlation_train    -0.55       displacy
+1.45           face    -0.55 weights_lambda
+1.45layout_coloraxis_showscale    -0.55        sampler
+1.45      directory    -0.55         smoker
+1.45            for    -0.55     thresholds
+1.44            iaa    -0.55           logy
+1.44        logging    -0.55         sample
+1.44testpredictplot    -0.55        environ
+1.44categorical_transformer    -0.55     regression
+1.44             33    -0.55embeddings_index
+1.44     scale_data    -0.55             w1
+1.44         data_d    -0.55        quality
+1.44    fast_encode    -0.55            df3
+1.43preprocessed_comments_test    -0.55cosine_similarity
+1.43 scaled_train_x    -0.55      file_list
+1.43          names    -0.55      listed_in
+1.43train_val_merge    -0.55       callback
+1.43          urine    -0.55          df_us
+1.43   missing_data    -0.55         select
+1.43    submissions    -0.54        sig_clf
+1.43   data1_scaled    -0.54samplewise_center
+1.43         pixels    -0.54           skew
+1.43       num_vars    -0.54        margins
+1.42        grid_df    -0.54   spectrograms
+1.42    size_column    -0.54         imread
+1.42 convert_to_num    -0.54         all_df
+1.42          x_num    -0.54          cased
+1.42  lemmatization    -0.54    yaxis_title
+1.42            180    -0.54      collapsed
+1.42   roberta_path    -0.54            sns
+1.42         tmp_df    -0.54           yhat
+1.41sentence_embeddings    -0.54             v2
+1.41        uniques    -0.54bertwordpiecetokenizer
+1.41       scale_id    -0.54            bad
+1.41legendary_generation1    -0.54             18
+1.41user_suggestion    -0.54          shops
+1.41         expmax    -0.54        updates
+1.41 x_valid_scaled    -0.54          board
+1.41             bs    -0.54  reported_date
+1.41 imagenet_stats    -0.54    train_index
+1.41 colorbar_title    -0.54   all_articles
+1.40date_title_count    -0.54       df_world
+1.40   full_grouped    -0.54      visualize
+1.40           img0    -0.54       heart_df
+1.40    merges_file    -0.54         status
+1.40test_purch_merged    -0.54       model_cv
+1.40      mergesort    -0.54            rho
+1.40train_data_normalized    -0.53   totalcharges
+1.39       diabetic    -0.53         starts
+1.39 one_hot_encode    -0.53embedding_vector
+1.39          empty    -0.53 kaggledatasets
+1.39         t_iter    -0.53         trends
+1.39     visualizer    -0.53          iinfo
+1.39        toarray    -0.53   n_estimators
+1.38       y_column    -0.53            ols
+1.38         x_full    -0.53         mexico
+1.38         pickle    -0.53      image_dir
+1.38        missing    -0.53chained_assignment
+1.37         x_temp    -0.53           flag
+1.37  augmentations    -0.53            vc1
+1.37      scaled_px    -0.53   test_vectors
+1.37 model_features    -0.53   textposition
+1.37bert_model_path    -0.53       frequent
+1.37  bubble_column    -0.53            df2
+1.36          blues    -0.53         interp
+1.36df_scaled_train    -0.53gradientboostingregressor
+1.36          deacc    -0.53 train_df_final
+1.36            scl    -0.53         k_fold
+1.36standard_scaler    -0.52       recorder
+1.36         doc_id    -0.52           hint
+1.36       to_frame    -0.52        pytorch
+1.36       total_df    -0.52       keywords
+1.35             go    -0.52       test_ind
+1.35     y_res_test    -0.52        encoder
+1.35         reader    -0.52        model_1
+1.35reason_category    -0.52       logmodel
+1.34        usecols    -0.52 neural_network
+1.34preprocess_string    -0.52             ln
+1.34         answer    -0.52            sex
+1.34        unknown    -0.52          y_hat
+1.34       diameter    -0.52     pred_proba
+1.34x_train_rescaled    -0.52      app_train
+1.34   scale_bubble    -0.52    tick_params
+1.34   preprocesser    -0.52          fpath
+1.34   robustscaler    -0.52sparse_categorical_crossentropy
+1.34            b64    -0.52     x_embedded
+1.34        y_title    -0.51      root_path
+1.34kernel_initializer    -0.51      openslide
+1.34      new_array    -0.51            png
+1.33    blue_scaler    -0.51  baseestimator
+1.33        x_title    -0.51featurewise_std_normalization
+1.33            api    -0.51           pull
+1.33mis_val_table_ren_columns    -0.51       all_json
+1.33     batch_size    -0.51            gtf
+1.33         val_ix    -0.51    classifiers
+1.33papers_preprocessed_df    -0.51 hit_dictionary
+1.33  update_layout    -0.51        vaccine

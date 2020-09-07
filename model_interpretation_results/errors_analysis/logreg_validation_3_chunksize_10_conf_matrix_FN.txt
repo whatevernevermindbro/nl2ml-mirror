@@ -1,0 +1,711 @@
+"    plt.imshow(this_img)
+    return plt
+
+displayImage(directory=TRAIN, image_id=test_img_id)11111
+def displayRandomImages(directory, paths=None , rows=3, columns=3):
+   fig = plt.figure(figsize=(20, 20))
+    
+    # if path is not specified, display all files in directory
+    if paths == None:"
+"        
+    for i in range(1, rows*columns + 1):
+        randomNumber = random.randint(0, len(paths)-1)
+        image = Image.open(directory/paths[randomNumber])
+        fig.add_subplot(rows, columns, i)
+        plt.imshow(image, aspect='equal')
+    plt.show()
+def drawBoxAndText(ax, label):
+    codepoint, x, y, w, h = label"
+"train_ds = DogDataset(image, augmentations = AUG_TRAIN)
+# initilize the dataloader for training
+trainloader = DataLoader(train_ds, batch_size=1, shuffle=True, num_workers=0)
+image = imageio.imread('../input/image1.jpg')
+image_rotated = rotate.augment_images([image])
+image_noise = gaussian_noise.augment_images([image])
+image_crop = crop.augment_images([image])
+image_hue = hue.augment_images([image])
+image_trans = elastic_trans.augment_images([image])"
+"img_clahe = clahe(image = image)
+img_blur = blur(image = image)
+
+# access the augmented image by 'image' key
+img_list = [img_gaus['image'], img_elastic['image'], img_bc['image'], img_gamma['image'], img_clahe['image'], img_blur['image']]
+
+# visualize the augmented images
+plt.figure(figsize=(10,10))
+plt.axis('off')"
+"box_aug = augmented_boxes['bboxes'][0]
+
+# visualize augmented image and bbox
+fig, ax = plt.subplots(1,2, figsize = (15, 10))
+
+ax[0].axis('off')
+ax[0].imshow(image)
+rect = patches.Rectangle((bboxes[0],bboxes[1]),bboxes[2],bboxes[3],linewidth=1,edgecolor='r',facecolor='none')
+ax[0].add_patch(rect)"
+"                    shift_limit = 0.5
+                ),
+            ],
+            p = 0.5
+        )
+    ],
+    p = 1
+)
+images_aug = np.array([augmentation_pipeline(image = image)['image'] for _ in range(16)])"
+"# visualize augmentation results
+plt.figure(figsize=(10,10))
+plt.axis('off')
+plt.imshow(gallery(images_aug, ncols = 4))
+plt.title('Augmentation pipeline examples')
+# import package
+import Augmentor
+
+# initialize pipeline"
+"        ch = apply_window(img[:, :, i], windows[i][0], windows[i][1])
+
+        if min_max_normalize:
+            image[:, :, i] = (ch - ch.min()) / (ch.max() - ch.min())
+        else:
+            image[:, :, i] = ch
+
+    return image
+class DicomWindowShift(ImageOnlyTransform):"
+"    Targets:
+        image
+    Image types:
+        uint8 (shape: HxW | HxWxC)
+    """"""
+    def __init__(
+            self,
+            window_width_mins=(80, 200, 380),
+            window_width_maxs=(80, 200, 380),"
+"    def get_params_dependent_on_targets(self, params):
+        windows = []
+
+        for i in range(3):
+            window_width = random.randint(self.window_width_mins[i], self.window_width_maxs[i])
+            window_center = random.randint(self.window_center_mins[i], self.window_center_maxs[i])
+
+            windows.append([window_center, window_width])
+"
+"    
+    # (brain_width_max, subdural_width_min, bones_width_min)
+    window_width_maxs=(85, 210, 400),
+    
+    # (brain_center_min, subdural_center_min, bones_center_min)
+    window_center_mins=(15, 75, 35),
+    
+    # (brain_center_max, subdural_center_max, bones_center_max)
+    window_center_maxs=(85, 85, 45),"
+"    A.Rotate(p=1.0),
+    DicomWindowShift(window_width_mins=(75, 190, 360),
+                     window_width_maxs=(85, 210, 400),
+                     window_center_mins=(15, 75, 35),
+                     window_center_maxs=(85, 85, 45),
+                     min_max_normalize=True,
+                     p=1.0)
+])
+f, ax = plt.subplots(2, 5, figsize=(16, 8))"
+"    max_value = custom_center + (custom_width/2)
+    
+    # Including another value for values way outside the range, to (hopefully) make segmentation processes easier. 
+    out_value_min = custom_center - custom_width
+    out_value_max = custom_center + custom_width
+    
+    if out_side_val:
+        image[np.logical_and(image < min_value, image > out_value_min)] = min_value
+        image[np.logical_and(image > max_value, image < out_value_max)] = max_value"
+"    uB = WW + WL
+    
+    # Keep only values inside of the window
+    background_seperation = np.logical_and(img > lB, img < uB)
+    
+    # Get largest connected component:
+    # From https://github.com/nilearn/nilearn/blob/master/nilearn/_utils/ndimage.py
+    background_seperation = morphology.dilation(background_seperation,  np.ones((5, 5)))
+    labels, label_nb = scipy.ndimage.label(background_seperation)"
+"    if display:
+        plt.figure(figsize=(15,2.5))
+        plt.subplot(141)
+        plt.imshow(img, cmap='bone')
+        plt.title('Original Images')
+        plt.axis('off')
+
+        plt.subplot(142)
+        plt.imshow(background_seperation)"
+"    pad_top = int( (new_height - height) / 2)
+
+    im_bg[pad_top:pad_top + height,
+          pad_left:pad_left + width] = image
+
+    return im_bg
+plt.figure(figsize=(7.5, 5))
+for ii in range(3):
+    tmp = train_csv.iloc[train_csv['Label']['any'].values == 1].iloc[np.random.randint("
+"    plt.hist(padded_image.ravel())
+def window_image(img, window_center, window_width, intercept, slope):
+    img = img * slope + intercept
+    img_min = window_center - window_width // 2
+    img_max = window_center + window_width // 2
+    img[img < img_min] = img_min
+    img[img > img_max] = img_max
+    return img 
+def resize(img, new_w, new_h):"
+"        # Rais interrupt exception so we can stop the cell execution
+        # without shutting down the kernel.
+        raise
+    except:
+        l.error(f""Error processing the image: {img_path}"")
+def prepare_images(imgs_path, subfolder):
+    for i in tqdm.tqdm(imgs_path):
+        prepare_and_save(i, subfolder)
+import logging as l"
+"        height = image.shape[1]
+        
+        if len(widths) > 0:
+            if width > max(widths):
+                max_im = image
+
+            if width < min(widths):
+                min_im = image
+"
+"        heights.append(height)
+        
+    return widths, heights, max_im, min_im
+def view_aug_images(train, rand_indices, aug = None, title = ''):
+    width = 5
+    height = 2
+    counter = 0
+    fig, axs = plt.subplots(height, width, figsize=(15,5))
+    "
+"        coords.append(dict(zip(names, l.astype('float'))))
+        if 'id' in coords[-1]:
+            coords[-1]['id'] = int(coords[-1]['id'])
+    return coords
+def get_img_coords(s):
+    '''
+    Input is a PredictionString (e.g. from train dataframe)
+    Output is two arrays:
+        xs: x coordinates in the image (row)"
+"    for point in coords:
+        # Get values
+        x, y, z = point['x'], point['y'], point['z']
+        yaw, pitch, roll = -point['pitch'], -point['yaw'], -point['roll']
+        # Math
+        Rt = np.eye(4)
+        t = np.array([x, y, z])
+        Rt[:3, 3] = t
+        Rt[:3, :3] = euler_to_Rot(yaw, pitch, roll).T"
+"        P = np.array([[x_l, -y_l, -z_l, 1],
+                      [x_l, -y_l, z_l, 1],
+                      [-x_l, -y_l, z_l, 1],
+                      [-x_l, -y_l, -z_l, 1],
+                      [0, 0, 0, 1]]).T
+        img_cor_points = np.dot(camera_matrix, np.dot(Rt, P))
+        img_cor_points = img_cor_points.T
+        img_cor_points[:, 0] /= img_cor_points[:, 2]
+        img_cor_points[:, 1] /= img_cor_points[:, 2]"
+"        # Drawing
+        img = draw_line(img, img_cor_points)
+        img = draw_points(img, img_cor_points[-1:])
+    
+    return img
+def _regr_preprocess(regr_dict, flip=False):
+    if flip:
+        for k in ['x', 'pitch', 'roll']:
+            regr_dict[k] = -regr_dict[k]"
+"        regr_dict[name] = regr_dict[name] / 100
+    regr_dict['roll'] = rotate(regr_dict['roll'], np.pi)
+    regr_dict['pitch_sin'] = sin(regr_dict['pitch'])
+    regr_dict['pitch_cos'] = cos(regr_dict['pitch'])
+    regr_dict.pop('pitch')
+    regr_dict.pop('id')
+    return regr_dict
+def _regr_back(regr_dict):
+    for name in ['x', 'y', 'z']:"
+"    regr_dict['roll'] = rotate(regr_dict['roll'], -np.pi)
+    
+    pitch_sin = regr_dict['pitch_sin'] / np.sqrt(regr_dict['pitch_sin']**2 + regr_dict['pitch_cos']**2)
+    pitch_cos = regr_dict['pitch_cos'] / np.sqrt(regr_dict['pitch_sin']**2 + regr_dict['pitch_cos']**2)
+    regr_dict['pitch'] = np.arccos(pitch_cos) * np.sign(pitch_sin)
+    return regr_dict
+def preprocess_image(img, flip=False):
+    img = img[img.shape[0] // 2:]
+    bg = np.ones_like(img) * img.mean(1, keepdims=True).astype(img.dtype)"
+"            regr[x, y] = [regr_dict[n] for n in sorted(regr_dict)]
+    if flip:
+        mask = np.array(mask[:,::-1])
+        regr = np.array(regr[:,::-1])
+    return mask, regr
+def plot_3d_car(model_json_file):
+    with open(f'../input/pku-autonomous-driving/car_models_json/{model_json_file}') as json_file:
+        car_model_data = json.load(json_file)
+"
+"    faces = np.array(car_model_data['faces']) - 1
+    car_type = car_model_data['car_type']
+    x, y, z = vertices[:,0], vertices[:,2], -vertices[:,1]
+    fig = plt.figure(figsize=(30, 10))
+    ax = plt.axes(projection='3d')
+    ax.plot_trisurf(x, y, faces, z,
+                    cmap='viridis', edgecolor='none')
+    ax.set_title(car_type)
+    ax.view_init(30, 0)"
+"    fig = plt.figure(figsize=(30, 10))
+    ax = plt.axes(projection='3d')
+    ax.plot_trisurf(x, y, faces, z,
+                    cmap='viridis', edgecolor='none')
+    ax.set_title(car_type)
+    ax.view_init(60, 0)
+    plt.show()
+    fig = plt.figure(figsize=(30, 10))
+    ax = plt.axes(projection='3d')"
+"                    cmap='viridis', edgecolor='none')
+    ax.set_title(car_type)
+    ax.view_init(-20, 180)
+    plt.show()
+    return
+def draw_obj(image, vertices, triangles):
+    for t in triangles:
+        coord = np.array([vertices[t[0]][:2], vertices[t[1]][:2], vertices[t[2]][:2]], dtype=np.int32)
+#         cv2.fillConvexPoly(image, coord, (0,0,255))"
+"def rotate(x, angle):
+    x = x + angle
+    x = x - (x + np.pi) // (2 * np.pi) * 2 * np.pi
+    return x
+def get_img_coords(s):
+    '''
+    Input is a PredictionString (e.g. from train dataframe)
+    Output is two arrays:
+        xs: x coordinates in the image"
+"    img_ys = img_p[:, 1]
+    img_zs = img_p[:, 2] # z = Distance from the camera
+    return img_xs, img_ys
+def _regr_preprocess(regr_dict):
+    for name in ['x', 'y', 'z']:
+        regr_dict[name] = regr_dict[name] / 100
+    regr_dict['roll'] = rotate(regr_dict['roll'], np.pi)
+    regr_dict['pitch_sin'] = sin(regr_dict['pitch'])
+    regr_dict['pitch_cos'] = cos(regr_dict['pitch'])"
+"    regr_dict.pop('id')
+    return regr_dict
+def _regr_back(regr_dict):
+    for name in ['x', 'y', 'z']:
+        regr_dict[name] = regr_dict[name] * 100
+    regr_dict['roll'] = rotate(regr_dict['roll'], -np.pi)
+    
+    pitch_sin = regr_dict['pitch_sin'] / np.sqrt(regr_dict['pitch_sin']**2 + regr_dict['pitch_cos']**2)
+    pitch_cos = regr_dict['pitch_cos'] / np.sqrt(regr_dict['pitch_sin']**2 + regr_dict['pitch_cos']**2)"
+"            coords[-1]['id'] = int(coords[-1]['id'])
+    return coords
+def coords_to_str(coords):
+    s = []
+    for c in coords:
+        for n in range(7):
+            s.append(str(c[n]))
+    return ' '.join(s)
+def pixel_coords(s):"
+"    xc = [c['x'] for c in coords]
+    yc = [c['y'] for c in coords]
+    zc = [c['z'] for c in coords]
+    P = np.array(list(zip(xc, yc, zc))).T
+    img_p = np.dot(camera_matrix, P).T
+    img_p[:, 0] /= img_p[:, 2]
+    img_p[:, 1] /= img_p[:, 2]
+    u = img_p[:, 0]
+    v = img_p[:, 1]"
+"        res = cv2.bitwise_and(trainimage,trainimage,mask = imagemaskinv)
+        
+        # cut upper half,because it doesn't contain cars.
+        res = res[res.shape[0] // 2:]
+        return res
+    except:
+        trainimage = trainimage[trainimage.shape[0] // 2:]
+        return trainimage
+def heatmap(u, v, output_width=128, output_height=128, sigma=1):"
+"        X1 = np.linspace(1, output_width, output_width)
+        Y1 = np.linspace(1, output_height, output_height)
+        [X, Y] = np.meshgrid(X1, Y1)
+        X = X - floor(p_x)
+        Y = Y - floor(p_y)
+        D2 = X * X + Y * Y
+        E2 = 2.0 * sigma ** 2
+        Exponent = D2 / E2
+        heatmap = np.exp(-Exponent)"
+"    coords = str_to_coords(s)
+    for p_x, p_y, regr_dict in zip(u, v, coords):
+        if p_x >= 0 and p_x < 128 and p_y >= 0 and p_y < 128:
+            regr_dict.pop('id')
+            regr[floor(p_y), floor(p_x)] = [regr_dict[n] for n in regr_dict]
+            
+    # x,y,z devide by 100
+    regr[:,:,-3:] /= 100  
+    return regr"
+"        # Get values
+        x, y, z = point['x'], point['y'], point['z']
+        yaw, pitch, roll = -point['pitch'], -point['yaw'], -point['roll']
+        # Math
+        Rt = np.eye(4)
+        t = np.array([x, y, z])
+        Rt[:3, 3] = t
+        Rt[:3, :3] = euler_to_Rot(yaw, pitch, roll).T
+        Rt = Rt[:3, :]"
+"                      [x_l, -y_l, z_l, 1],
+                      [-x_l, -y_l, z_l, 1],
+                      [-x_l, -y_l, -z_l, 1],
+                      [0, 0, 0, 1]]).T
+        img_cor_points = np.dot(camera_matrix, np.dot(Rt, P))
+        img_cor_points = img_cor_points.T
+        img_cor_points[:, 0] /= img_cor_points[:, 2]
+        img_cor_points[:, 1] /= img_cor_points[:, 2]
+        img_cor_points = img_cor_points.astype(int)"
+"        img = draw_line(img, img_cor_points)
+        img = draw_points(img, img_cor_points[-1:])
+    
+    return img
+def preprocess_image(img):
+    img = img[img.shape[0] // 2:]
+    bg = np.ones_like(img) * img.mean(1, keepdims=True).astype(img.dtype)
+    bg = bg[:, :img.shape[1] // 4]
+    img = np.concatenate([bg, img, bg], 1)"
+"        cv2.circle(image, (p_x, p_y), 5, (255, 0, 0), -1)
+    return image
+def img_cor_2_world_cor():
+    x_img, y_img, z_img = img_cor_points[0]
+    xc, yc, zc = x_img*z_img, y_img*z_img, z_img
+    p_cam = np.array([xc, yc, zc])
+    xw, yw, zw = np.dot(np.linalg.inv(k), p_cam)
+    print(xw, yw, zw)
+    print(x, y, z)"
+"    P = np.array(list(zip(xs, ys, zs))).T
+    img_p = np.dot(camera_matrix, P).T
+    img_p[:, 0] /= img_p[:, 2]
+    img_p[:, 1] /= img_p[:, 2]
+    img_xs = img_p[:, 0]
+    img_ys = img_p[:, 1]
+    img_zs = img_p[:, 2]
+    return img_xs, img_y
+def euler_to_Rot(yaw, pitch, roll):"
+"                  [0, 1, 0],
+                  [-sin(yaw), 0, cos(yaw)]])
+    P = np.array([[1, 0, 0],
+                  [0, cos(pitch), -sin(pitch)],
+                  [0, sin(pitch), cos(pitch)]])
+    R = np.array([[cos(roll), -sin(roll), 0],
+                  [sin(roll), cos(roll), 0],
+                  [0, 0, 1]])
+    return np.dot(Y, np.dot(P, R))"
+"    for t in triangles:
+        coord = np.array([vertices[t[0]][:2], vertices[t[1]][:2], vertices[t[2]][:2]], dtype=np.int32)
+#         cv2.fillConvexPoly(image, coord, (0,0,255))
+        place = num_for_color%3
+        color = [0,0,0]
+        color[place] = 255
+        color = tuple(color)
+        cv2.polylines(image, np.int32([coord]), 1, color)
+    return image"
+"    for t in triangles:
+        coord = np.array([vertices[t[0]][:2], vertices[t[1]][:2], vertices[t[2]][:2]], dtype=np.int32)
+        color = [255,255,255]
+        color = tuple(color)
+        cv2.polylines(image, np.int32([coord]), 1, color)
+    return image
+def visualize(img, coords):
+    img = img.copy()
+    num_for_color = 0"
+"    for point in coords:
+        c_model = cid2name[int(point['id'])] + '.json'
+        with open(PATH+'car_models_json/'+c_model) as json_file:
+            data = json.load(json_file)
+        vertices = np.array(data['vertices'])
+        vertices[:, 1] = -vertices[:, 1]
+        triangles = np.array(data['faces']) - 1
+        x, y, z = point['x'], point['y'], point['z']
+        yaw, pitch, roll = -point['pitch'], -point['yaw'], -point['roll']"
+"        t = np.array([x, y, z])
+        Rt[:3, 3] = t
+        Rt[:3, :3] = euler_to_Rot(yaw, pitch, roll).T
+        Rt = Rt[:3, :]
+        P = np.ones((vertices.shape[0],vertices.shape[1]+1))
+        P[:, :-1] = vertices
+        P = P.T
+        img_cor_points = np.dot(camera_matrix, np.dot(Rt, P))
+        img_cor_points = img_cor_points.T"
+"        img_cor_points[:, 1] /= img_cor_points[:, 2]
+        img_cor_points = img_cor_points.astype(int)
+        # find counters
+        overlay = np.zeros_like(img)
+        overlay = draw_bw(overlay, img_cor_points, triangles, num_for_color)
+        overlay = cv2.cvtColor(overlay, cv2.COLOR_BGR2GRAY)
+        contours, hierarchy = cv2.findContours(overlay, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+        # draw counters
+        for i in range(len(contours)):"
+"        # x
+        masks[1][overlay!=0] = point['x']/100
+        # y
+        masks[2][overlay!=0] = point['y']/100
+        # z
+        masks[3][overlay!=0] = point['z']/100
+        # yaw
+        masks[4][overlay!=0] = point['yaw']
+        # pitch sin"
+"        masks[5][overlay!=0] = psin
+        # pitch cos
+        pcos = cos(point['pitch'])
+        masks[6][overlay!=0] = pcos
+        # roll
+        masks[7][overlay!=0] = rotate(point['roll'],np.pi)
+        
+        #plt.imshow(overlay)
+        #plt.show()"
+"    elif res.shape[2]>3:
+        #print(res.shape)
+        #print(res[...,:3].shape)
+        return res[...,:3]
+    else:
+        return res
+def clear_duplicates(coords):
+    for c1 in coords:
+        xyz1 = np.array([c1['x'], c1['y'], c1['z']])"
+"    col_names = sorted(['x', 'y', 'z', 'yaw', 'pitch_sin', 'pitch_cos', 'roll'])
+    coords = []
+    for r, c in points:
+        regr_dict = dict(zip(col_names, regr_output[:, r, c]))
+        coords.append(_regr_back(regr_dict))
+        coords[-1]['confidence'] = 1 / (1 + np.exp(-logits[r, c]))
+        coords[-1]['x'], coords[-1]['y'], coords[-1]['z'] = optimize_xy(r, c, coords[-1]['x'], coords[-1]['y'], coords[-1]['z'])
+    coords = clear_duplicates(coords)
+    return coords"
+"    s = []
+    for c in coords:
+        for n in names:
+            s.append(str(c.get(n, 0)))
+    return ' '.join(s)
+def get_img_coords(s):
+    '''
+    Input is a PredictionString (e.g. from train dataframe)
+    Output is two arrays:"
+"    regr_dict.pop('pitch')
+    regr_dict.pop('id')
+    return regr_dict
+def _regr_back(regr_dict):
+    for name in ['x', 'y', 'z']:
+        regr_dict[name] = regr_dict[name] * 100
+    regr_dict['roll'] = rotate(regr_dict['roll'], -np.pi)
+    
+    pitch_sin = regr_dict['pitch_sin'] / np.sqrt(regr_dict['pitch_sin']**2 + regr_dict['pitch_cos']**2)"
+"        height_shift_range=0.1)
+def a2v(yaw, pitch, roll):
+    # Euler Angle -> Rotation Matrix
+    # I think the pitch and yaw should be exchanged
+    yaw, pitch = pitch, yaw
+    Y = np.array([[cos(yaw), -sin(yaw), 0],
+                  [sin(yaw), cos(yaw), 0],
+                  [0, 0, 1]])
+    P = np.array([[cos(pitch), 0, sin(pitch)],"
+"                  [-sin(pitch), 0, cos(pitch)]])
+    R = np.array([[1, 0, 0],
+                  [0, cos(roll), -sin(roll)],
+                  [0, sin(roll), cos(roll)]])
+    rotation_m = np.dot(Y, np.dot(P, R))
+    
+    
+    # Rotation Matrix -> Rotation Vector
+    rotation_v = Rodrigues(rotation_m)[0]"
+"    
+    return rotation_v
+def v2a(rotation_v):
+    # Rotation Vector -> Rotation Matrix
+    R = Rodrigues(rotation_v)[0]
+    
+    sq = sqrt(R[0,0] ** 2 +  R[1,0] ** 2)
+
+    if  not (sq < 1e-6) :"
+"        yaw = atan2(-R[2,0], sq)
+        pitch = atan2(R[1,0], R[0,0])
+    else :
+        roll = atan2(-R[1,2], R[1,1])
+        yaw = atan2(-R[2,0], sq)
+        pitch = 0
+
+    return yaw, pitch, roll
+def flip_hor_at_u(img, cx, flag_plot=False):"
+"        pad_left = width_new / 2 - width_left
+        pad_right = width_new / 2 - width_right
+    else:
+        # if flipping line lies at a pixel...
+        width_left = np.round(u_flip)
+        width_right = np.round(width - u_flip - 1)
+        width_new = 2 * max(width_left, width_right) + 1
+        pad_left = (width_new - 1) / 2 - width_left
+        pad_right = (width_new - 1) / 2 - width_right"
+"                  pad_left.astype(np.int):dim_right.astype(np.int)
+                  :]
+    width_cropped = img_cropped.shape[1]
+    assert width_cropped== width, ""width changed during flipping ?!""
+
+    # plot images
+    if flag_plot:
+        fig_width, fig_height = max(4,width/100), max(6, 2*height/100)
+        fig,ax = plt.subplots(2,1, sharey=True, sharex=True, figsize=(fig_width,fig_height))"
+"        ax[1].imshow(img_cropped)
+        for axi in ax:
+            axi.vlines(u_flip, 0, height-1)
+        plt.show()
+
+    return img_cropped
+def euler_to_Rot(yaw, pitch, roll):
+    Y = np.array([[cos(yaw), 0, sin(yaw)],
+                  [0, 1, 0],"
+"    P = np.array([[1, 0, 0],
+                  [0, cos(pitch), -sin(pitch)],
+                  [0, sin(pitch), cos(pitch)]])
+    R = np.array([[cos(roll), -sin(roll), 0],
+                  [sin(roll), cos(roll), 0],
+                  [0, 0, 1]])
+    return np.dot(Y, np.dot(P, R))
+def str2coords(s, names=['id', 'yaw', 'pitch', 'roll', 'x', 'y', 'z']):
+    '''"
+"    return coords
+def get_img_coords(s):
+    '''
+    Input is a PredictionString (e.g. from train dataframe)
+    Output is two arrays:
+        xs: x coordinates in the image
+        ys: y coordinates in the image
+    '''
+    coords = str2coords(s)"
+"    ys = [c['y'] for c in coords]
+    zs = [c['z'] for c in coords]
+    P = np.array(list(zip(xs, ys, zs))).T
+    img_p = np.dot(camera_matrix, P).T
+    img_p[:, 0] /= img_p[:, 2]
+    img_p[:, 1] /= img_p[:, 2]
+    img_xs = img_p[:, 0]
+    img_ys = img_p[:, 1]
+    return img_xs, img_ys"
+"    x_l = 1.02
+    y_l = 0.80
+    z_l = 2.31
+    
+    img = img.copy()
+    for point in coords:
+        # Get values
+        x, y, z = point['x'], point['y'], point['z']
+        yaw, pitch, roll = point['yaw'], point['pitch'], point['roll']"
+"        Rt = np.eye(4)
+        t = np.array([x, y, z])
+        Rt[:3, 3] = t
+        Rt[:3, :3] = euler_to_Rot(yaw, pitch, roll).T
+        Rt = Rt[:3, :]
+        P = np.array([[x_l, -y_l, -z_l, 1],
+                      [x_l, -y_l, z_l, 1],
+                      [-x_l, -y_l, z_l, 1],
+                      [-x_l, -y_l, -z_l, 1],"
+"        img_cor_points = np.dot(camera_matrix, np.dot(Rt, P))
+        img_cor_points = img_cor_points.T
+        img_cor_points[:, 0] /= img_cor_points[:, 2]
+        img_cor_points[:, 1] /= img_cor_points[:, 2]
+        img_cor_points = img_cor_points.astype(int)
+        # Drawing
+        img = draw_points(img, img_cor_points[-1:])
+        if pose_name == 'X':
+            cv2.putText(img, str(int(x)), (img_cor_points[-1,0]-60, img_cor_points[-1,1]-20), cv2.FONT_HERSHEY_PLAIN, 6, (0, 255, 0), 3, cv2.LINE_AA)"
+"
+#   try:
+#     font = ImageFont.truetype(""/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Regular.ttf"",
+#                               25)
+#   except IOError:
+#     print(""Font not found, using default font."")
+  font = ImageFont.load_default()
+
+  for i in range(min(boxes.shape[0], max_boxes)):"
+"          xmax,
+          color,
+          font,
+          display_str_list=[display_str])
+      np.copyto(image, np.array(image_pil))
+  return image
+def draw_bounding_box_on_image(image,
+                               ymin,
+                               xmin,"
+"                               xmax,
+                               color,
+                               font,
+                               thickness=4,
+                               display_str_list=()):
+  """"""Adds a bounding box to an image.""""""
+  draw = ImageDraw.Draw(image)
+  im_width, im_height = image.size
+  (left, right, top, bottom) = (xmin * im_width, xmax * im_width,"
+"  total_display_str_height = (1 + 2 * 0.05) * sum(display_str_heights)
+
+  if top > total_display_str_height:
+    text_bottom = top
+  else:
+    text_bottom = bottom + total_display_str_height
+  # Reverse list and print from bottom to top.
+  for display_str in display_str_list[::-1]:
+    text_width, text_height = font.getsize(display_str)"
+"                font,
+                display_str_list=[display_str])
+            np.copyto(image, np.array(image_pil))
+    return image
+def draw_bounding_box_on_image(image,
+                               ymin,
+                               xmin,
+                               ymax,
+                               xmax,"
+"                               font,
+                               thickness=4,
+                               display_str_list=()):
+    """"""Adds a bounding box to an image.""""""
+    draw = ImageDraw.Draw(image)
+    im_width, im_height = image.size
+    (left, right, top, bottom) = (xmin * im_width, xmax * im_width,
+                                  ymin * im_height, ymax * im_height)
+    draw.line([(left, top), (left, bottom), (right, bottom), (right, top),"
+"            imagepath = os.path.join(img_folder, imagename)
+            if os.path.isfile(imagepath):
+                if imagepath not in image_mask:
+                    image_mask[imagename] = [filename]
+                else:
+                    image_mask[imagename].append(filename)
+            else:
+                print('cannot find the image:', imagepath)
+"
+"                    ymin = np.min(pos[0])
+                    ymax = np.max(pos[0])
+                    boxes.append([xmin, ymin, xmax, ymax])
+                    masks.append(maskflag)
+
+            if len(boxes) > 0:
+
+                boxes = np.array(boxes)
+                masks = np.array(masks)"
+"    m = g_image.mean()
+    m1 = 0.5 * m
+    m2 = 0.25 * m
+    for i in range(image.shape[0]):
+        for j in range(image.shape[1]):
+            pxl = g_image[i,j]
+            if pxl > m:
+                g_image[i,j] = 3
+            elif pxl > m1:"
+"
+for row, index in df.iterrows():
+    row['column_name'] = remove_emoticons(row['column_name'])
+
+import re
+
+# EMOTICONS can be found by the following github link: https://github.com/NeelShah18/emot/blob/master/emot/emo_unicode.py
+def convert_emoticons(text):
+    for emot in EMOTICONS:"
+"
+
+def correction(word):
+    ""Most probable spelling correction for word.""
+    return max(candidates(word), key=P)
+
+
+def candidates(word):
+    ""Generate possible spelling corrections for word."""

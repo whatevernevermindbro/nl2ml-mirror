@@ -1,0 +1,12 @@
+graph = {'imports': ['import ', ' from ']
+          ,'data_load': ['.load', '_load', '_dump', 'load_', '.csv', 'glob', 'pickle.', 'read_', 'download', '.txt', '.json', '.png', '.jpg', '.jpeg']
+          ,'preprocessing': ['train_test_split(', 'Normalizer(', 'StandardScaler(', 'normalize(', 'scale(', 'DictVectorizer(', 'CountVectorizer(', 'HashingVectorizer(', 'TfidfVectorizer(', 'Stemmer(', 'Lemmatizer(', 'convert', '.resize', 'encode(', '.fill(', '.fillna(', '.concat', 'merge'
+                              ,'train_test_split (', 'Normalizer (', 'StandardScaler (', 'normalize (', 'scale (', 'DictVectorizer (', 'CountVectorizer (', 'HashingVectorizer (', 'TfidfVectorizer (', 'Stemmer (', 'Lemmatizer (', 'encode (', '.fill (', '.fillna (']
+          ,'visualization': ['plot.', 'plt.', 'graph', 'histogram', 'hist', 'sns.', 'plotline', 'chart', 'diagram', 'heatmap', 'figure', 'plot_tree(', 'plot_tree (']
+          ,'model': ['LinearRegression(', 'RandomForest(', 'Ridge(', 'RidgeCV(', 'RidgeClassifier(', 'RidgeClassifierCV(', 'Lasso(', 'SGD(', 'LogisticRegression(', 'LogisticRegressionCV(', 'SVC(', 'SVR(', 'Layer(', 'XGboost(', 'LGBM(', 'CatBoost('
+                      , 'Perceptron(', 'KNeighborsRegressor(', 'KNeighborsClassifier(', 'SGDRegressor(', 'ElasticNet(', 'ElasticNetCV(', 'KMeans(', 'AgglomerativeClustering(', 'SpectralClustering(', 'CategoricalNB(', 'ComplementNB(', 'DecisionTreeClassifier(', 'DecisionTreeRegressor('
+                      ,'LinearRegression (', 'RandomForest (', 'Ridge (', 'RidgeCV (', 'RidgeClassifier (', 'RidgeClassifierCV (', 'Lasso (', 'SGD (', 'LogisticRegression (', 'LogisticRegressionCV (', 'SVC (', 'SVR (', 'Layer (', 'XGboost (', 'LGBM (', 'CatBoost ('
+                      , 'Perceptron (', 'KNeighborsRegressor (', 'KNeighborsClassifier (', 'SGDRegressor (', 'ElasticNet (', 'ElasticNetCV (', 'KMeans (', 'AgglomerativeClustering (', 'SpectralClustering (', 'CategoricalNB (', 'ComplementNB (', 'DecisionTreeClassifier (', 'DecisionTreeRegressor (']
+          ,'train': ['.fit_transform', '.fit', 'epoch', 'loss', 'optimizer']
+          ,'predict': ['.predict', '_error', '.mean_', '_score', '_distance']
+}

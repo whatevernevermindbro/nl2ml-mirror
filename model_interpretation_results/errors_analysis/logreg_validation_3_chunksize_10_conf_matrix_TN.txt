@@ -1,0 +1,387 @@
+"SomeModel.objects.filter(id=id).delete()
+dict([['two', 2], ['one', 1]])
+dict(zip(l[::2], l[1::2]))
+GRAVITY = 9.8
+re.findall('(([0-9]+)([A-Z]))', '20M10000N80M')
+re.findall('([0-9]+|[A-Z])', '20M10000N80M')
+re.findall('([0-9]+)([A-Z])', '20M10000N80M')
+re.compile('\\w+').findall('Hello world, my name is...James the 2nd!')
+datetime.datetime.strptime('03:55', '%H:%M').time()"
+"numpy.array([(x in a) for x in b])
+networkx.draw_networkx_labels(G, pos, labels)
+y = [row[:] for row in x]
+X = numpy.loadtxt('somefile.csv', delimiter=',')
+matching = [s for s in some_list if 'abc' in s]
+df.to_csv('mydf.tsv', sep='\t')
+random.sample(list(range(100)), 10)
+s.rsplit(',', 1)
+all(isinstance(x, int) for x in lst)"
+"browser.find_elements_by_xpath(""//*[@type='submit']/@value"").text
+browser.find_elements_by_xpath(""//*[@type='submit']"").get_attribute('value')
+with open('example.yaml', 'r') as stream:
+    try:
+        print((yaml.load(stream)))
+    except yaml.YAMLError as exc:
+        print(exc)
+with open('example.yaml') as stream:
+    try:"
+"my_function(**data)
+sum((1 for line in open('myfile.txt')))
+def bufcount(filename):
+    f = open(filename)
+    lines = 0
+    buf_size = (1024 * 1024)
+    read_f = f.read
+    buf = read_f(buf_size)
+    while buf:"
+"ftp.retrbinary('RETR %s' % filename, file.write)
+urlfetch.fetch(url, deadline=10 * 60)
+print(my_string[0:100])
+legend(numpoints=1)
+dict((x, set(y) & set(d1.get(x, ()))) for x, y in d2.items())
+numpy.loadtxt(open('test.csv', 'rb'), delimiter=',', skiprows=1)
+Sample.objects.filter(date__range=['2011-01-01', '2011-01-31'])
+Sample.objects.filter(date__year='2011', date__month='01')
+d['dict3'] = {'spam': 5, 'ham': 6}"
+"a.shape
+N.shape(a)
+N.shape(a)
+a.shape
+[i for i, v in enumerate(L) if v[0] == 53]
+struct.unpack('<L', 'y\xcc\xa6\xbb')[0]
+arr[[0, 1, 1], [1, 0, 2]]
+list(powerset('abcd'))
+s in ['true', '1', 't', 'y', 'yes', 'yeah', 'yup', 'certainly', 'uh-huh']"
+"    pass
+for (letter, number) in list(d.items()):
+    pass
+for (k, v) in list(d.items()):
+    pass
+list(d.items())
+list(d.items())
+for (k, v) in list(d.items()):
+    pass"
+"img = Image.open('picture.jpg')
+img.show()
+img = Image.open('picture.jpg')
+Img.show
+sys.exit(0)
+sys.exit('aa! errors!')
+sys.exit()
+[max(abs(x) for x in arr[i:i + 4]) for i in range(0, len(arr), 4)]
+os.chdir('c:\\Users\\uname\\desktop\\python')"
+"((25 < a) & (a < 100)).sum()
+date.today().strftime('%A')
+re.search('\\bis\\b', your_string)
+{{car.date_of_manufacture | datetime}}
+{{car.date_of_manufacture.strftime('%Y-%m-%d')}}
+[item for sublist in l for item in sublist]
+list(itertools.chain(*list2d))
+list(itertools.chain.from_iterable(list2d))
+ord('a')"
+"print(func.__name__)
+"""""""""""".join('{}{}'.format(key, val) for key, val in sorted(adict.items()))
+"""""""""""".join('{}{}'.format(key, val) for key, val in list(adict.items()))
+new_list = old_list[:]
+new_list = list(old_list)
+new_list = copy.copy(old_list)
+new_list = copy.deepcopy(old_list)
+[i for i in old_list]
+plt.legend(frameon=False)"
+"globals()['myfunction']()
+urllib.request.urlopen('http://www.stackoverflow.com').getcode()
+conn = httplib.HTTPConnection('www.python.org')
+conn.request('HEAD', '/')
+r1 = conn.getresponse()
+print(r1.status, r1.reason)
+r = requests.head(url)
+return (r.status_code == 200)
+print(urllib.request.urlopen('http://www.stackoverflow.com').getcode())"
+"decimal.Decimal(random.randrange(10000)) / 100
+onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+f = []
+for (dirpath, dirnames, filenames) in walk(mypath):
+    f.extend(filenames)
+    break
+print(glob.glob('/home/adam/*.txt'))
+os.listdir('somedirectory')
+cur.executemany('INSERT INTO table VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)', tup)"
+"else:
+    print('The strings are not the same (case insensitive)')
+if (string1.lower() == string2.lower()):
+    pass
+(string1.lower() == string2.lower())
+(first.lower() == second.lower())
+(first.upper() == second.upper())
+os.system(""awk '{print $10, $11}' test.txt > test2.txt"")
+del my_list[2:6]"
+"if ('blah' not in somestring):
+    pass
+if (needle in haystack):
+    pass
+string.find('substring')
+if (s.find('is') == (-1)):
+    print(""No 'is' here!"")
+else:
+    print(""Found 'is' in the string."")"
+"f = open('example.txt')
+s = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
+if (s.find('blabla') != (-1)):
+    pass
+datafile = file('example.txt')
+found = False
+for line in datafile:
+    if (blabla in line):
+        return True"
+"new_list = [x[:] for x in old_list]
+""""""{:.50f}"""""".format(float(a[0] / a[1]))
+df.to_sparse(0)
+print([obj.attr for obj in my_list_of_objs])
+sum(1 if d['success'] else 0 for d in s)
+sum(d['success'] for d in s)
+imp.find_module('os')[1]
+(bool(a) != bool(b))
+((a and (not b)) or ((not a) and b))"
+"root.geometry('500x500')
+re.findall('\\b(?:b+a)+b+\\b', mystring)
+str_list = [tuple('{0:.8e}'.format(flt) for flt in sublist) for sublist in lst]
+str_list = [['{0:.8e}'.format(flt) for flt in sublist] for sublist in lst]
+t = tuple(x[0] for x in s)
+datetime.datetime.now().strftime('%a')
+ord('a')
+ord('\u3042')
+ord()"
+"random.choice(foo)
+set(['a', 'b']).issubset(['a', 'b', 'c'])
+set(['a', 'b']).issubset(set(l))
+p = Popen(['grep', 'f'], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+grep_stdout = p.communicate(input='one\ntwo\nthree\nfour\nfive\nsix\n')[0]
+p = subprocess.Popen(['grep', 'f'], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+p.stdin.write('one\ntwo\nthree\nfour\nfive\nsix\n')
+p.communicate()[0]
+p.stdin.close()"
+"os.path.isfile(fname)
+my_file = Path('/path/to/file')
+if my_file.is_file():
+    pass
+os.path.exists(file_path)
+print(os.path.isfile('/etc/password.txt'))
+print(os.path.isfile('/etc'))
+print(os.path.exists('/does/not/exist'))
+print(os.path.isfile('/does/not/exist'))"
+"    pass
+try:
+    del mydict[key]
+except KeyError:
+    pass
+parser.add_argument('input', nargs='+')
+pyplot.plot(x, y, color='#112233')
+re.sub('<[^<]+?>', '', text)
+a[np.in1d(a, b)]"
+"if some_string:
+    pass
+it = iter(sorted(d.items()))
+for (key, value) in sorted(d.items()):
+    pass
+return sorted(dict.items())
+return iter(sorted(dict.items()))
+for (k, v) in sorted(foo.items()):
+    pass"
+"round(2.0005, 3)
+round(3.0005, 3)
+round(4.0005, 3)
+round(8.005, 2)
+round(7.005, 2)
+round(6.005, 2)
+round(1.005, 2)
+df['Cat1'].fillna(df['Cat2'])
+logging.info('date=%s', date)"
+"'hello world'[::(-1)]
+s[::(-1)]
+''.join(reversed('foo'))
+''.join(reversed(string))
+'foo'[::(-1)]
+a_string[::(-1)]
+def reversed_string(a_string):
+    return a_string[::(-1)]
+''.join(reversed(s))"
+"session.query(User).filter_by(id=123).update({'name': 'Bob Marley'})
+r = requests.post('http://wikipedia.org', cookies=cookie)
+sys.path.insert(0, 'libs')
+datetime.datetime.now()
+datetime.datetime.now().time()
+strftime('%Y-%m-%d %H:%M:%S', gmtime())
+str(datetime.now())
+datetime.datetime.time(datetime.datetime.now())
+ord('\xff')"
+"    for filename in filenames:
+        pass
+os.listdir(path)
+os.rename(dir, dir + '!')
+""""""-"""""".join(a + b for a, b in zip(s[::2], s[1::2]))
+print('%.3f' % 3.1415)
+data[0]['f'] = var
+print(a_module.__file__)
+print(os.getcwd())"
+"urlparse.urldefrag('http://www.address.com/something#something')
+urllib.request.urlretrieve('http://example.com/file.ext', '/path/to/dir/filename.ext')
+list(set(frozenset(item) for item in L))
+[set(item) for item in set(frozenset(item) for item in L)]
+p.terminate()
+del mylist[:]
+ctypes.windll.user32.MessageBoxW(0, 'Error', 'Error', 0)
+str_list = list([_f for _f in str_list if _f])
+re.sub('[\\ \\n]{2,}', '', yourstring)"
+"print(os.path.splitext('/home/user/somefile.txt')[0] + '.jpg')
+pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+ax.set_title('$%s \\times 10^{%s}$' % ('3.5', '+20'))
+print(os.path.getmtime('/tmp'))
+today.strftime('%B')
+today.strftime('%B')
+[j for i in x for j in i]
+print(list(itertools.chain.from_iterable(a)))
+datetime.datetime.strptime('January 11, 2010', '%B %d, %Y').strftime('%A')"
+"a.remove('b')
+a.remove(c)
+a.remove(6)
+a.remove(6)
+if (c in a):
+    a.remove(c)
+try:
+    a.remove(c)
+except ValueError:"
+"re.findall('(?=(a.*?a))', 'a 1 a 2 a 3 a 4 a')
+np.einsum('ij,kj->jik', X, X)
+some_list[(-1)]
+some_list[(-2)]
+some_list[(- n)]
+alist[(-1)]
+astr[(-1)]
+print([u for v in [[i, i] for i in range(5)] for u in v])
+[0, 0, 1, 1, 2, 2, 3, 3, 4, 4]"
+"s[s.find('\n') + 1:s.rfind('\n')]
+{(x ** 2) for x in range(100)}
+zip(*[[1, 2], [3, 4], [5, 6]])
+zip(*[[1, 2], [3, 4], [5, 6]])
+requests.get('https://www.mysite.com/', auth=('username', 'pwd'))
+x[2:]
+x[:2]
+x[:(-2)]
+x[(-2):]"
+"numpy.random.choice(numpy.arange(1, 7), p=[0.1, 0.05, 0.05, 0.2, 0.4, 0.2])
+df.loc[df['Value'].idxmax()]
+re.findall('^(.+?)((.+)\\3+)$', '42344343434')[0][:-1]
+np.fromstring('\x00\x00\x80?\x00\x00\x00@\x00\x00@@\x00\x00\x80@', dtype='<f4')
+np.fromstring('\x00\x00\x80?\x00\x00\x00@\x00\x00@@\x00\x00\x80@', dtype='>f4')
+cursor.execute('INSERT INTO table VALUES (?, ?, ?)', (var1, var2, var3))
+cursor.execute('INSERT INTO table VALUES (%s, %s, %s)', (var1, var2, var3))
+cursor.execute('INSERT INTO table VALUES (%s, %s, %s)', (var1, var2, var3))
+df['stats'].str[1:-1].str.split(',', expand=True).astype(float)"
+"getattr(a, 'property', 'default value')
+np.delete(a, list(range(0, a.shape[1], 8)), axis=1)
+datetime.datetime.fromtimestamp(ms / 1000.0)
+np.einsum('...j,...j->...', vf, vf)
+r = requests.get(url)
+r = requests.get(url, params=payload)
+r = requests.post(url, data=payload)
+post_response = requests.post(url='http://httpbin.org/post', json=post_data)
+{{(mylist | slice): '3:8'}}"
+"subprocess.call(['shutdown', '/r', '/t', '900'])
+subprocess.call(['shutdown', '/s'])
+subprocess.call(['shutdown', '/a '])
+subprocess.call(['shutdown', '/l '])
+subprocess.call(['shutdown', '/r'])
+open('filename', 'w').close()
+open('file.txt', 'w').close()
+df.to_dict('index')
+df.to_dict('records')"
+"raise AssertionError(""Unexpected value of 'distance'!"", distance)
+driver.find_element_by_id('foo').clear()
+driver.find_element_by_id('foo').clear()
+socket.inet_ntoa(struct.pack('!L', 2130706433))
+df = df[['x', 'y', 'a', 'b']]
+super(ChildClass, self).__init__(*args, **kwargs)
+sum(d.values())
+sum(d.values())
+json.dumps(your_data, ensure_ascii=False)"
+"block_sz = 8192
+while True:
+    buffer = u.read(block_sz)
+    if (not buffer):
+        break
+    file_size_dl += len(buffer)
+    f.write(buffer)
+    status = ('%10d  [%3.2f%%]' % (file_size_dl, ((file_size_dl * 100.0) / file_size)))
+    status = (status + (chr(8) * (len(status) + 1)))"
+"db.execute(""INSERT INTO present VALUES('test2', ?, 10)"", (None,))
+[image for menuitem in list_of_menuitems for image in menuitem]
+a.extend(b)
+a.extend(list(b))
+np.savetxt('c:\\data\\np.txt', df.values, fmt='%d')
+df.to_csv('c:\\data\\pandas.txt', header=None, index=None, sep=' ', mode='a')
+print(x.rpartition('-')[0])
+print(x.rsplit('-', 1)[0])
+ftp.storlines('STOR ' + filename, open(filename, 'r'))"
+"np.maximum([2, 3, 4], [1, 5, 2])
+print(l[3:] + l[:3])
+for fn in os.listdir('.'):
+    if os.path.isfile(fn):
+        pass
+for (root, dirs, filenames) in os.walk(source):
+    for f in filenames:
+        pass
+[int(1000 * random.random()) for i in range(10000)]"
+"np.vstack((A, B))
+os.stat(filepath).st_size
+l.count('a')
+Counter(l)
+[[x, l.count(x)] for x in set(l)]
+dict(((x, l.count(x)) for x in set(l)))
+l.count('b')
+shutil.copy(srcfile, dstdir)
+max(k for k, v in x.items() if v != 0)"
+"raw_byte_string.decode('unicode_escape')
+[m.group(0) for m in re.finditer('(\\d)\\1*', s)]
+plt.scatter(np.random.randn(100), np.random.randn(100), facecolors='none')
+plt.plot(np.random.randn(100), np.random.randn(100), 'o', mfc='none')
+soup.find('div', id='main-content').decompose()
+df[df['ids'].str.contains('ball')]
+df.reset_index(level=0, inplace=True)
+df['index1'] = df.index
+df.reset_index(level=['tick', 'obs'])"
+"[i for (i, x) in enumerate(testlist) if (x == 1)]
+[i for (i, x) in enumerate(testlist) if (x == 1)]
+for i in [i for (i, x) in enumerate(testlist) if (x == 1)]:
+    pass
+for i in (i for (i, x) in enumerate(testlist) if (x == 1)):
+    pass
+gen = (i for (i, x) in enumerate(testlist) if (x == 1))
+for i in gen:
+    pass"
+"datetime.now(pytz.utc)
+list2 = [x for x in list1 if x != []]
+list2 = [x for x in list1 if x]
+return HttpResponse(data, mimetype='application/json')
+re.findall('(.*?)\\[.*?\\]', example_str)
+re.findall('(.*?)(?:\\[.*?\\]|$)', example_str)
+re.findall('\\(.+?\\)|\\w', '(zyx)bc')
+re.findall('\\((.*?)\\)|(\\w)', '(zyx)bc')
+re.findall('\\(.*?\\)|\\w', '(zyx)bc')"
+"        pass
+for (root, dirs, files) in os.walk('/mydir'):
+    for file in files:
+        if file.endswith('.txt'):
+            pass
+df.plot(legend=False)
+for i in range(256):
+    for j in range(256):
+        ip = ('192.168.%d.%d' % (i, j))"
+"import imp
+imp.reload(module)
+struct.unpack('H', struct.pack('h', number))
+numlist = [float(x) for x in numlist]
+df.to_csv(filename, index=False)
+json_data = json.loads(unescaped)
+[chr(i) for i in range(127)]
+newFile.write(struct.pack('5B', *newFileBytes))
+re.sub('^[A-Z0-9]*(?![a-z])', '', string)"

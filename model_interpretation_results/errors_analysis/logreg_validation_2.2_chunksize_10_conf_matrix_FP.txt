@@ -1,0 +1,432 @@
+"ex.groupby(level='A').agg(lambda x: x.index.get_level_values(1).nunique())
+pd.concat(map(pd.DataFrame, iter(d.values())), keys=list(d.keys())).stack().unstack(0)
+sum(1 for i, j in zip(a, b) if i != j)
+d = {(a.lower(), b): v for (a, b), v in list(d.items())}
+list_.sort(key=lambda x: [x[0], len(x[1]), x[1]])
+s.strip()
+s = s.lstrip()
+s = s.rstrip()
+s = s.strip(' \t\n\r')"
+"Task.objects.exclude(prerequisites__status__in=['A', 'P', 'F'])
+root.configure(background='black')
+numpy.array([(key, val) for key, val in result.items()], dtype)
+pd.concat([df_1, df_2.sort_values('y')])
+re.sub('(.*)</div>', '\\1</bad>', s)
+print(max(d, key=lambda x: (d[x]['salary'], d[x]['bonus'])))
+Book.objects.filter(author__id=1).filter(author__id=2)
+re.compile('XYZ', re.IGNORECASE).split('fooxyzbar')
+[sum(map(int, s)) for s in example.split()]"
+"c.decode('unicode_escape')
+pd.melt(x, id_vars=['farm', 'fruit'], var_name='year', value_name='value')
+default_data['item3'] = 3
+default_data.update({'item3': 3, })
+default_data.update({'item4': 4, 'item5': 5, })
+l[:3] + l[-3:]
+df = df.reset_index(drop=True)
+[a[x].append(b[x]) for x in range(3)]
+os.path.realpath(path)"
+"if ('key1' in dict):
+    pass
+if (key in d):
+    pass
+Blog.objects.filter(pk__in=[1, 4, 7])
+f = open('test/test.pdf', 'rb')
+format(12345678.46, ',').replace(',', ' ').replace('.', ',')
+pd.merge(frame_1, frame_2, left_on='county_ID', right_on='countyid')
+np.isnan(a).sum() / np.prod(a.shape)"
+"lst.sort(key=lambda x: x[2], reverse=True)
+indices = [i for i, x in enumerate(my_list) if x == 'whatever']
+subprocess.call('grep -r PASSED *.log | sort -u | wc -l', shell=True)
+len(my_text) - len(my_text.rstrip('?'))
+df[df.columns[1:]].replace('[\\$,]', '', regex=True).astype(float)
+df1.merge(df2, how='left', on='word')
+print(''.join(''.join(i) for i in zip(a2, a1)) + a[-1] if len(a) % 2 else '')
+root.attributes('-topmost', True)
+root.lift()"
+"re.findall('\\d|\\d,\\d\\)', '6,7)')
+input('Press Enter to continue...')
+""""""ABC"""""".encode('hex')
+db.Doc.update({'_id': b['_id']}, {'$set': {'geolocCountry': myGeolocCountry}})
+re.sub('l+', 'l', 'lollll')
+rows = soup.findAll('tr')[4::5]
+plt.gca().invert_xaxis()
+plt.gca().invert_yaxis()
+pd.concat([GOOG, AAPL], keys=['GOOG', 'AAPL'], axis=1)"
+"i = int(s, 16)
+int('0xff', 16)
+int('FFFF', 16)
+ast.literal_eval('0xdeadbeef')
+int('deadbeef', 16)
+os.system('screencapture screen.png')
+driver.set_window_size(1400, 1000)
+unicodedata.normalize('NFKD', 'm\xfasica').encode('ascii', 'ignore')
+pandas.concat([df1, df2]).drop_duplicates().reset_index(drop=True)"
+"b = {a[i]: a[i + 1] for i in range(0, len(a), 2)}
+len(set(a)) == len(a)
+print(hashlib.md5(open(full_path, 'rb').read()).hexdigest())
+sorted(list(data.items()), key=lambda x: x[1][0])
+"""""""""""".join(x.upper() if random.randint(0, 1) else x for x in s)
+os.system('GREPDB=""echo 123""; /bin/bash -c ""$GREPDB""')
+os.system('/bin/bash -c ""echo hello world""')
+getattr(test, a_string)
+Image.open('pathToFile').show()"
+"weekly = [sum(visitors[x:x + 7]) for x in range(0, len(daily), 7)]
+del d[key]
+{i: a[i] for i in a if (i != 0)}
+lol.pop('hello')
+del r[key]
+np.linalg.solve(np.dot(a.T, a), np.dot(a.T, b))
+pd.concat([df.drop('b', axis=1), pd.DataFrame(df['b'].tolist())], axis=1)
+for i in range(0, 10, 2):
+    pass"
+"    pass
+[{'content': x['content'].lower()} for x in messages]
+"""""" """""".join(my_list)
+re.sub('(http://\\S+|\\S*[^\\w\\s]\\S*)', '', a)
+str(n) == str(n)[::-1]
+ftp.storbinary('STOR myfile.txt', open('myfile.txt', 'rb'))
+re.sub('.*I', 'I', stri)
+int('1,000,000'.replace(',', ''))
+pd.merge(df1, df2, left_index=True, right_index=True, how='outer')"
+"'Hello\n\n\n'.rstrip('\n')
+re.findall('.{,16}\\b', text)
+[[X[i][j] for j in range(len(X[i]))] for i in range(len(X))]
+'\xd0\xbc\xd0\xb0\xd1\x80\xd0\xba\xd0\xb0'.encode('latin-1')
+df.groupby((df.a == 'B').shift(1).fillna(0).cumsum())
+urllib.request.urlretrieve('http://search.twitter.com/search.json?q=hi', 'hi.json')
+numpy.where((x == 0))[0]
+sys.stdout.flush()
+str(i)"
+"str(a)
+L.sort(key=operator.itemgetter(1))
+print(str(count) + '    ' + str(conv))
+df.fillna(method='ffill', inplace=True)
+text.config(state=DISABLED)
+sum(map(ord, string))
+list(itertools.product(*arrays))
+'{:,}'.format(value)
+locale.setlocale(locale.LC_ALL, 'en_US')"
+"results = [item['value'] for item in test_data]
+datetime.datetime.now().isoformat()
+datetime.datetime.utcnow().isoformat()
+df.apply(' '.join, axis=0)
+pd.DataFrame(df.values - df2.values, columns=df.columns)
+print(open('myfile.txt', 'U').read())
+print(line.decode('utf-16-le').split())
+file = io.open('data.txt', 'r', encoding='utf-16-le')
+s1 = pd.merge(df1, df2, how='inner', on=['user_id'])"
+"pd.merge(df1, df2, on=['A', 'B', 'C', 'D'], how='inner')
+dict((v, k) for k, v in map.items())
+s.decode('unicode_escape')
+[int(i) for i in str_list]
+map(int, ['1', '2', '3'])
+list(map(int, ['1', '2', '3']))
+soup.find_all('a', href=re.compile('http://www\\.iwashere\\.com/'))
+soup.find_all('a', href=re.compile('^(?!(?:[a-zA-Z][a-zA-Z0-9+.-]*:|//))'))
+subprocess.call(['java', '-jar', 'Blender.jar'])"
+"no_integers = [x for x in mylist if not isinstance(x, int)]
+tree.xpath("".//a[text()='Example']"")[0].tag
+"""""", """""".join([(str(k) + ' ' + str(v)) for k, v in list(a.items())])
+print(set(re.sub('[\x00-\x7f]', '', '\xa3\u20ac\xa3\u20ac')))
+print(re.sub('[\x00-\x7f]', '', '\xa3100 is worth more than \u20ac100'))
+ast.literal_eval(""{'muffin' : 'lolz', 'foo' : 'kitty'}"")
+print(t.decode('unicode_escape'))
+print(str.encode('cp1252').decode('utf-8').encode('cp1252').decode('utf-8'))
+zip(list_a, list_b)"
+"driver.find_element_by_name('<check_box_name>').is_selected()
+driver.find_element_by_id('<check_box_id>').is_selected()
+[(a if a else 2) for a in [0, 1, 0, 3]]
+'M\\N{AMPERSAND}M\\N{APOSTROPHE}s'.encode().decode('unicode-escape')
+'M\\N{AMPERSAND}M\\N{APOSTROPHE}s'.decode('unicode-escape')
+chr(int('fd9b', 16)).encode('utf-8')
+print('0x%X' % value)
+cleaned = [x for x in your_list if x]
+slice(*[(int(i.strip()) if i else None) for i in string_slice.split(':')])"
+"zip(it, it, it)
+df['x'].str.lower()
+jsobj['a']['b']['e'].append({'f': var6, 'g': var7, 'h': var8})
+"""""""""""".join(lst)
+sum(v for v in list(d.values()) if v > 0)
+app.run(debug=True)
+df.drop(df.index[[1, 3]], inplace=True)
+df.apply(lambda x: x.fillna(x.mean()), axis=0)
+[o.my_attr for o in my_list]"
+"re.findall('TAA(?:[ATGC]{3})+?TAA', seq)
+sorted(s, key=float)
+hex(65)
+a.append(b).reset_index(drop=True)
+pd.concat([a, b], ignore_index=True)
+[(i, j) for i in range(1, 3) for j in range(1, 5)]
+sorted(iter(mydict.items()), key=itemgetter(1), reverse=True)
+pd.date_range('1/1/2014', periods=12, freq='BM')
+requests.get('https://kennethreitz.com', verify=False)"
+""""""""""""".join(list(OrderedDict.fromkeys('aaabcabccd').keys()))
+list(set('aaabcabccd'))
+"""""""""""".join(set('aaabcabccd'))
+df.loc[(df.loc[:, (df.dtypes != object)] != 0).any(1)]
+br.form.add_file(open(filename), 'text/plain', filename)
+all(word in d for word in ['somekey', 'someotherkey', 'somekeyggg'])
+subprocess.check_output(['espeak', text], stderr=subprocess.STDOUT)
+df.fillna(method='ffill', inplace=True)
+print(np.linspace(1, 3, num=4, endpoint=False))"
+"fn = os.path.join(os.path.dirname(__file__), 'my_file')
+e = next(iter(s))
+os.system('dir c:\\')
+self.treeview.connect('size-allocate', self.treeview_changed)
+3 in [1, 2, 3]
+datetime.datetime.strptime('10/05/2012', '%d/%m/%Y').strftime('%Y-%m-%d')
+s = s.replace('\\', '\\\\')
+print(proc.communicate()[0])
+pd.concat([pd.DataFrame(l) for l in my_list], axis=1).T"
+"plt.savefig('test.png', bbox_inches='tight')
+(listone + listtwo)
+for item in itertools.chain(listone, listtwo):
+    pass
+males = df[(df[Gender] == 'Male') & (df[Year] == 2014)]
+print('\\')
+df.replace('-', np.nan)
+df = df.drop('column_name', 1)
+df.drop(df.columns[[0, 1, 3]], axis=1)"
+"parser = argparse.ArgumentParser(allow_abbrev=False)
+feature3 = [d.get('Feature3') for d in df.dic]
+df.loc[gb.groups['foo'], ('A', 'B')]
+print('[%s, %s, %s]' % (1, 2, 3))
+print('[{0}, {1}, {2}]'.format(1, 2, 3))
+[v for k, v in list(my_dict.items()) if 'Date' in k]
+""""""{0.month}/{0.day}/{0.year}"""""".format(my_date)
+df.drop(('col1', 'a'), axis=1)
+df.drop('a', level=1, axis=1)"
+"map(int, re.findall('\\d+', s))
+os.listdir('/home/username/www/')
+os.listdir('path')
+pd.concat([distancesDF, datesDF.dates], axis=1)
+[x[0] for x in a]
+[i[0] for i in a]
+re.sub('(?<=[a-z])\\r?\\n', ' ', textblock)
+gzip.open('file.gz', 'rt', encoding='utf-8')
+set(['a', 'b']).issubset(['b', 'a', 'foo', 'bar'])"
+"line.translate(None, '!@#$')
+line = re.sub('[!@#$]', '', line)
+string.replace('1', '')
+a = a.replace(char, '')
+a = a.replace(char, '')
+line = line.translate(string.maketrans('', ''), '!@#$')
+pd.concat([df, pd.get_dummies(df, '', '').astype(int)], axis=1)[order]
+[3, 4, 1, 2]
+globals()['something'] = 'bob'"
+"yourdf.drop(['columnheading1', 'columnheading2'], axis=1, inplace=True)
+[s.strip() for s in input().split(',')]
+[int(d) for d in str(bin(x))[2:]]
+max(len(word) for word in i)
+len(max(i, key=len))
+os.system(my_cmd)
+mylist.sort(key=lambda x: x.lower())
+mylist.sort(key=str.lower)
+mylist.sort()"
+"zip(*list_of_tuples)
+pd.merge(y, x, on='k')[['a', 'b', 'y']]
+[item.strip() for item in my_string.split(',')]
+print((obj.__dict__))
+dir()
+dir()
+window.set_position(Gtk.WindowPosition.CENTER)
+plt.rc('font', **{'size': '30'})
+df.isnull().values.any()"
+"x.reset_index().merge(y, how='left', on='state', sort=False).sort('index')
+json.loads(request.POST.get('mydata', '{}'))
+list(zip(*((iter([1, 2, 3, 4, 5, 6, 7, 8, 9]),) * 3)))
+list(grouper(2, [1, 2, 3, 4, 5, 6, 7]))
+[input[i:i + n] for i in range(0, len(input), n)]
+keys.sort(key=lambda x: map(int, x.split('.')))
+keys.sort(key=lambda x: [int(y) for y in x.split('.')])
+img.transpose(2, 0, 1).reshape(3, -1)
+df['BrandName'].replace(['ABC', 'AB'], 'A')"
+"df.sub(df.mean(axis=1), axis=0)
+"""""""""""".join([i for i in s if i.isalpha()])
+l = (int(x) for x in s.split())
+""""""42 0"""""".split()
+map(int, '42 0'.split())
+[i for i, elem in enumerate(bool_list, 1) if elem]
+data.groupby(data['date'].map(lambda x: x.year))
+np.in1d(b, a).nonzero()[0]
+time.strftime('%l:%M%p %z on %b %d, %Y')"
+"l1.sort(key=lambda x: int(x[0]))
+sorted([[1, 'mike'], [1, 'bob']])
+""""""Abc"""""".translate(maketrans('abcABC', 'defDEF'))
+""""""<br/>"""""".join([('%s:: %s' % (key, value)) for key, value in list(d.items())])
+self.writer.writerow([str(s).encode('utf-8') for s in row])
+os.system('cls')
+os.system('clear')
+os.system('tcsh your_own_script')
+os.system(""zsh -c 'echo $0'"")"
+"platform.system()
+import platform
+platform.release()
+print(os.name)
+[x for x in my_list if not x.startswith('#')]
+""""""Day old bread, 50% sale {0}"""""".format('today')
+min(list, key=lambda x: float('inf') if math.isnan(x[1]) else x[1])
+a = [(sum(x) / len(x)) for x in zip(*a)]
+logging.info('Log message', extra={'app_name': 'myapp'})"
+"df.fillna(0)
+df.toPandas().to_csv('mycsv.csv')
+df.write.csv('mycsv.csv')
+sum(x[1] for x in structure)
+df.groupby('STNAME')['COUNTY_POP'].agg(lambda x: x.nlargest(3).sum())
+datetime.strptime('21/11/06 16:30', '%d/%m/%y %H:%M')
+os.path.dirname(os.path.abspath(__file__))
+re.sub('(.)', '\\1\\1', text.read(), 0, re.S)
+"""""""""""".join(('a', 'b', 'c', 'd', 'g', 'x', 'r', 'e'))"
+"apple.decode('iso-8859-1').encode('utf8')
+df.to_csv('filename.csv', header=False)
+print('{0}:<15}}{1}:<15}}{2}:<8}}'.format('1', '2', '3'))
+max(ld, key=lambda d: d['size'])
+""""""{0}\\w{{2}}b{1}\\w{{2}}quarter"""""".format('b', 'a')
+user = models.ForeignKey('User', unique=True)
+re.compile('^([^A]*)AA([^A]|AA)*$')
+b = np.concatenate((a, a), axis=0)
+sorted(l, key=lambda x: x.replace('0', 'Z'))"
+"e = root.xpath('.//a[starts-with(text(),""TEXT A"")]')
+e = root.xpath('.//a[text()=""TEXT A""]')
+c = [b[i] for i in index]
+np.dot(a[:, (None)], b[(None), :])
+np.outer(a, b)
+subprocess.call(['./abc.py', arg1, arg2])
+df[['value']].fillna(df.groupby('group').transform('mean'))
+re.sub('(.)(?=.)', '\\1-', s)
+re.sub('(?<=.)(?=.)', '-', str)"
+"print(collections.Counter(s).most_common(1)[0])
+float(re.findall('(?:^|_)' + par + '(\\d+\\.\\d*)', dir)[0])
+re.findall('[^a]', 'abcd')
+print([item for item in dir(adfix) if not item.startswith('__')])
+[x[0] for x in rows]
+res_list = [x[0] for x in rows]
+pd.concat([x] * 5, ignore_index=True)
+pd.concat([x] * 5)
+sorted_list_of_keyvalues = sorted(list(ips_data.items()), key=item[1]['data_two'])"
+"""""""\\xc3\\x85あ"""""".encode('utf-8').decode('unicode_escape')
+""""""\\xc3\\x85あ"""""".encode('utf-8')
+[j for i in zip(a, b) for j in i]
+[j for i in zip(a, b) for j in i]
+print([s.replace('8', '') for s in lst])
+"""""","""""".join('Hello')
+Content.objects.all().order_by('?')[:100]
+A[np.arange(A.shape[0])[:, (None)], B]
+df.pivot_table(index='saleid', columns='upc', aggfunc='size', fill_value=0)"
+"{key: val for key, val in list(myDict.items()) if val != 42}
+return len(s.encode('utf-8'))
+os.kill(process.pid, signal.SIGKILL)
+df[pd.isnull(df).any(axis=1)]
+url.split('&')[-1].replace('=', '') + '.html'
+parser.ParseFile(open('sample.xml', 'rb'))
+sys.exit()
+setattr(self, attr, group)
+urllib.parse.unquote(urllib.parse.unquote(some_string))"
+"pd.concat(g for _, g in df.groupby('ID') if len(g) > 1)
+x = numpy.delete(x, 2, axis=1)
+x = numpy.delete(x, 0, axis=0)
+pd.concat((df1, df2), axis=1).mean(axis=1)
+np.mean(np.array([old_set, new_set]), axis=0)
+scatter(x, y, s=500, color='green', marker='h')
+result = [item for word in words for item in word.split(',')]
+datetime.datetime.strptime('2012-05-29T19:30:03.283Z', '%Y-%m-%dT%H:%M:%S.%fZ')
+sum(item['one'] for item in list(tadas.values()))"
+"a.encode('ascii', 'ignore')
+files = [f for f in os.listdir('.') if re.match('[0-9]+.*\\.jpg', f)]
+np.zeros((6, 9, 20)) + np.array([1, 2, 3, 4, 5, 6, 7, 8, 9])[(None), :, (None)]
+np.zeros((6, 9, 20)) + np.array([1, 2, 3, 4, 5, 6, 7, 8, 9]).reshape((1, 9, 1))
+os.system('start excel.exe <path/to/file>')
+print(max(x, key=sum))
+sum(len(y) for y in x if len(y) > 1)
+re.sub('(\\d+)', '""\\1""', 'This is number 1 and this is number 22')
+numpy.dot(numpy.dot(a, m), a)"
+"sorted(list_of_dct, key=lambda x: order.index(list(x.values())[0]))
+return s[0].upper() + s[1:]
+"""""""""""".join([1, 2, 3, 4])
+line = line.decode('utf-8', 'ignore').encode('utf-8')
+os.system(command)
+c.execute('SELECT * FROM foo WHERE bar = %s AND baz = %s', (param1, param2))
+dateobj = datetime.datetime.strptime(datestr, '%Y-%m-%d').date()
+os.kill(os.getpid(), signal.SIGUSR1)
+bytes.fromhex('4a4b4c').decode('utf-8')"
+"pd.merge(split_df, csv_df, on=['key'], suffixes=('_left', '_right'))
+s.split(' ', 4)
+input('Enter your input:')
+app.run(debug=True)
+pickle.dump(mylist, open('save.txt', 'wb'))
+scipy.tensordot(P, T, axes=[1, 1]).swapaxes(0, 1)
+numpy.zeros((3, 3, 3))
+"""""" """""".join(content.split(' ')[:-1])
+x = np.asarray(x).reshape(1, -1)[(0), :]"
+"db.GqlQuery('SELECT * FROM Schedule WHERE station = $1', foo.key())
+df.b.str.contains('^f')
+print('\n'.join('\t'.join(str(col) for col in row) for row in tab))
+df.set_index(list('BC')).drop(tuples, errors='ignore').reset_index()
+""""""({:d} goals, ${:d})"""""".format(self.goals, self.penalties)
+""""""({} goals, ${})"""""".format(self.goals, self.penalties)
+""""""({0.goals} goals, ${0.penalties})"""""".format(self)
+[int(''.join(str(d) for d in x)) for x in L]
+[''.join(str(d) for d in x) for x in L]"
+"re.sub('[^\\sa-zA-Z0-9]', '', text).lower().strip()
+re.sub('(?!\\s)[\\W_]', '', text).lower().strip()
+plt.plot(x, y, label='H\u2082O')
+plt.plot(x, y, label='$H_2O$')
+[x for x in mylist if len(x) == 3]
+lst = [Object() for _ in range(100)]
+lst = [Object() for i in range(100)]
+self.driver.find_element_by_css_selector('.someclass a').get_attribute('href')
+df1.merge(df2, on='Date_Time')"
+"sorted(d.items())
+int('1')
+int()
+T2 = [map(int, x) for x in T1]
+subprocess.call(['./test.sh'])
+subprocess.call(['notepad'])
+[val for pair in zip(l1, l2) for val in pair]
+encoded = base64.b64encode('data to be encoded')
+encoded = 'data to be encoded'.encode('ascii')"
+"writer.writeheader()
+df.fillna(df.mean(axis=1), axis=1)
+time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(1347517370))
+super(Derived, cls).do(a)
+a[np.where((a[:, (0)] == 0) * (a[:, (1)] == 1))]
+re.split(' +', 'hello world sample text')
+len(max(words, key=len))
+result[0]['from_user']
+[line.split() for line in open('File.txt')]"
+"new_file = open('path/to/FILE_NAME.ext', 'w')
+df.groupby(['col1', 'col2'])['col3'].nunique().reset_index()
+any(key.startswith('EMP$$') for key in dict1)
+[value for key, value in list(dict1.items()) if key.startswith('EMP$$')]
+pd.DataFrame({'email': sf.index, 'list': sf.values})
+print('\t'.join(map(str, list)))
+print('\xd0\xbf\xd1\x80\xd0\xb8'.encode('raw_unicode_escape'))
+'Sopet\xc3\xb3n'.encode('latin-1').decode('utf-8')
+image = image.resize((x, y), Image.ANTIALIAS)"
+"subprocess.Popen(['background-process', 'arguments'])
+[mydict[x] for x in mykeys]
+dict([('Name', 'Joe'), ('Age', 22)])
+data.reshape(-1, j).mean(axis=1).reshape(data.shape[0], -1)
+print(s.encode('unicode-escape').replace('""', '\\""'))
+re.split('(\\W+)', s)
+df.plot(kind='barh', stacked=True)
+{i[1]: i[0] for i in list(myDictionary.items())}
+[i for i, j in enumerate(myList) if 'how' in j.lower() or 'what' in j.lower()]"
+"pd.concat([df[0].apply(pd.Series), df[1]], axis=1)
+re.findall('src=""js/([^""]*\\bjquery\\b[^""]*)""', data)
+sum(int(float(item)) for item in [_f for _f in ['', '3.4', '', '', '1.0'] if _f])
+subprocess.Popen(['c:\\Program Files\\VMware\\VMware Server\\vmware-cmd.bat'])
+q.put((-n, n))
+df['group'].plot(kind='bar', color=['r', 'g', 'b', 'r', 'g', 'b', 'r'])
+re.findall('([a-fA-F\\d]{32})', data)
+len(my_list)
+len(l)"
+"print(concatenate((a, b), axis=1))
+c = np.r_[(a[None, :], b[None, :])]
+np.array((a, b))
+print(socket.getaddrinfo('google.com', 80))
+df.xs('sat', level='day', drop_level=False)
+return HttpResponse('Unauthorized', status=401)
+Flask(__name__, template_folder='wherever')
+session.execute('INSERT INTO t1 (SELECT * FROM t2)')
+c2.sort(key=lambda row: row[2])"

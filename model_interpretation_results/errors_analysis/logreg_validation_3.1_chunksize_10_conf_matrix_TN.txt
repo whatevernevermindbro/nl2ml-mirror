@@ -1,0 +1,27 @@
+"    pass
+for (letter, number) in list(d.items()):
+    pass
+for (k, v) in list(d.items()):
+    pass
+list(d.items())
+list(d.items())
+for (k, v) in list(d.items()):
+    pass"
+"numpy.random.choice(numpy.arange(1, 7), p=[0.1, 0.05, 0.05, 0.2, 0.4, 0.2])
+df.loc[df['Value'].idxmax()]
+re.findall('^(.+?)((.+)\\3+)$', '42344343434')[0][:-1]
+np.fromstring('\x00\x00\x80?\x00\x00\x00@\x00\x00@@\x00\x00\x80@', dtype='<f4')
+np.fromstring('\x00\x00\x80?\x00\x00\x00@\x00\x00@@\x00\x00\x80@', dtype='>f4')
+cursor.execute('INSERT INTO table VALUES (?, ?, ?)', (var1, var2, var3))
+cursor.execute('INSERT INTO table VALUES (%s, %s, %s)', (var1, var2, var3))
+cursor.execute('INSERT INTO table VALUES (%s, %s, %s)', (var1, var2, var3))
+df['stats'].str[1:-1].str.split(',', expand=True).astype(float)"
+"np.maximum([2, 3, 4], [1, 5, 2])
+print(l[3:] + l[:3])
+for fn in os.listdir('.'):
+    if os.path.isfile(fn):
+        pass
+for (root, dirs, filenames) in os.walk(source):
+    for f in filenames:
+        pass
+[int(1000 * random.random()) for i in range(10000)]"

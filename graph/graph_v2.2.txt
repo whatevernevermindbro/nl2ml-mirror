@@ -1,0 +1,48 @@
+{
+    
+	"imports": ["import", "from"],
+
+    
+	"data_load": [".load", "_load", "_dump", "load_", ".csv", "glob", "pickle.", "read_", "download", ".txt", ".json", ".png", ".jpg", ".jpeg",],
+
+    
+	"preprocessing": ["train_test_split(", "Normalizer(", "StandardScaler(", "normalize(", "scale(", "DictVectorizer(", 
+			"CountVectorizer(", "HashingVectorizer(", "TfidfVectorizer(", "Stemmer(",
+
+			"Lemmatizer(", "convert", ".resize", "encode(", ".fill(", ".fillna(",
+			".concat(", ".concat (",  ".concatenate(", ".concatenate (", "merge",
+			"train_test_split (", "Normalizer (",
+
+			"StandardScaler (", "normalize (", "scale (","DictVectorizer (", "CountVectorizer (",
+			"HashingVectorizer (", "TfidfVectorizer (", "Stemmer (", "Lemmatizer (", "encode (",
+
+			".fill (", ".fillna (", "preprocess", "generation", "augmentation", "stemming", "lemmatization",
+			"scale", ".normalize", ".crop", "crop(", "crop (", "resize(", "resize (",
+
+			"invert_xaxis", "print_results", "attention", ".drop(", ".drop (", "preprocessing", "test_size", 
+			"test_split", "font_scale", "scale", "color_contonuous_scale", "colorscale", "encode", 
+
+			"preprocessor", "set_vscale", "rescale", "reversescale", "inverse_transform", "porterstemmer","crop",
+			"stem", "simple_preprocess", "ploynomialfeatures", "autoscale", "lemmatize", "lemmatizer",
+			"pd_merge_all",
+ "stemmer", "labelencoder", "minmaxscaler", "converted", "preprocess_image", "vectorizer",
+			"tokenizer", "tfidf", "stemmer", "scaled_train", "input_ids", "combined_merged", "pucountry_convert",
+			"stemming"],
+
+    
+	"visualization": ["plotting", "plot.", "plt.", "graph", "histogram", "hist", "sns.", "plotline", "chart", "diagram", "heatmap", "figure", "plot_tree(", "plot_tree (", "boxplot"],
+
+    
+	"model": ["LinearRegression(", "RandomForest(", "Ridge(", "RidgeCV(", "RidgeClassifier(", "RidgeClassifierCV(", "Lasso(", "SGD(", "LogisticRegression(", "LogisticRegressionCV(", "SVC(", "SVR(",
+		"Layer(", "XGboost(", "LGBM(", "CatBoost(", "Perceptron(", "KNeighborsRegressor(", "KNeighborsClassifier(", "SGDRegressor(", "ElasticNet(", "ElasticNetCV(", "KMeans(",
+		"AgglomerativeClustering(", "SpectralClustering(", "CategoricalNB(", "ComplementNB(", "DecisionTreeClassifier(", "DecisionTreeRegressor(", "LinearRegression (", "RandomForest (",
+		"Ridge (", "RidgeCV (", "RidgeClassifier (", "RidgeClassifierCV (", "Lasso (", "SGD (", "LogisticRegression (", "LogisticRegressionCV (", "SVC (", "SVR (", "Layer (", "XGboost (",
+		"LGBM (", "CatBoost (", "Perceptron (", "KNeighborsRegressor (", "KNeighborsClassifier (", "SGDRegressor (", "ElasticNet (", "ElasticNetCV (", "KMeans (", "AgglomerativeClustering (",
+		"SpectralClustering (", "CategoricalNB (", "ComplementNB (", "DecisionTreeClassifier (", "DecisionTreeRegressor ("],
+
+    "train": [".fit_transform", ".fit", "epoch", "loss", "optimizer"],
+
+    
+	"predict": [".predict", "_error", ".mean_", "_score", "_distance"]
+
+}

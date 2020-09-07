@@ -1,0 +1,6 @@
+[core]
+    remote = nl2ml
+    
+['remote "nl2ml"']
+    url = azure://nl2ml
+    connection_string = DefaultEndpointsProtocol=https;AccountName=nl2ml;AccountKey=NnmBI51F7lOzLvWJhb2FHot/uEbIxZ+00lSp/wjZlM3iqoWJbIdvsJCfdN7BNk91ht5KKNKTLw/zCYM0B9vQkQ==;EndpointSuffix=core.windows.net

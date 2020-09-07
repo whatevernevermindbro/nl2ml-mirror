@@ -1,0 +1,99 @@
+"    pass
+for (letter, number) in list(d.items()):
+    pass
+for (k, v) in list(d.items()):
+    pass
+list(d.items())
+list(d.items())
+for (k, v) in list(d.items()):
+    pass"
+"    pass
+for (letter, number) in list(d.items()):
+    pass
+session.query(Task).filter(Task.time_spent > timedelta(hours=3)).all()
+os.system('msbuild project.sln /p:Configuration=Debug')
+max(list(MyCount.keys()), key=int)
+os.system('source .bashrc; shopt -s expand_aliases; nuke -x scriptPath')
+my_function.__name__
+my_function.__name__"
+"print(func.__name__)
+"""""""""""".join('{}{}'.format(key, val) for key, val in sorted(adict.items()))
+"""""""""""".join('{}{}'.format(key, val) for key, val in list(adict.items()))
+new_list = old_list[:]
+new_list = list(old_list)
+new_list = copy.copy(old_list)
+new_list = copy.deepcopy(old_list)
+[i for i in old_list]
+plt.legend(frameon=False)"
+"root.geometry('500x500')
+re.findall('\\b(?:b+a)+b+\\b', mystring)
+str_list = [tuple('{0:.8e}'.format(flt) for flt in sublist) for sublist in lst]
+str_list = [['{0:.8e}'.format(flt) for flt in sublist] for sublist in lst]
+t = tuple(x[0] for x in s)
+datetime.datetime.now().strftime('%a')
+ord('a')
+ord('\u3042')
+ord()"
+"random.choice(foo)
+set(['a', 'b']).issubset(['a', 'b', 'c'])
+set(['a', 'b']).issubset(set(l))
+p = Popen(['grep', 'f'], stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+grep_stdout = p.communicate(input='one\ntwo\nthree\nfour\nfive\nsix\n')[0]
+p = subprocess.Popen(['grep', 'f'], stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+p.stdin.write('one\ntwo\nthree\nfour\nfive\nsix\n')
+p.communicate()[0]
+p.stdin.close()"
+"round(2.0005, 3)
+round(3.0005, 3)
+round(4.0005, 3)
+round(8.005, 2)
+round(7.005, 2)
+round(6.005, 2)
+round(1.005, 2)
+df['Cat1'].fillna(df['Cat2'])
+logging.info('date=%s', date)"
+"some_string[::(-1)]
+'H-e-l-l-o- -W-o-r-l-d'[::2]
+s = s[beginning:(beginning + LENGTH)]
+sys.exit()
+quit()
+sys.exit('some error message')
+data['City'].encode('ascii', 'ignore')
+psutil.cpu_percent()
+psutil.virtual_memory()"
+"subprocess.call(['shutdown', '/r', '/t', '900'])
+subprocess.call(['shutdown', '/s'])
+subprocess.call(['shutdown', '/a '])
+subprocess.call(['shutdown', '/l '])
+subprocess.call(['shutdown', '/r'])
+open('filename', 'w').close()
+open('file.txt', 'w').close()
+df.to_dict('index')
+df.to_dict('records')"
+"raise AssertionError(""Unexpected value of 'distance'!"", distance)
+driver.find_element_by_id('foo').clear()
+driver.find_element_by_id('foo').clear()
+socket.inet_ntoa(struct.pack('!L', 2130706433))
+df = df[['x', 'y', 'a', 'b']]
+super(ChildClass, self).__init__(*args, **kwargs)
+sum(d.values())
+sum(d.values())
+json.dumps(your_data, ensure_ascii=False)"
+"np.maximum([2, 3, 4], [1, 5, 2])
+print(l[3:] + l[:3])
+for fn in os.listdir('.'):
+    if os.path.isfile(fn):
+        pass
+for (root, dirs, filenames) in os.walk(source):
+    for f in filenames:
+        pass
+[int(1000 * random.random()) for i in range(10000)]"
+"""""""\\xF3\\xBE\\x80\\x80"""""".replace('\\x', '').decode('hex')
+df[df.columns[-1]]
+df.loc[df['Letters'] == 'C', 'Letters'].values[0]
+np.column_stack(([1, 2, 3], [4, 5, 6]))
+type(i)
+type(v)
+type(v)
+type(v)
+type(v)"

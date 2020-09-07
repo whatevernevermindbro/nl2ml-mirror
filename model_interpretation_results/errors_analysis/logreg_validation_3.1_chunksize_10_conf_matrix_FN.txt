@@ -1,0 +1,27 @@
+"    for point in coords:
+        c_model = cid2name[int(point['id'])] + '.json'
+        with open(PATH+'car_models_json/'+c_model) as json_file:
+            data = json.load(json_file)
+        vertices = np.array(data['vertices'])
+        vertices[:, 1] = -vertices[:, 1]
+        triangles = np.array(data['faces']) - 1
+        x, y, z = point['x'], point['y'], point['z']
+        yaw, pitch, roll = -point['pitch'], -point['yaw'], -point['roll']"
+"        masks[5][overlay!=0] = psin
+        # pitch cos
+        pcos = cos(point['pitch'])
+        masks[6][overlay!=0] = pcos
+        # roll
+        masks[7][overlay!=0] = rotate(point['roll'],np.pi)
+        
+        #plt.imshow(overlay)
+        #plt.show()"
+"                  [-sin(pitch), 0, cos(pitch)]])
+    R = np.array([[1, 0, 0],
+                  [0, cos(roll), -sin(roll)],
+                  [0, sin(roll), cos(roll)]])
+    rotation_m = np.dot(Y, np.dot(P, R))
+    
+    
+    # Rotation Matrix -> Rotation Vector
+    rotation_v = Rodrigues(rotation_m)[0]"

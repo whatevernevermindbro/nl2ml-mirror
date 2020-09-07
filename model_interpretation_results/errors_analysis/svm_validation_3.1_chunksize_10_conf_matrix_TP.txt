@@ -1,0 +1,2214 @@
+"    dataset['Embarked'] = dataset['Embarked'].fillna('S')
+for dataset in data_cleaner:
+        dataset['Age'].fillna(dataset['Age'].median(), inplace = True)
+label = LabelEncoder()
+for dataset in data_cleaner:    
+    dataset['Sex_Code'] = label.fit_transform(dataset['Sex'])
+    dataset['Embarked_Code'] = label.fit_transform(dataset['Embarked'])
+    dataset['Title_Code'] = label.fit_transform(dataset['Title'])
+    dataset['AgeBin_Code'] = label.fit_transform(dataset['AgeBin'])"
+"for dataset in combine:
+    dataset['Title'] = dataset['Title'].replace(['Lady', 'Countess','Capt', 'Col',\
+         'Don', 'Dr', 'Major', 'Rev', 'Sir', 'Jonkheer', 'Dona'], 'Rare')
+
+    dataset['Title'] = dataset['Title'].replace('Mlle', 'Miss')
+    dataset['Title'] = dataset['Title'].replace('Ms', 'Miss')
+    dataset['Title'] = dataset['Title'].replace('Mme', 'Mrs')
+title_mapping = {""Mr"": 1, ""Miss"": 2, ""Mrs"": 3, ""Master"": 4, ""Rare"": 5}
+for dataset in combine:"
+"    dataset['Title'] = dataset['Title'].fillna(0)
+scaled_features = StandardScaler().fit_transform(df_train[['GrLivArea', 'GarageArea', \
+                                                           '1stFlrSF', 'TotalBsmtSF']])
+df_standard = pd.DataFrame(scaled_features, index=df_train.index, columns=['GrLivArea', \
+                                                                           'GarageArea', '1stFlrSF', 'TotalBsmtSF'])
+dataset['MSSubClass'] = dataset['MSSubClass'].astype(str)
+dataset[""Alley""].fillna(""None"", inplace=True)
+dataset[""BsmtFinSF1""].fillna(0, inplace=True)    
+for entry in continuous_vars:"
+"        dataset[entry] = np.log1p(dataset[entry])
+df_dummies =  pd.get_dummies(dataset)
+from sklearn.preprocessing import Imputer
+imputer = Imputer(missing_values = ""NaN"", strategy = ""mean"", axis = 0)
+imputer = imputer.fit(X[:,1:3])
+X[:, 1:3] = imputer.transform(X[:, 1:3])
+labelencoder_X = LabelEncoder()
+X[:,0] = labelencoder_X.fit_transform(X[:,0])
+onehotencoder = OneHotEncoder(categorical_features =[0])"
+"sc_X = StandardScaler()
+X_train = sc_X.fit_transform(X_train)
+X_test = sc_X.transform(X_test)
+scaler = MinMaxScaler(feature_range=(0, 1)) 
+rescaledX = scaler.fit_transform(X) 
+scaler = StandardScaler().fit(X) 
+rescaledX = scaler.transform(X) 
+from sklearn.preprocessing import StandardScaler
+std = StandardScaler()"
+"X_test = std.transform(X_test)
+imputer = SimpleImputer(missing_values=np.nan, strategy='mean') imputer = imputer.fit(X[:, :])
+X[:, :] = imputer.transform(X[:, :])
+labelencoder_X = LabelEncoder()
+X[:, 0] = labelencoder_X.fit_transform(X[:, 0])
+onehotencoder = OneHotEncoder(categorical_features=[0])
+X = onehotencoder.fit_transform(X).toarray()
+labelencoder_Y = LabelEncoder()
+Y = labelencoder_Y.fit_transform(Y)"
+"X_train = sc_X.fit_transform(X_train)
+X_test = sc_X.transform(X_test)
+X_scaled = preprocessing.scale(X_train)
+min_max_scaler = preprocessing.MinMaxScaler()
+X_train_minmax = min_max_scaler.fit_transform(X_train)
+norm_data = preprocessing.normalize(X_train, norm='l2')
+column_transformer = ColumnTransformer([
+    ('ohe', OneHotEncoder(handle_unknown=""ignore""), categorical),
+    ('scaling', StandardScaler(), numeric)"
+"X = column_transformer.fit_transform(X)
+numerical_col = application.select_dtypes(include=['number']).columns
+non_numerical_col = application.select_dtypes(exclude=['number']).columns
+application[numerical_col] = application[numerical_col].fillna(application[numerical_col].mean())
+application[non_numerical_col] = application[non_numerical_col].fillna('')
+column_transformer = ColumnTransformer([
+    ('ohe', OneHotEncoder(handle_unknown=""ignore""), non_numerical_col)
+], remainder='passthrough')
+"
+"X_test_transformed = column_transformer.transform(X_test)
+categorical = []
+def label_encode(col, X_train, X_test):
+    cat = pd.DataFrame(X_train[col].unique())
+    n, new_col = len(cat), col + '_label'
+    cat[new_col] = list(range(n))
+    categorical.append(new_col)
+    X_train = X_train.join(cat.set_index(0), how='left', on=col)
+    X_test = X_test.join(cat.set_index(0), how='left', on=col)"
+"    X_train[new_col] = X_train[new_col].astype('int64') 
+    X_test[new_col] = X_test[new_col].astype('int64')
+    return X_train, X_test
+for col in non_numerical_col:
+    X_train_encoded, X_test_encoded = label_encode(col, X_train_encoded, X_test_encoded)
+sex = pd.Series( np.where( full.Sex == 'male' , 1 , 0 ) , name = 'Sex' )
+embarked = pd.get_dummies( full.Embarked , prefix='Embarked' )
+full[ 'Age' ] = full.Age.fillna( full.Age.mean() )
+full[ 'Fare' ] = full.Fare.fillna( full.Fare.mean() )"
+"
+cabin[ 'Cabin' ] = full.Cabin.fillna( 'U' )
+
+cabin[ 'Cabin' ] = cabin[ 'Cabin' ].map( lambda c : c[0] )
+
+cabin = pd.get_dummies( cabin['Cabin'] , prefix = 'Cabin' )
+def cleanTicket( ticket ):
+    ticket = ticket.replace( '.' , '' )
+    ticket = ticket.replace( '/' , '' )"
+"    ticket = map( lambda t : t.strip() , ticket )
+    ticket = list(filter( lambda t : not t.isdigit() , ticket ))
+    if len( ticket ) > 0:
+        return ticket[0]
+    else: 
+        return 'XXX'
+
+ticket = pd.DataFrame()
+"
+"ticket = pd.get_dummies( ticket[ 'Ticket' ] , prefix = 'Ticket' )
+features = [""Pclass"", ""Sex"", ""SibSp"", ""Parch""]
+X = pd.get_dummies(train_data[features])
+X_test = pd.get_dummies(test_data[features])
+train_data = train_df.copy()
+train_data[""Age""].fillna(train_df[""Age""].median(skipna=True), inplace=True)
+train_data[""Embarked""].fillna(train_df['Embarked'].value_counts().idxmax(), inplace=True)
+train_data.drop('Cabin', axis=1, inplace=True)
+"
+"cat_feat = X.select_dtypes('object').columns.values
+X_num = X[num_feat]
+X_cat = X[cat_feat]
+
+X_num = (X_num - X_num.mean()) / X_num.std()
+X_num = X_num.fillna(X_num.mean())
+X_cat = pd.get_dummies(X_cat)
+
+X = pd.concat([X_num, X_cat], axis=1)"
+"for c in X.columns:
+    if(X[c].dtype=='object'):
+        train[c]=label.fit_transform(X[c])
+    else:
+        train[c]=X[c]
+df_train['bin_3'] = df_train['bin_3'].map(bin_dict)
+df_train['bin_4'] = df_train['bin_4'].map(bin_dict)
+df_test['bin_3'] = df_test['bin_3'].map(bin_dict)
+df_test['bin_4'] = df_test['bin_4'].map(bin_dict)"
+"dummies = pd.get_dummies(traintest, columns=traintest.columns, drop_first=True, sparse=True)
+train_ohe = dummies.iloc[:train.shape[0], :]
+test_ohe = dummies.iloc[train.shape[0]:, :]
+for col in ['original_language', 'collection_name', 'all_genres']:
+    le = LabelEncoder()
+    le.fit(list(train[col].fillna('')) + list(test[col].fillna('')))
+    train[col] = le.transform(train[col].fillna('').astype(str))
+    test[col] = le.transform(test[col].fillna('').astype(str))
+continuous_features = list(filter(lambda x: x not in categorical_features, X))"
+"train[""SalePrice""] = np.log1p(train[""SalePrice""])
+all_data[""PoolQC""] = all_data[""PoolQC""].fillna(""None"")
+all_data[""MiscFeature""] = all_data[""MiscFeature""].fillna(""None"")
+all_data[""Alley""] = all_data[""Alley""].fillna(""None"")
+all_data[""Fence""] = all_data[""Fence""].fillna(""None"")
+all_data[""FireplaceQu""] = all_data[""FireplaceQu""].fillna(""None"")
+all_data['KitchenQual'] = all_data['KitchenQual'].fillna(all_data['KitchenQual'].mode()[0])
+all_data['Electrical'] = all_data['Electrical'].fillna(all_data['Electrical'].mode()[0])
+all_data['Exterior1st'] = all_data['Exterior1st'].fillna(all_data['Exterior1st'].mode()[0])"
+"all_data['SaleType'] = all_data['SaleType'].fillna(all_data['SaleType'].mode()[0])
+for c in cols:
+    lbl = LabelEncoder() 
+    lbl.fit(list(all_data[c].values)) 
+    all_data[c] = lbl.transform(list(all_data[c].values))
+numeric_feats = all_data.dtypes[all_data.dtypes != ""object""].index
+skewed_feats = all_data[numeric_feats].apply(lambda x: skew(x.dropna())).sort_values(ascending=False)
+skewness = pd.DataFrame({'Skew' :skewed_feats})
+skewness = skewness[abs(skewness) > 0.75]"
+"skewed_features = skewness.index
+lam = 0.15
+for feat in skewed_features:
+    all_data[feat] = boxcox1p(all_data[feat], lam)
+X_train = X_train / 255.0
+test = test / 255.0
+for dataset in data_cleaner:    
+    dataset['Age'].fillna(dataset['Age'].median(), inplace = True)
+    dataset['Embarked'].fillna(dataset['Embarked'].mode()[0], inplace = True)"
+"label = LabelEncoder()
+for dataset in data_cleaner:    
+    dataset['Sex_Code'] = label.fit_transform(dataset['Sex'])
+    dataset['Embarked_Code'] = label.fit_transform(dataset['Embarked'])
+    dataset['Title_Code'] = label.fit_transform(dataset['Title'])
+    dataset['AgeBin_Code'] = label.fit_transform(dataset['AgeBin'])
+    dataset['FareBin_Code'] = label.fit_transform(dataset['FareBin'])
+data1_dummy = pd.get_dummies(data1[data1_x])
+data1_x_dummy = data1_dummy.columns.tolist()"
+"app_test = pd.get_dummies(app_test)
+le = LabelEncoder()
+
+for col in app_train:
+    if app_train[col].dtype == 'object':
+        if len(list(app_train[col].unique())) <= 2:
+            le.fit(app_train[col])
+            app_train[col] = le.transform(app_train[col])
+            app_test[col] = le.transform(app_test[col])"
+"Ticket = []
+for i in list(dataset.Ticket):
+    if not i.isdigit() :
+        Ticket.append(i.replace(""."","""").replace(""/"","""").strip().split(' ')[0])
+    else:
+        Ticket.append(""X"")
+        
+dataset[""Ticket""] = Ticket
+train[""SalePrice""] = np.log1p(train[""SalePrice""])"
+"numeric_feats = all_data.dtypes[all_data.dtypes != ""object""].index
+
+skewed_feats = train[numeric_feats].apply(lambda x: skew(x.dropna())) #compute skewness
+skewed_feats = skewed_feats[skewed_feats > 0.75]
+skewed_feats = skewed_feats.index
+
+all_data[skewed_feats] = np.log1p(all_data[skewed_feats])
+average_age_titanic   = titanic_df[""Age""].mean()
+std_age_titanic       = titanic_df[""Age""].std()"
+"
+average_age_test   = test_df[""Age""].mean()
+std_age_test       = test_df[""Age""].std()
+count_nan_age_test = test_df[""Age""].isnull().sum()
+
+rand_1 = np.random.randint(average_age_titanic - std_age_titanic, average_age_titanic + std_age_titanic, size = count_nan_age_titanic)
+rand_2 = np.random.randint(average_age_test - std_age_test, average_age_test + std_age_test, size = count_nan_age_test)
+
+titanic_df[""Age""][np.isnan(titanic_df[""Age""])] = rand_1"
+"titanic_df.drop(""Cabin"",axis=1,inplace=True)
+test_df.drop(""Cabin"",axis=1,inplace=True)
+def simplify_ages(df):
+    df.Age = df.Age.fillna(-0.5)
+    bins = (-1, 0, 5, 12, 18, 25, 35, 60, 120)
+    group_names = ['Unknown', 'Baby', 'Child', 'Teenager', 'Student', 'Young Adult', 'Adult', 'Senior']
+    categories = pd.cut(df.Age, bins, labels=group_names)
+    df.Age = categories
+    return df"
+"    df.Cabin = df.Cabin.fillna('N')
+    df.Cabin = df.Cabin.apply(lambda x: x[0])
+    return df
+def format_name(df):
+    df['Lname'] = df.Name.apply(lambda x: x.split(' ')[0])
+    df['NamePrefix'] = df.Name.apply(lambda x: x.split(' ')[1])
+    return df    
+def treat_null_cols(df):
+    nulls=  df.select_dtypes(include=""number"").columns.values"
+"    if nulls is not None:
+        null_columns = nulls.index.values.tolist()
+        for col in null_columns:
+            if df[col].dtype == 'object':
+                df.loc[:,col]=df.loc[:,col].fillna(method='ffill')
+                df.loc[:,col]=df.loc[:,col].fillna(method='bfill')
+            # Numerical columns    
+            elif col in (""Credit_History"",""Loan_Amount_Term""):
+                df[col].fillna(df[col].mode()[0],inplace=True)"
+"                df[col].fillna(df[col].median(),inplace=True)
+    else:
+        print('No null values !')
+# Property_Area
+col_name=""Property_Area""
+d = {'Urban':2,'Semiurban':1,'Rural':0}
+train_df[col_name].replace(d,inplace=True)
+test_df[col_name].replace(d,inplace=True)
+"
+"col_name=""Self_Employed""
+d = {'Yes':1,'No':0}
+train_df[col_name].replace(d,inplace=True)
+test_df[col_name].replace(d,inplace=True)
+
+# Education
+col_name=""Education""
+d ={'Graduate':1, 'Not Graduate':0}
+train_df[col_name].replace(d,inplace=True)"
+"for col in numeric_col:
+    m=np.mean(all_data[col])
+    ma=np.max(all_data[col])
+    mi=np.min(all_data[col])
+    all_data[col]=(all_data[col]-m)/(ma-mi)
+def clean_StadiumType(txt):    
+    if pd.isna(txt):
+        return np.nan
+    txt = txt.lower()"
+"    txt = re.sub(' +', ' ', txt)
+    txt = txt.strip()
+    txt = txt.replace('outside', 'outdoor')
+    txt = txt.replace('outdor', 'outdoor')
+    txt = txt.replace('outddors', 'outdoor')
+    txt = txt.replace('outdoors', 'outdoor')
+    txt = txt.replace('oudoor', 'outdoor')
+    txt = txt.replace('indoors', 'indoor')
+    txt = txt.replace('ourdoor', 'outdoor')"
+"    return txt
+train['StadiumType'] = train['StadiumType'].apply(clean_StadiumType)
+store['CompetitionDistance'] = store['CompetitionDistance'].fillna(store['CompetitionDistance'].max())
+store['CompetitionOpenSinceMonth'] = store['CompetitionOpenSinceMonth'].fillna(store['CompetitionOpenSinceMonth'].mode().iloc[0])
+store['CompetitionOpenSinceYear'] = store['CompetitionOpenSinceYear'].fillna(store['CompetitionOpenSinceYear'].mode().iloc[0])
+df['Day'] = df['Date'].dt.day
+df['Month'] = df['Date'].dt.month
+df['Year'] = df['Date'].dt.year
+cat_cols = df.select_dtypes(include=['object']).columns"
+"missing_val = nan_percentage[nan_percentage > 0]
+to_drop = missing_val[missing_val > 0.4].index.values
+combined = combined.drop(to_drop, axis=1)
+cat_candidates = combined.dtypes[combined.dtypes==""object""].index.values
+num_candidates = combined.dtypes[combined.dtypes!=""object""].index.values
+def impute_na_trees(df, col):
+    if df[col].dtype == ""object"":
+        df[col] = df[col].fillna(""Unknown"")
+    else:"
+"    return df
+for col in combined.columns:
+    combined = impute_na_trees(combined, col)
+from sklearn.preprocessing import LabelEncoder
+labelencoder = LabelEncoder()
+train[categorical_cols] = train[categorical_cols].apply(lambda col: labelencoder.fit_transform(col.astype(str)))
+train.isnull().sum().sort_values(ascending = False))
+from sklearn.feature_selection import SelectKBest, chi2
+"
+"fitted = selector.fit(X, y)
+features_scores = pd.DataFrame(fitted.scores_)
+features_columns = pd.DataFrame(X.columns)
+
+best_features = pd.concat([features_columns, features_scores], axis=1)
+best_features.columns = ['Feature', 'Score']
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test = sc.fit_transform(X_test)"
+"all_data[""MiscFeature""] = all_data[""MiscFeature""].fillna(""None"")
+all_data[""Alley""] = all_data[""Alley""].fillna(""None"")
+all_data[""Fence""] = all_data[""Fence""].fillna(""None"")
+all_data[""FireplaceQu""] = all_data[""FireplaceQu""].fillna(""None"")
+all_data[""LotFrontage""] = all_data.groupby(""Neighborhood"")[""LotFrontage""].transform(
+    lambda x: x.fillna(x.median()))
+NAcatTest=all_data.select_dtypes(include='object')
+NAnumTest=all_data.select_dtypes(exclude='object')
+enc = OneHotEncoder(categorical_variables, handle_unknown='ignore')"
+"numeric_feats = all_data.dtypes[all_data.dtypes != ""object""].index
+skewed_feats = all_data[numeric_feats].apply(lambda x: skew(x.dropna())).sort_values(ascending=False)
+skewness = pd.DataFrame({'Skew' :skewed_feats})
+skewness = skewness[abs(skewness) > 0.75]
+from scipy.special import boxcox1p
+skewed_features = skewness.index
+lam = 0.15
+for feat in skewed_features:
+    all_data[feat] = boxcox1p(all_data[feat], lam)"
+"test = test / 255.0
+for dataset in data_cleaner:    
+    dataset['Age'].fillna(dataset['Age'].median(), inplace = True)
+    dataset['Embarked'].fillna(dataset['Embarked'].mode()[0], inplace = True)
+    dataset['Fare'].fillna(dataset['Fare'].median(), inplace = True)
+label = LabelEncoder()
+for dataset in data_cleaner:    
+    dataset['Sex_Code'] = label.fit_transform(dataset['Sex'])
+    dataset['Embarked_Code'] = label.fit_transform(dataset['Embarked'])"
+"    dataset['AgeBin_Code'] = label.fit_transform(dataset['AgeBin'])
+    dataset['FareBin_Code'] = label.fit_transform(dataset['FareBin'])
+sc_X = StandardScaler()
+X_train = sc_X.fit_transform(X_train)
+X_test = sc_X.transform(X_test)
+X_scaled = preprocessing.scale(X_train)
+data1_dummy = pd.get_dummies(data1[data1_x])
+data1_x_dummy = data1_dummy.columns.tolist()
+app_train = pd.get_dummies(app_train)"
+"def rle_decode(mask_rle, shape=(768, 768)):
+    s = mask_rle.split()
+    starts, lengths = [np.asarray(x, dtype=int) for x in (s[0:][::2], s[1:][::2])]
+    starts -= 1
+    ends = starts + lengths
+    img = np.zeros(shape[0]*shape[1], dtype=np.uint8)
+    for lo, hi in zip(starts, ends):
+        img[lo:hi] = 1
+    return img.reshape(shape).T  # Needed to align to RLE direction"
+"    pixels = img.T.flatten()
+    pixels = np.concatenate([[0], pixels, [0]])
+    runs = np.where(pixels[1:] != pixels[:-1])[0] + 1
+    runs[1::2] -= runs[::2]
+    return ' '.join(str(x) for x in runs)
+def remove_constant_pixels(pixels_df):
+    #Remove the pixels that are always black to compute faster
+    changing_pixels_df = pixels_df.loc[:]
+    dropped_pixels_b = []"
+"    #Pixels with max value =0 are pixels that never change
+    for col in pixels_df:
+        if changing_pixels_df[col].max() == 0:
+            changing_pixels_df.drop(columns=[col], inplace=True)
+            dropped_pixels_b.append(col)
+    print(""Constantly black pixels that have been dropped: {}"".format(dropped_pixels_b))
+
+
+    #Same with pixels with min=255 (white pixels)"
+"    for col in changing_pixels_df:
+        if changing_pixels_df[col].min() == 255:
+            changing_pixels_df.drop(columns=[col], inplace=True)
+            dropped_pixel_w.append(col)
+    print(""\n Constantly white pixels that have been dropped: {}"".format(dropped_pixels_b))
+
+    print(changing_pixels_df.head())
+    print(""Remaining pixels: {}"".format(len(changing_pixels_df.columns)))
+    print(""Pixels removed: {}"".format(784-len(changing_pixels_df.columns)))"
+"    return changing_pixels_df, dropped_pixels_b + dropped_pixels_w
+def deskew(img):
+    m = cv2.moments(img)
+    if abs(m['mu02']) < 1e-2:
+        return img.copy()
+    skew = m['mu11']/m['mu02']
+    M = np.float32([[1, skew, -0.5*SZ*skew], [0, 1, 0]])
+    img = cv2.warpAffine(img,M,(SZ, SZ),flags=affine_flags)
+    return img"
+"    img = cv2.imread(os.path.join(train_images_dir, image_file))
+    img = cv2.resize(img, NEW_SIZE[::-1], interpolation=INTERPOLATION)
+    dst = os.path.join('/kaggle/train_images', image_file)
+    cv2.imwrite(dst, img)
+def show_samples(samples):
+    for sample in samples:
+        fig, ax = plt.subplots(figsize=(15, 10))
+        img_path = os.path.join(DATASET_DIR, 'train_images', sample[0])
+        img = cv2.imread(img_path, 1)"
+"
+        # Get annotations
+        labels = df[df['Image_Label'].str.contains(sample[0])]['EncodedPixels']
+
+        patches = []
+        for idx, rle in enumerate(labels.values):
+            if rle is not np.nan:
+                mask = rle2mask(rle)
+                contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)"
+"                    poly_patch = Polygon(contour.reshape(-1, 2), closed=True, linewidth=2, edgecolor=COLORS[idx], facecolor=COLORS[idx], fill=True)
+                    patches.append(poly_patch)
+        p = PatchCollection(patches, match_original=True, cmap=matplotlib.cm.jet, alpha=0.3)
+
+        ax.imshow(img/255)
+        ax.set_title('{} - ({})'.format(sample[0], ', '.join(sample[1].astype(np.str))))
+        ax.add_collection(p)
+        ax.set_xticklabels([])
+        ax.set_yticklabels([])"
+"def displayImage(filepath=None, directory=None, image_id=None):  
+    if filepath == None:
+        if (directory == None) and (image_id==None):
+            print(""path to file not specified"")
+            return None
+        else:
+            filepath=directory/toPath(image_id)
+    
+    plt.figure(figsize=(15,15))"
+"    plt.imshow(this_img)
+    return plt
+
+displayImage(directory=TRAIN, image_id=test_img_id)11111
+def displayRandomImages(directory, paths=None , rows=3, columns=3):
+   fig = plt.figure(figsize=(20, 20))
+    
+    # if path is not specified, display all files in directory
+    if paths == None:"
+"        
+    for i in range(1, rows*columns + 1):
+        randomNumber = random.randint(0, len(paths)-1)
+        image = Image.open(directory/paths[randomNumber])
+        fig.add_subplot(rows, columns, i)
+        plt.imshow(image, aspect='equal')
+    plt.show()
+def drawBoxAndText(ax, label):
+    codepoint, x, y, w, h = label"
+"    rect = Rectangle((x, y), w, h, linewidth=1, edgecolor=""r"", facecolor=""none"")
+    ax.add_patch(rect)
+    ax.text(x+w+25, y+(h/2)+20, unicodeToCharacter(codepoint),
+            fontproperties=prop,
+            color=""r"",
+           size=16)
+    return ax
+rotate = iaa.Affine(rotate=(-25, 25)) # rotate image
+gaussian_noise = iaa.AdditiveGaussianNoise(scale=(10, 60)) # add gaussian noise"
+"hue = iaa.AddToHueAndSaturation((-60, 60))  # change their color
+elastic_trans = iaa.ElasticTransformation(alpha=90, sigma=9) # water-like effect
+coarse_drop = iaa.CoarseDropout((0.01, 0.1), size_percent=0.01)# set large image areas to zero
+class DogDataset(Dataset):
+    '''
+    Sample dataset for imgaug demonstration.
+    The dataset will consist of just one sample image.
+    '''
+"
+"        self.image = image
+        self.augmentations = augmentations # save the augmentations
+
+    def __len__(self):
+        return 1 # return 1 as we have only one image
+
+    def __getitem__(self, idx):
+        # return the augmented image
+        return TF.to_tensor(self.augmentations.augment_image(self.image))"
+"train_ds = DogDataset(image, augmentations = AUG_TRAIN)
+# initilize the dataloader for training
+trainloader = DataLoader(train_ds, batch_size=1, shuffle=True, num_workers=0)
+image = imageio.imread('../input/image1.jpg')
+image_rotated = rotate.augment_images([image])
+image_noise = gaussian_noise.augment_images([image])
+image_crop = crop.augment_images([image])
+image_hue = hue.augment_images([image])
+image_trans = elastic_trans.augment_images([image])"
+"
+# initialize augmentations
+seq = iaa.Sequential([
+    iaa.CoarseDropout(0.1, size_percent=0.2),
+    iaa.Affine(rotate=(-30, 30)),
+    iaa.ElasticTransformation(alpha=10, sigma=1)
+])
+
+# apply augmentation for image and mask"
+"
+# visualize augmented image and mask
+side_by_side = np.hstack([
+    segmap.draw_on_image(image),
+    segmap_aug.draw_on_image(image_aug),  # show blend of (augmented) image and segmentation map
+    segmap_aug.draw()  # show only the augmented segmentation map
+])
+
+fig, ax = plt.subplots(figsize=(10, 7))"
+"plt.title('Augmentations for segmentation masks')
+ax.imshow(side_by_side)
+# define a simple augmentations pipeline for the image with bounding box
+seq = iaa.Sequential([
+    iaa.GammaContrast(1.5), # add contrast
+    iaa.Affine(translate_percent={""x"": 0.1}, scale=0.8), # translate the image
+    iaa.Fliplr(p = 1.0) # apply horizontal flip
+])
+"
+"image_aug, bbs_aug = seq(image=image, bounding_boxes=bbs)
+# define an augmentation pipeline
+aug_pipeline = iaa.Sequential([
+    iaa.Sometimes(0.5, iaa.GaussianBlur((0, 3.0))), # apply Gaussian blur with a sigma between 0 and 3 to 50% of the images
+    # apply one of the augmentations: Dropout or CoarseDropout
+    iaa.OneOf([
+        iaa.Dropout((0.01, 0.1), per_channel=0.5), # randomly remove up to 10% of the pixels
+        iaa.CoarseDropout((0.03, 0.15), size_percent=(0.02, 0.05), per_channel=0.2),
+    ]),"
+"    iaa.SomeOf((0, 3),[
+        iaa.Sharpen(alpha=(0, 1.0), lightness=(0.75, 1.5)), # sharpen images
+        iaa.Emboss(alpha=(0, 1.0), strength=(0, 2.0)), # emboss images
+        iaa.Fliplr(1.0), # horizontally flip
+        iaa.Sometimes(0.5, iaa.CropAndPad(percent=(-0.25, 0.25))), # crop and pad 50% of the images
+        iaa.Sometimes(0.5, iaa.Affine(rotate=5)) # rotate 50% of the images
+    ])
+],
+random_order=True # apply the augmentations in random order"
+"
+# apply augmentation pipeline to sample image
+images_aug = np.array([aug_pipeline.augment_image(image) for _ in range(16)])
+# import albumentations package
+import albumentations as A
+
+# initialize augmentations
+gaus_noise = A.GaussNoise() # gaussian noise
+elastic = A.ElasticTransform() # elastic transform"
+"gamma = A.RandomGamma(p=1) # random gamma
+clahe = A.CLAHE(p=1) # CLAHE (see https://en.wikipedia.org/wiki/Adaptive_histogram_equalization#Contrast_Limited_AHE)
+blur = A.Blur()
+
+# apply augmentations
+# pass image to the augmentation
+img_gaus = gaus_noise(image = image)
+img_elastic = elastic(image = image)
+img_bc = bright_contrast(image = image)"
+"img_clahe = clahe(image = image)
+img_blur = blur(image = image)
+
+# access the augmented image by 'image' key
+img_list = [img_gaus['image'], img_elastic['image'], img_bc['image'], img_gamma['image'], img_clahe['image'], img_blur['image']]
+
+# visualize the augmented images
+plt.figure(figsize=(10,10))
+plt.axis('off')"
+"plt.title('Augmentation examples')
+# compose augmentation pipeline
+aug_pipeline = A.Compose([
+    A.ShiftScaleRotate(rotate_limit=0, p = 1),
+    A.RGBShift(p = 1),
+    A.Blur(p = 1),
+    A.GaussNoise(p = 1)
+],p=1)
+# augment image and bounding box"
+"box_aug = augmented_boxes['bboxes'][0]
+
+# visualize augmented image and bbox
+fig, ax = plt.subplots(1,2, figsize = (15, 10))
+
+ax[0].axis('off')
+ax[0].imshow(image)
+rect = patches.Rectangle((bboxes[0],bboxes[1]),bboxes[2],bboxes[3],linewidth=1,edgecolor='r',facecolor='none')
+ax[0].add_patch(rect)"
+"
+ax[1].axis('off')
+ax[1].imshow(augmented_boxes['image'])
+rect = patches.Rectangle((box_aug[0],box_aug[1]),box_aug[2],box_aug[3],linewidth=1,edgecolor='r',facecolor='none')
+ax[1].add_patch(rect)
+ax[1].set_title('augmented image')
+# compose complex augmentation pipeline
+augmentation_pipeline = A.Compose(
+    ["
+"        A.OneOf(
+            [
+                # apply one of transforms to 50% of images
+                A.RandomContrast(), # apply random contrast
+                A.RandomGamma(), # apply random gamma
+                A.RandomBrightness(), # apply random brightness
+            ],
+            p = 0.5
+        ),"
+"            [
+                # apply one of transforms to 50% images
+                A.ElasticTransform(
+                    alpha = 120,
+                    sigma = 120 * 0.05,
+                    alpha_affine = 120 * 0.03
+                ),
+                A.GridDistortion(),
+                A.OpticalDistortion("
+"                    shift_limit = 0.5
+                ),
+            ],
+            p = 0.5
+        )
+    ],
+    p = 1
+)
+images_aug = np.array([augmentation_pipeline(image = image)['image'] for _ in range(16)])"
+"# visualize augmentation results
+plt.figure(figsize=(10,10))
+plt.axis('off')
+plt.imshow(gallery(images_aug, ncols = 4))
+plt.title('Augmentation pipeline examples')
+# import package
+import Augmentor
+
+# initialize pipeline"
+"# apply augmentations
+p.rotate(1, max_left_rotation=3, max_right_rotation=3)
+p.shear(1, max_shear_left = 3, max_shear_right = 3)
+p.zoom_random(1, percentage_area=0.9)
+
+# sample from augmentation pipeline
+images_aug = p.sample(1)
+# visualize augmented image
+augmented_image = images_aug[0][0]"
+"
+# visualize augmented image and mask
+fig, ax = plt.subplots(1,3, figsize = (15, 10))
+
+ax[0].axis('off')
+ax[0].imshow(image)
+ax[0].set_title('original image')
+
+ax[1].axis('off')"
+"ax[1].set_title('augmented image')
+
+ax[2].axis('off')
+ax[2].imshow(augmented_mask)
+ax[2].set_title('augmented mask')
+class DogDataset3(Dataset):
+    '''
+    Sample dataset for Augmentor demonstration.
+    The dataset will consist of just one sample image."
+"
+    def __init__(self, image):
+        self.image = image
+
+    def __len__(self):
+        return 1 # return 1 as we have only one image
+
+    def __getitem__(self, idx):
+        # return the augmented image"
+"        
+        # initialize the pipeline
+        p = Augmentor.DataPipeline([[np.array(image)]])
+
+        # apply augmentations
+        p.rotate(0.5, max_left_rotation=10, max_right_rotation=10) # rotate the image with 50% probability
+        p.shear(0.5, max_shear_left = 10, max_shear_right = 10) # shear the image with 50% probability
+        p.zoom_random(0.5, percentage_area=0.7) # zoom randomly with 50% probability
+"
+"        images_aug = p.sample(1)
+        
+        # get augmented image
+        augmented_image = images_aug[0][0]
+        
+        # convert to tensor and return the result
+        return TF.to_tensor(augmented_image)
+
+# initialize the dataset, pass the augmentation pipeline as an argument to init function"
+"
+# initilize the dataloader for training
+trainloader = DataLoader(train_ds, batch_size=1, shuffle=True, num_workers=0)
+def apply_window(image, center, width):
+    image = image.copy()
+
+    min_value = center - width // 2
+    max_value = center + width // 2
+"
+"    image[image > max_value] = max_value
+
+    return image
+def dicom_window_shift(img, windows, min_max_normalize=True):
+    image = np.zeros((img.shape[0], img.shape[1], 3))
+
+    if img.ndim == 2:
+        img = np.repeat(img[:, :, np.newaxis], 3, axis=2)
+"
+"        ch = apply_window(img[:, :, i], windows[i][0], windows[i][1])
+
+        if min_max_normalize:
+            image[:, :, i] = (ch - ch.min()) / (ch.max() - ch.min())
+        else:
+            image[:, :, i] = ch
+
+    return image
+class DicomWindowShift(ImageOnlyTransform):"
+"    
+    Note: It won't work for preprocessed png or jpg images. Please use the dicom's HU values
+    (rescaled width slope/intercept!)
+    
+    Args:
+        window_width_mins (int, int, int): minimun window width per channel
+        window_width_maxs (int, int, int): maximum window width per channel
+        window_center_mins (int, int, int): minimum value for window center per channel
+        window_center_maxs (int, int, int): maximum value for window center per channel"
+"    Targets:
+        image
+    Image types:
+        uint8 (shape: HxW | HxWxC)
+    """"""
+    def __init__(
+            self,
+            window_width_mins=(80, 200, 380),
+            window_width_maxs=(80, 200, 380),"
+"            window_center_maxs=(40, 80, 40),
+            min_max_normalize=True,
+            always_apply=False,
+            p=0.5,
+    ):
+        super(DicomWindowShift, self).__init__(always_apply, p)
+        self.window_width_mins = window_width_mins
+        self.window_width_maxs = window_width_maxs
+        self.window_center_mins = window_center_mins"
+"        self.min_max_normalize = min_max_normalize
+
+        assert len(self.window_width_mins) == 3
+        assert len(self.window_width_maxs) == 3
+        assert len(self.window_center_mins) == 3
+        assert len(self.window_center_maxs) == 3
+
+    def apply(self, image, windows=(), min_max_normalize=True, **params):
+        return dicom_window_shift(image, windows, min_max_normalize)"
+"    def get_params_dependent_on_targets(self, params):
+        windows = []
+
+        for i in range(3):
+            window_width = random.randint(self.window_width_mins[i], self.window_width_maxs[i])
+            window_center = random.randint(self.window_center_mins[i], self.window_center_maxs[i])
+
+            windows.append([window_center, window_width])
+"
+"
+    @property
+    def targets_as_params(self):
+        return [""image""]
+
+    def get_transform_init_args_names(self):
+        return ""window_width_mins"", ""window_width_maxs"", ""window_center_mins"", ""window_center_maxs"", ""min_max_normalize""
+transform = DicomWindowShift(
+    # (brain_width_min, subdural_width_min, bones_width_min)"
+"    
+    # (brain_width_max, subdural_width_min, bones_width_min)
+    window_width_maxs=(85, 210, 400),
+    
+    # (brain_center_min, subdural_center_min, bones_center_min)
+    window_center_mins=(15, 75, 35),
+    
+    # (brain_center_max, subdural_center_max, bones_center_max)
+    window_center_maxs=(85, 85, 45),"
+"    min_max_normalize=True,
+    p=1.0
+)
+f, ax = plt.subplots(2, 5, figsize=(16, 8))
+ax = ax.flatten()
+
+for i in range(10):
+    tr = transform(image=image)
+    ax[i].imshow(tr['image'][:,:,0], cmap='gray')"
+"    A.Rotate(p=1.0),
+    DicomWindowShift(window_width_mins=(75, 190, 360),
+                     window_width_maxs=(85, 210, 400),
+                     window_center_mins=(15, 75, 35),
+                     window_center_maxs=(85, 85, 45),
+                     min_max_normalize=True,
+                     p=1.0)
+])
+f, ax = plt.subplots(2, 5, figsize=(16, 8))"
+"
+for i in range(10):
+    tr = transform(image=image)
+    ax[i].imshow(tr['image'][:,:,0], cmap='gray')
+def image_to_hu(image_path, image_id):
+    ''' 
+    Minimally adapted from https://www.raddq.com/dicom-processing-segmentation-visualization-in-python/
+    '''
+    dicom = pydicom.read_file(image_path + 'ID_' + image_id + '.dcm')"
+"         
+    # Convert to Hounsfield units (HU)
+    intercept = dicom.RescaleIntercept
+    slope = dicom.RescaleSlope
+    
+    if slope != 1:
+        image = slope * image.astype(np.float64)
+        image = image.astype(np.float64)
+        "
+"    
+    image[image < -1024] = -1024 # Setting values smaller than air, to air.
+    # Values smaller than -1024, are probably just outside the scanner.
+    return image, dicom
+def image_windowed(image, custom_center=50, custom_width=130, out_side_val=False):
+    '''
+    Important thing to note in this function: The image migth be changed in place!
+    '''
+    # see: https://www.kaggle.com/allunia/rsna-ih-detection-eda-baseline"
+"    max_value = custom_center + (custom_width/2)
+    
+    # Including another value for values way outside the range, to (hopefully) make segmentation processes easier. 
+    out_value_min = custom_center - custom_width
+    out_value_max = custom_center + custom_width
+    
+    if out_side_val:
+        image[np.logical_and(image < min_value, image > out_value_min)] = min_value
+        image[np.logical_and(image > max_value, image < out_value_max)] = max_value"
+"        image[image > out_value_max] = out_value_max
+    
+    else:
+        image[image < min_value] = min_value
+        image[image > max_value] = max_value
+    
+    return image
+def image_resample(image, dicom_header, new_spacing=[1,1]):
+    # Code from https://www.raddq.com/dicom-processing-segmentation-visualization-in-python/"
+"    spacing = map(float, dicom_header.PixelSpacing)
+    spacing = np.array(list(spacing))
+    resize_factor = spacing / new_spacing
+    new_real_shape = image.shape * resize_factor
+    new_shape = np.round(new_real_shape)
+    real_resize_factor = new_shape / image.shape
+    new_spacing = spacing / real_resize_factor
+    
+    image = scipy.ndimage.interpolation.zoom(image, real_resize_factor)"
+"    return image
+def image_background_segmentation(image_path, image_id, WW=40, WL=80, display=False):
+    img, dcm_head = image_to_hu(image_path, image_id)
+    img = image_resample(img, dcm_head)
+    img_out = img.copy()
+    # use values outside the window as well, helps with segmentation
+    img = image_windowed(img, custom_center=WW, custom_width=WL, out_side_val=True)
+    
+    # Calculate the outside values by hand (again)"
+"    uB = WW + WL
+    
+    # Keep only values inside of the window
+    background_seperation = np.logical_and(img > lB, img < uB)
+    
+    # Get largest connected component:
+    # From https://github.com/nilearn/nilearn/blob/master/nilearn/_utils/ndimage.py
+    background_seperation = morphology.dilation(background_seperation,  np.ones((5, 5)))
+    labels, label_nb = scipy.ndimage.label(background_seperation)"
+"    label_count = np.bincount(labels.ravel().astype(np.int))
+    # discard the 0 label
+    label_count[0] = 0
+    mask = labels == label_count.argmax()
+    
+    # Fill holes in the mask
+    mask = morphology.dilation(mask, np.ones((5, 5))) # dilate the mask for less fuzy edges
+    mask = scipy.ndimage.morphology.binary_fill_holes(mask)
+    mask = morphology.dilation(mask, np.ones((3, 3))) # dilate the mask again"
+"    if display:
+        plt.figure(figsize=(15,2.5))
+        plt.subplot(141)
+        plt.imshow(img, cmap='bone')
+        plt.title('Original Images')
+        plt.axis('off')
+
+        plt.subplot(142)
+        plt.imshow(background_seperation)"
+"        plt.axis('off')
+
+        plt.subplot(143)
+        plt.imshow(mask)
+        plt.title('Mask')
+        plt.axis('off')
+
+        plt.subplot(144)
+        plt.imshow(mask * img, cmap='bone')"
+"        plt.suptitle(image_id)
+        plt.axis('off')
+
+    return mask * img_out
+for ii in range(5):
+    tmp = train_csv.iloc[train_csv['Label']['any'].values == 1].iloc[np.random.randint(
+        train_csv.iloc[train_csv['Label']['any'].values == 1].shape[0])].name
+    masked_image = image_background_segmentation(image_path, tmp, display=True)
+def image_crop(image):"
+"    mask = image == 0
+
+    # Find the bounding box of those pixels
+    coords = np.array(np.nonzero(~mask))
+    top_left = np.min(coords, axis=1)
+    bottom_right = np.max(coords, axis=1)
+
+    out = image[top_left[0]:bottom_right[0],
+                top_left[1]:bottom_right[1]]"
+"    return out
+def image_pad(image, new_height, new_width):
+    # based on https://stackoverflow.com/questions/26310873/how-do-i-crop-an-image-on-a-white-background-with-python
+    height, width = image.shape
+
+    # make canvas
+    im_bg = np.zeros((new_height, new_width))
+
+    # Your work: Compute where it should be"
+"    pad_top = int( (new_height - height) / 2)
+
+    im_bg[pad_top:pad_top + height,
+          pad_left:pad_left + width] = image
+
+    return im_bg
+plt.figure(figsize=(7.5, 5))
+for ii in range(3):
+    tmp = train_csv.iloc[train_csv['Label']['any'].values == 1].iloc[np.random.randint("
+"    masked_image = image_background_segmentation(image_path, tmp, False)
+    masked_image = image_windowed(masked_image)
+    cropped_image = image_crop(masked_image)
+    padded_image = image_pad(cropped_image, 256, 256)
+    padded_image = MaxAbsScaler().fit_transform(padded_image.reshape(-1, 1)).reshape([256, 256])
+    plt.subplot(2, 3, ii + 1)
+    plt.imshow(padded_image, cmap='bone')
+    plt.title(f'Image Shape:\n{padded_image.shape}')
+    plt.axis('off')"
+"    plt.hist(padded_image.ravel())
+def window_image(img, window_center, window_width, intercept, slope):
+    img = img * slope + intercept
+    img_min = window_center - window_width // 2
+    img_max = window_center + window_width // 2
+    img[img < img_min] = img_min
+    img[img > img_max] = img_max
+    return img 
+def resize(img, new_w, new_h):"
+"    return img.resize((new_w, new_h), resample=PIL.Image.BICUBIC)
+def save_img(img_pil, subfolder, name):
+    img_pil.save(f""{OUTPUT_DIR}/{subfolder}/{name}.{OUTPUT_FORMAT}"")
+def normalize_minmax(img):
+    mi, ma = img.min(), img.max()
+    return (img - mi) / (ma - mi)
+def prepare_image(img_path):
+    img_dicom = pydicom.read_file(img_path)
+    img_id = get_id(img_dicom)"
+"    img = window_image(img_dicom.pixel_array, **metadata)
+    img = normalize_minmax(img) * 255
+    img_pil = resize(img, RESIZED_WIDTH, RESIZED_HEIGHT)
+    return img_id, img_pil
+def prepare_and_save(img_path, subfolder):
+    try:
+        l.error(""loading eso"")
+        img_id, img_pil = prepare_image(img_path)
+        save_img(img_pil, subfolder, img_id)"
+"        # Rais interrupt exception so we can stop the cell execution
+        # without shutting down the kernel.
+        raise
+    except:
+        l.error(f""Error processing the image: {img_path}"")
+def prepare_images(imgs_path, subfolder):
+    for i in tqdm.tqdm(imgs_path):
+        prepare_and_save(i, subfolder)
+import logging as l"
+"    joblib.Parallel(n_jobs=n_jobs)(joblib.delayed(prepare_and_save)(i, subfolder) for i in tqdm.tqdm(img_paths))
+img_path = train_output_path[0]
+PIL.Image.open(img_path)
+def prepare_df(path, train=False, nrows=None):
+    """"""
+    Prepare Pandas DataFrame for fitting neural network models
+    Returns a Dataframe with two columns
+    ImageID and Labels (list of all labels for an image)
+    """""" "
+"    
+    # Get ImageID and type for pivoting
+    df['ImageID'] = df['ID'].str.rsplit('_', 1).map(lambda x: x[0]) + '.png'
+    df['type'] = df['ID'].str.split(""_"", n = 3, expand = True)[2]
+    # Create new DataFrame by pivoting
+    new_df = df[['Label', 'ImageID', 'type']].drop_duplicates().pivot(index='ImageID', 
+                                                                      columns='type', 
+                                                                      values='Label').reset_index()
+    return new_df"
+"train_df['ImageID'] = train_df['ID'].str.rsplit('_', 1).map(lambda x: x[0]) + '.png'
+label_lists = train_df.groupby('ImageID')['Label'].apply(list)
+def build_triplets(metadata):
+    metadata.sort_values(by=""ImagePositionPatient_2"", inplace=True, ascending=False)
+    studies = metadata.groupby(""StudyInstanceUID"")
+    triplets = []
+
+    for study_name, study_df in tqdm_notebook(studies):
+        padded_names = np.pad(study_df.index, (1, 1), 'edge')"
+"        for i, img in enumerate(padded_names[1:-1]):
+            t = [padded_names[i], img, padded_names[i + 2]]
+            triplets.append(t)
+
+    return pd.DataFrame(triplets, columns=[""red"", ""green"", ""blue""])
+def prepare_dicom(dcm):
+    """"""
+    Converts a DICOM object to a 16-bit Numpy array (in Hounsfield units)
+    :param dcm: DICOM Object"
+"    """"""
+
+    try:
+        # https://www.kaggle.com/jhoward/cleaning-the-data-for-rapid-prototyping-fastai
+        if dcm.BitsStored == 12 and dcm.PixelRepresentation == 0 and dcm.RescaleIntercept > -100:
+            x = dcm.pixel_array + 1000
+            px_mode = 4096
+            x[x >= px_mode] = x[x >= px_mode] - px_mode
+            dcm.PixelData = x.tobytes()"
+"
+        pixels = dcm.pixel_array.astype(np.float32) * dcm.RescaleSlope + dcm.RescaleIntercept
+    except ValueError as e:
+        print(""ValueError with"", dcm.SOPInstanceUID, e)
+        return np.zeros((512, 512))
+
+    # Pad the image if it isn't square
+    if pixels.shape[0] != pixels.shape[1]:
+        (a, b) = pixels.shape"
+"            padding = ((0, 0), ((a - b) // 2, (a - b) // 2))
+        else:
+            padding = (((b - a) // 2, (b - a) // 2), (0, 0))
+        pixels = np.pad(pixels, padding, mode='constant', constant_values=0)
+
+    return pixels.astype(np.int16)
+class CropHead(object):
+    def __init__(self, offset=10):
+        """""""
+"        is the background). This method removes most of the headrest
+
+        Originally made as a image transform for use with PyTorch, but too slow to run on the fly :(
+        :param offset: Pixel offset to apply to the crop so that it isn't too tight
+        """"""
+        self.offset = offset
+
+    def crop_extents(self, img):
+        try:"
+"                img_array = np.array(img)
+            else:
+                img_array = img
+
+            labeled_blobs, number_of_blobs = ndimage.label(img_array)
+            blob_sizes = np.bincount(labeled_blobs.flatten())
+            head_blob = labeled_blobs == np.argmax(blob_sizes[1:]) + 1  # The number of the head blob
+            head_blob = np.max(head_blob, axis=-1)
+"
+"            rows = np.flatnonzero((~mask).sum(axis=1))
+            cols = np.flatnonzero((~mask).sum(axis=0))
+
+            x_min = max([rows.min() - self.offset, 0])
+            x_max = min([rows.max() + self.offset + 1, img_array.shape[0]])
+            y_min = max([cols.min() - self.offset, 0])
+            y_max = min([cols.max() + self.offset + 1, img_array.shape[1]])
+
+            return x_min, x_max, y_min, y_max"
+"            return 0, 0, -1, -1
+
+    def __call__(self, img):
+        """"""
+        Crops a CT image to so that as much black area is removed as possible
+        :param img: PIL image
+        :return: Cropped image
+        """"""
+"
+"
+        try:
+            if type(img) != np.array:
+                img_array = np.array(img)
+            else:
+                img_array = img
+
+            return Image.fromarray(np.uint8(img_array[x_min:x_max, y_min:y_max]))
+        except ValueError:"
+"
+    def __repr__(self):
+        return self.__class__.__name__ + '(offset={})'.format(self.offset)
+def rsna_to_pivot(df, sub_type_name='HemType'):
+    """"""Convert RSNA data frame to pivoted table with
+    each subtype as a binary encoded column.""""""
+    df2 = df.copy()
+    ids, sub_types = zip(*df['ID'].str.rsplit('_', n=1).values)
+    df2.loc[:, 'ID'] = ids"
+"    return df2.pivot(index='ID', columns=sub_type_name, values='Label')
+
+def pivot_to_rsna(df, sub_type_name='HemType'):
+    """"""Converted pivoted table back to RSNA spec for submission.""""""
+    df2 = df.copy()
+    df2 = df2.reset_index()
+    unpivot_vars = df2.columns[1:]
+    df2 = pd.melt(df2, id_vars='ID', value_vars=unpivot_vars, var_name=sub_type_name, value_name='Label')
+    df2['ID'] = df2['ID'].str.cat(df2[sub_type_name], sep='_')"
+"    return df2
+def rsna_to_pivot(df, sub_type_name='HemType'):
+    """"""Convert RSNA data frame to pivoted table with
+    each subtype as a binary encoded column.""""""
+    df2 = df.copy()
+    ids, sub_types = zip(*df['ID'].str.rsplit('_', n=1).values)
+    df2.loc[:, 'ID'] = ids
+    df2.loc[:, sub_type_name] = sub_types
+    return df2.pivot(index='ID', columns=sub_type_name, values='Label')"
+"    """"""Converted pivoted table back to RSNA spec for submission.""""""
+    df2 = df.copy()
+    df2 = df2.reset_index()
+    unpivot_vars = df2.columns[1:]
+    df2 = pd.melt(df2, id_vars='ID', value_vars=unpivot_vars, var_name=sub_type_name, value_name='Label')
+    df2['ID'] = df2['ID'].str.cat(df2[sub_type_name], sep='_')
+    df2.drop(columns=sub_type_name, inplace=True)
+    return df2
+def view_images(images, title = '', aug = None):"
+"    height = 2
+    fig, axs = plt.subplots(height, width, figsize=(15,5))
+    
+    for im in range(0, height * width):
+        image = pydicom.read_file(os.path.join(TRAIN_IMG_PATH,images[im]+ '.dcm')).pixel_array
+        i = im // width
+        j = im % width
+        axs[i,j].imshow(image, cmap=plt.cm.bone) 
+        axs[i,j].axis('off')"
+"    plt.suptitle(title)
+    plt.show()
+def get_image_sizes(df, train = True):
+    if train:
+        path = TRAIN_IMG_PATH
+    else:
+        path = TEST_IMG_PATH
+        
+    widths = []"
+"    
+    images = df.image.values
+    #print(images)
+    max_im = pydicom.read_file(os.path.join(path,images[0]+ '.dcm')).pixel_array
+    min_im = pydicom.read_file(os.path.join(path,images[0]+ '.dcm')).pixel_array
+        
+    for im in range(0, len(images)):
+        image = pydicom.read_file(os.path.join(path,images[im]+ '.dcm')).pixel_array
+        "
+"        height = image.shape[1]
+        
+        if len(widths) > 0:
+            if width > max(widths):
+                max_im = image
+
+            if width < min(widths):
+                min_im = image
+"
+"        heights.append(height)
+        
+    return widths, heights, max_im, min_im
+def view_aug_images(train, rand_indices, aug = None, title = ''):
+    width = 5
+    height = 2
+    counter = 0
+    fig, axs = plt.subplots(height, width, figsize=(15,5))
+    "
+"        image = pydicom.read_file(os.path.join(TRAIN_IMG_PATH,train.iloc[im].image+ '.dcm')).pixel_array
+        if aug is not None:
+            image = aug(image=np.array(image))['image']
+        
+        i = counter // width
+        j = counter % width
+        axs[i,j].imshow(image, cmap=plt.cm.bone) #plot the data
+        axs[i,j].axis('off')
+        "
+"        
+        axs[i,j].set_title(diagnosis)
+        counter += 1
+
+    plt.suptitle(title)
+    plt.show()
+df = pd.read_csv(os.path.join(DATASET_DIR, 'train.csv'))
+def load_image(path, transform=default_transform):
+    image = Image.open(path)"
+"def str2coords(s, names=['id', 'yaw', 'pitch', 'roll', 'x', 'y', 'z']):
+    '''
+    Input:
+        s: PredictionString (e.g. from train dataframe)
+        names: array of what to extract from the string
+    Output:
+        list of dicts with keys from `names`
+    '''
+    coords = []"
+"        coords.append(dict(zip(names, l.astype('float'))))
+        if 'id' in coords[-1]:
+            coords[-1]['id'] = int(coords[-1]['id'])
+    return coords
+def get_img_coords(s):
+    '''
+    Input is a PredictionString (e.g. from train dataframe)
+    Output is two arrays:
+        xs: x coordinates in the image (row)"
+"    '''
+    coords = str2coords(s)
+    xs = [c['x'] for c in coords]
+    ys = [c['y'] for c in coords]
+    zs = [c['z'] for c in coords]
+    P = np.array(list(zip(xs, ys, zs))).T
+    img_p = np.dot(camera_matrix, P).T
+    img_p[:, 0] /= img_p[:, 2]
+    img_p[:, 1] /= img_p[:, 2]"
+"    img_ys = img_p[:, 1]
+    img_zs = img_p[:, 2] # z = Distance from the camera
+    return img_xs, img_ys
+def visualize(img, coords):
+    # You will also need functions from the previous cells
+    x_l = 1.02
+    y_l = 0.80
+    z_l = 2.31
+    "
+"    for point in coords:
+        # Get values
+        x, y, z = point['x'], point['y'], point['z']
+        yaw, pitch, roll = -point['pitch'], -point['yaw'], -point['roll']
+        # Math
+        Rt = np.eye(4)
+        t = np.array([x, y, z])
+        Rt[:3, 3] = t
+        Rt[:3, :3] = euler_to_Rot(yaw, pitch, roll).T"
+"        # Drawing
+        img = draw_line(img, img_cor_points)
+        img = draw_points(img, img_cor_points[-1:])
+    
+    return img
+def _regr_preprocess(regr_dict, flip=False):
+    if flip:
+        for k in ['x', 'pitch', 'roll']:
+            regr_dict[k] = -regr_dict[k]"
+"        regr_dict[name] = regr_dict[name] / 100
+    regr_dict['roll'] = rotate(regr_dict['roll'], np.pi)
+    regr_dict['pitch_sin'] = sin(regr_dict['pitch'])
+    regr_dict['pitch_cos'] = cos(regr_dict['pitch'])
+    regr_dict.pop('pitch')
+    regr_dict.pop('id')
+    return regr_dict
+def _regr_back(regr_dict):
+    for name in ['x', 'y', 'z']:"
+"    regr_dict['roll'] = rotate(regr_dict['roll'], -np.pi)
+    
+    pitch_sin = regr_dict['pitch_sin'] / np.sqrt(regr_dict['pitch_sin']**2 + regr_dict['pitch_cos']**2)
+    pitch_cos = regr_dict['pitch_cos'] / np.sqrt(regr_dict['pitch_sin']**2 + regr_dict['pitch_cos']**2)
+    regr_dict['pitch'] = np.arccos(pitch_cos) * np.sign(pitch_sin)
+    return regr_dict
+def preprocess_image(img, flip=False):
+    img = img[img.shape[0] // 2:]
+    bg = np.ones_like(img) * img.mean(1, keepdims=True).astype(img.dtype)"
+"    img = np.concatenate([bg, img, bg], 1)
+    img = cv2.resize(img, (IMG_WIDTH, IMG_HEIGHT))
+    if flip:
+        img = img[:,::-1]
+    return (img / 255).astype('float32')
+def get_mask_and_regr(img, labels, flip=False):
+    mask = np.zeros([IMG_HEIGHT // MODEL_SCALE, IMG_WIDTH // MODEL_SCALE], dtype='float32')
+    regr_names = ['x', 'y', 'z', 'yaw', 'pitch', 'roll']
+    regr = np.zeros([IMG_HEIGHT // MODEL_SCALE, IMG_WIDTH // MODEL_SCALE, 7], dtype='float32')"
+"    xs, ys = get_img_coords(labels)
+    for x, y, regr_dict in zip(xs, ys, coords):
+        x, y = y, x
+        x = (x - img.shape[0] // 2) * IMG_HEIGHT / (img.shape[0] // 2) / MODEL_SCALE
+        x = np.round(x).astype('int')
+        y = (y + img.shape[1] // 6) * IMG_WIDTH / (img.shape[1] * 4/3) / MODEL_SCALE
+        y = np.round(y).astype('int')
+        if x >= 0 and x < IMG_HEIGHT // MODEL_SCALE and y >= 0 and y < IMG_WIDTH // MODEL_SCALE:
+            mask[x, y] = 1"
+"            regr[x, y] = [regr_dict[n] for n in sorted(regr_dict)]
+    if flip:
+        mask = np.array(mask[:,::-1])
+        regr = np.array(regr[:,::-1])
+    return mask, regr
+def plot_3d_car(model_json_file):
+    with open(f'../input/pku-autonomous-driving/car_models_json/{model_json_file}') as json_file:
+        car_model_data = json.load(json_file)
+"
+"    faces = np.array(car_model_data['faces']) - 1
+    car_type = car_model_data['car_type']
+    x, y, z = vertices[:,0], vertices[:,2], -vertices[:,1]
+    fig = plt.figure(figsize=(30, 10))
+    ax = plt.axes(projection='3d')
+    ax.plot_trisurf(x, y, faces, z,
+                    cmap='viridis', edgecolor='none')
+    ax.set_title(car_type)
+    ax.view_init(30, 0)"
+"    fig = plt.figure(figsize=(30, 10))
+    ax = plt.axes(projection='3d')
+    ax.plot_trisurf(x, y, faces, z,
+                    cmap='viridis', edgecolor='none')
+    ax.set_title(car_type)
+    ax.view_init(60, 0)
+    plt.show()
+    fig = plt.figure(figsize=(30, 10))
+    ax = plt.axes(projection='3d')"
+"                    cmap='viridis', edgecolor='none')
+    ax.set_title(car_type)
+    ax.view_init(-20, 180)
+    plt.show()
+    return
+def draw_obj(image, vertices, triangles):
+    for t in triangles:
+        coord = np.array([vertices[t[0]][:2], vertices[t[1]][:2], vertices[t[2]][:2]], dtype=np.int32)
+#         cv2.fillConvexPoly(image, coord, (0,0,255))"
+"def rotate(x, angle):
+    x = x + angle
+    x = x - (x + np.pi) // (2 * np.pi) * 2 * np.pi
+    return x
+def get_img_coords(s):
+    '''
+    Input is a PredictionString (e.g. from train dataframe)
+    Output is two arrays:
+        xs: x coordinates in the image"
+"    '''
+    coords = str2coords(s)
+    xs = [c['x'] for c in coords]
+    ys = [c['y'] for c in coords]
+    zs = [c['z'] for c in coords]
+    P = np.array(list(zip(xs, ys, zs))).T
+    img_p = np.dot(camera_matrix, P).T
+    img_p[:, 0] /= img_p[:, 2]
+    img_p[:, 1] /= img_p[:, 2]"
+"    img_ys = img_p[:, 1]
+    img_zs = img_p[:, 2] # z = Distance from the camera
+    return img_xs, img_ys
+def _regr_preprocess(regr_dict):
+    for name in ['x', 'y', 'z']:
+        regr_dict[name] = regr_dict[name] / 100
+    regr_dict['roll'] = rotate(regr_dict['roll'], np.pi)
+    regr_dict['pitch_sin'] = sin(regr_dict['pitch'])
+    regr_dict['pitch_cos'] = cos(regr_dict['pitch'])"
+"    regr_dict.pop('id')
+    return regr_dict
+def _regr_back(regr_dict):
+    for name in ['x', 'y', 'z']:
+        regr_dict[name] = regr_dict[name] * 100
+    regr_dict['roll'] = rotate(regr_dict['roll'], -np.pi)
+    
+    pitch_sin = regr_dict['pitch_sin'] / np.sqrt(regr_dict['pitch_sin']**2 + regr_dict['pitch_cos']**2)
+    pitch_cos = regr_dict['pitch_cos'] / np.sqrt(regr_dict['pitch_sin']**2 + regr_dict['pitch_cos']**2)"
+"    return regr_dict
+def preprocess_image(img):
+    img = img[img.shape[0] // 2:]
+    bg = np.ones_like(img) * img.mean(1, keepdims=True).astype(img.dtype)
+    bg = bg[:, :img.shape[1] // 4]
+    img = np.concatenate([bg, img, bg], 1)
+    img = cv2.resize(img, (IMG_WIDTH, IMG_HEIGHT))
+    return (img / 255).astype('float32')
+def get_mask_and_regr(img, labels):"
+"    regr_names = ['x', 'y', 'z', 'yaw', 'pitch', 'roll']
+    regr = np.zeros([IMG_HEIGHT // MODEL_SCALE, IMG_WIDTH // MODEL_SCALE, 7], dtype='float32')
+    coords = str2coords(labels)
+    xs, ys = get_img_coords(labels)
+    for x, y, regr_dict in zip(xs, ys, coords):
+        x, y = y, x
+        x = (x - img.shape[0] // 2) * IMG_HEIGHT / (img.shape[0] // 2) / MODEL_SCALE
+        x = np.round(x).astype('int')
+        y = (y + img.shape[1] // 4) * IMG_WIDTH / (img.shape[1] * 1.5) / MODEL_SCALE"
+"        if x >= 0 and x < IMG_HEIGHT // MODEL_SCALE and y >= 0 and y < IMG_WIDTH // MODEL_SCALE:
+            mask[x, y] = 1
+            regr_dict = _regr_preprocess(regr_dict)
+            regr[x, y] = [regr_dict[n] for n in sorted(regr_dict)]
+    return mask, regr
+def str_to_coords(s, names=['id', 'yaw', 'pitch', 'roll', 'x', 'y', 'z']):
+    coords = []
+    for l in np.array(s.split()).reshape([-1, 7]):
+        coords.append(dict(zip(names, l.astype('float'))))"
+"            coords[-1]['id'] = int(coords[-1]['id'])
+    return coords
+def coords_to_str(coords):
+    s = []
+    for c in coords:
+        for n in range(7):
+            s.append(str(c[n]))
+    return ' '.join(s)
+def pixel_coords(s):"
+"    xc = [c['x'] for c in coords]
+    yc = [c['y'] for c in coords]
+    zc = [c['z'] for c in coords]
+    P = np.array(list(zip(xc, yc, zc))).T
+    img_p = np.dot(camera_matrix, P).T
+    img_p[:, 0] /= img_p[:, 2]
+    img_p[:, 1] /= img_p[:, 2]
+    u = img_p[:, 0]
+    v = img_p[:, 1]"
+"    return u, v
+def resize_image(img, input_width = 512, input_height = 512):
+    img = cv2.resize(img, (input_width, input_height))
+    return (img / 255).astype('float32')
+def CreateMaskImages(imageName):
+
+    trainimage = cv2.imread(PATH  + ""/train_images/"" + imageName + '.jpg')
+    imagemask = cv2.imread(PATH + ""/train_masks/"" + imageName + "".jpg"",0)
+    try:"
+"        res = cv2.bitwise_and(trainimage,trainimage,mask = imagemaskinv)
+        
+        # cut upper half,because it doesn't contain cars.
+        res = res[res.shape[0] // 2:]
+        return res
+    except:
+        trainimage = trainimage[trainimage.shape[0] // 2:]
+        return trainimage
+def heatmap(u, v, output_width=128, output_height=128, sigma=1):"
+"        X1 = np.linspace(1, output_width, output_width)
+        Y1 = np.linspace(1, output_height, output_height)
+        [X, Y] = np.meshgrid(X1, Y1)
+        X = X - floor(p_x)
+        Y = Y - floor(p_y)
+        D2 = X * X + Y * Y
+        E2 = 2.0 * sigma ** 2
+        Exponent = D2 / E2
+        heatmap = np.exp(-Exponent)"
+"        return heatmap
+    
+    output = np.zeros((128,128,1))
+    for i in range(len(u)):
+        heatmap = get_heatmap(u[i], v[i])
+        output[:,:] = np.maximum(output[:,:],heatmap[:,:])
+      
+    return output
+def pose(s, u, v):"
+"    coords = str_to_coords(s)
+    for p_x, p_y, regr_dict in zip(u, v, coords):
+        if p_x >= 0 and p_x < 128 and p_y >= 0 and p_y < 128:
+            regr_dict.pop('id')
+            regr[floor(p_y), floor(p_x)] = [regr_dict[n] for n in regr_dict]
+            
+    # x,y,z devide by 100
+    regr[:,:,-3:] /= 100  
+    return regr"
+"    color = (255, 0, 0)
+    cv2.line(image, tuple(points[0][:2]), tuple(points[3][:2]), color, 16)
+    cv2.line(image, tuple(points[0][:2]), tuple(points[1][:2]), color, 16)
+    cv2.line(image, tuple(points[1][:2]), tuple(points[2][:2]), color, 16)
+    cv2.line(image, tuple(points[2][:2]), tuple(points[3][:2]), color, 16)
+    return image
+def draw_points(image, points):
+    for (p_x, p_y, p_z) in points:
+        cv2.circle(image, (p_x, p_y), int(1000 / p_z), (0, 255, 0), -1)"
+"#             print('Point', p_x, p_y, 'is out of image with shape', image.shape)
+    return image
+def visualize(img, coords):
+    # You will also need functions from the previous cells
+    x_l = 1.02
+    y_l = 0.80
+    z_l = 2.31
+    
+    img = img.copy()"
+"        # Get values
+        x, y, z = point['x'], point['y'], point['z']
+        yaw, pitch, roll = -point['pitch'], -point['yaw'], -point['roll']
+        # Math
+        Rt = np.eye(4)
+        t = np.array([x, y, z])
+        Rt[:3, 3] = t
+        Rt[:3, :3] = euler_to_Rot(yaw, pitch, roll).T
+        Rt = Rt[:3, :]"
+"        img = draw_line(img, img_cor_points)
+        img = draw_points(img, img_cor_points[-1:])
+    
+    return img
+def preprocess_image(img):
+    img = img[img.shape[0] // 2:]
+    bg = np.ones_like(img) * img.mean(1, keepdims=True).astype(img.dtype)
+    bg = bg[:, :img.shape[1] // 4]
+    img = np.concatenate([bg, img, bg], 1)"
+"    return (img / 255).astype('float32')
+def get_mask_and_regr(img, labels):
+    mask = np.zeros([IMG_HEIGHT // MODEL_SCALE, IMG_WIDTH // MODEL_SCALE], dtype='float32')
+    regr_names = ['x', 'y', 'z', 'yaw', 'pitch', 'roll']
+    regr = np.zeros([IMG_HEIGHT // MODEL_SCALE, IMG_WIDTH // MODEL_SCALE, 7], dtype='float32')
+    coords = str2coords(labels)
+    xs, ys = get_img_coords(labels)
+    for x, y, regr_dict in zip(xs, ys, coords):
+        x, y = y, x"
+"        x = np.round(x).astype('int')
+        y = (y + img.shape[1] // 4) * IMG_WIDTH / (img.shape[1] * 1.5) / MODEL_SCALE
+        y = np.round(y).astype('int')
+        if x >= 0 and x < IMG_HEIGHT // MODEL_SCALE and y >= 0 and y < IMG_WIDTH // MODEL_SCALE:
+            mask[x, y] = 1
+            regr_dict = _regr_preprocess(regr_dict)
+            regr[x, y] = [regr_dict[n] for n in sorted(regr_dict)]
+    return mask, regr
+def draw_line(image, points):"
+"    cv2.line(image, tuple(points[1][:2]), tuple(points[2][:2]), color, 16)
+    cv2.line(image, tuple(points[1][:2]), tuple(points[4][:2]), color, 16)
+
+    cv2.line(image, tuple(points[1][:2]), tuple(points[5][:2]), color, 16)
+    cv2.line(image, tuple(points[2][:2]), tuple(points[3][:2]), color, 16)
+    cv2.line(image, tuple(points[2][:2]), tuple(points[6][:2]), color, 16)
+    cv2.line(image, tuple(points[3][:2]), tuple(points[4][:2]), color, 16)
+    cv2.line(image, tuple(points[3][:2]), tuple(points[7][:2]), color, 16)
+"
+"    cv2.line(image, tuple(points[5][:2]), tuple(points[8][:2]), color, 16)
+
+    cv2.line(image, tuple(points[5][:2]), tuple(points[6][:2]), color, 16)
+    cv2.line(image, tuple(points[6][:2]), tuple(points[7][:2]), color, 16)
+    cv2.line(image, tuple(points[7][:2]), tuple(points[8][:2]), color, 16)
+    return image
+def draw_points(image, points):
+    image = np.array(image)
+    for (p_x, p_y, p_z) in points:"
+"        cv2.circle(image, (p_x, p_y), 5, (255, 0, 0), -1)
+    return image
+def img_cor_2_world_cor():
+    x_img, y_img, z_img = img_cor_points[0]
+    xc, yc, zc = x_img*z_img, y_img*z_img, z_img
+    p_cam = np.array([xc, yc, zc])
+    xw, yw, zw = np.dot(np.linalg.inv(k), p_cam)
+    print(xw, yw, zw)
+    print(x, y, z)"
+"    img = cv2.imread(path)
+    if not fast_mode and img is not None and len(img.shape) == 3:
+        img = np.array(img[:, :, ::-1])
+    return img
+def str2coords(s, names=['id', 'yaw', 'pitch', 'roll', 'x', 'y', 'z']):
+    coords = []
+    for l in np.array(s.split()).reshape([-1, 7]):
+        coords.append(dict(zip(names, l.astype('float'))))
+        if 'id' in coords[-1]:"
+"    return coords
+def rotate(x, angle):
+    x = x + angle
+    x = x - (x + np.pi) // (2 * np.pi) * 2 * np.pi
+    return x
+def get_img_coords(s):
+    coords = str2coords(s)
+    xs = [c['x'] for c in coords]
+    ys = [c['y'] for c in coords]"
+"    P = np.array(list(zip(xs, ys, zs))).T
+    img_p = np.dot(camera_matrix, P).T
+    img_p[:, 0] /= img_p[:, 2]
+    img_p[:, 1] /= img_p[:, 2]
+    img_xs = img_p[:, 0]
+    img_ys = img_p[:, 1]
+    img_zs = img_p[:, 2]
+    return img_xs, img_y
+def euler_to_Rot(yaw, pitch, roll):"
+"                  [0, 1, 0],
+                  [-sin(yaw), 0, cos(yaw)]])
+    P = np.array([[1, 0, 0],
+                  [0, cos(pitch), -sin(pitch)],
+                  [0, sin(pitch), cos(pitch)]])
+    R = np.array([[cos(roll), -sin(roll), 0],
+                  [sin(roll), cos(roll), 0],
+                  [0, 0, 1]])
+    return np.dot(Y, np.dot(P, R))"
+"    for t in triangles:
+        coord = np.array([vertices[t[0]][:2], vertices[t[1]][:2], vertices[t[2]][:2]], dtype=np.int32)
+#         cv2.fillConvexPoly(image, coord, (0,0,255))
+        place = num_for_color%3
+        color = [0,0,0]
+        color[place] = 255
+        color = tuple(color)
+        cv2.polylines(image, np.int32([coord]), 1, color)
+    return image"
+"    for t in triangles:
+        coord = np.array([vertices[t[0]][:2], vertices[t[1]][:2], vertices[t[2]][:2]], dtype=np.int32)
+        color = [255,255,255]
+        color = tuple(color)
+        cv2.polylines(image, np.int32([coord]), 1, color)
+    return image
+def visualize(img, coords):
+    img = img.copy()
+    num_for_color = 0"
+"        img_cor_points[:, 1] /= img_cor_points[:, 2]
+        img_cor_points = img_cor_points.astype(int)
+        # find counters
+        overlay = np.zeros_like(img)
+        overlay = draw_bw(overlay, img_cor_points, triangles, num_for_color)
+        overlay = cv2.cvtColor(overlay, cv2.COLOR_BGR2GRAY)
+        contours, hierarchy = cv2.findContours(overlay, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+        # draw counters
+        for i in range(len(contours)):"
+"                overlay = cv2.drawContours(overlay, contours, i, 255, -1)
+        # for instance segmentation
+        overlay_contours = overlay
+        overlay_contours = cv2.Canny(overlay_contours, 30, 200)
+        kernel = np.ones((8,8),np.uint8)
+        overlay_contours = cv2.dilate(overlay_contours,kernel,iterations = 1)
+        # logits
+        masks[0][overlay!=0] = 1
+        # for IS"
+"        num_for_color += 1
+    return img, masks
+def convert_3d_to_2d(x, y, z, fx = 2304.5479, fy = 2305.8757, cx = 1686.2379, cy = 1354.9849):
+    # taken from https://www.kaggle.com/theshockwaverider/eda-visualization-baseline
+    return x * fx / z + cx, y * fy / z + cy
+def image2np(image:Tensor)->np.ndarray:
+    ""Convert from torch style `image` to numpy/matplotlib style.""
+    res = image.cpu().permute(1,2,0).numpy()
+    if res.shape[2]==1:"
+"    elif res.shape[2]>3:
+        #print(res.shape)
+        #print(res[...,:3].shape)
+        return res[...,:3]
+    else:
+        return res
+def clear_duplicates(coords):
+    for c1 in coords:
+        xyz1 = np.array([c1['x'], c1['y'], c1['z']])"
+"            xyz2 = np.array([c2['x'], c2['y'], c2['z']])
+            distance = np.sqrt(((xyz1 - xyz2)**2).sum())
+            if distance < DISTANCE_THRESH_CLEAR:
+                if c1['confidence'] < c2['confidence']:
+                    c1['confidence'] = -1
+    return [c for c in coords if c['confidence'] > 0]
+def extract_coords(prediction, threshold=0):
+    logits = prediction[0]
+    regr_output = prediction[1:]"
+"    col_names = sorted(['x', 'y', 'z', 'yaw', 'pitch_sin', 'pitch_cos', 'roll'])
+    coords = []
+    for r, c in points:
+        regr_dict = dict(zip(col_names, regr_output[:, r, c]))
+        coords.append(_regr_back(regr_dict))
+        coords[-1]['confidence'] = 1 / (1 + np.exp(-logits[r, c]))
+        coords[-1]['x'], coords[-1]['y'], coords[-1]['z'] = optimize_xy(r, c, coords[-1]['x'], coords[-1]['y'], coords[-1]['z'])
+    coords = clear_duplicates(coords)
+    return coords"
+"    s = []
+    for c in coords:
+        for n in names:
+            s.append(str(c.get(n, 0)))
+    return ' '.join(s)
+def get_img_coords(s):
+    '''
+    Input is a PredictionString (e.g. from train dataframe)
+    Output is two arrays:"
+"        ys: y coordinates in the image
+    '''
+    coords = str2coords(s)
+    xs = [c['x'] for c in coords]
+    ys = [c['y'] for c in coords]
+    zs = [c['z'] for c in coords]
+    P = np.array(list(zip(xs, ys, zs))).T
+    img_p = np.dot(camera_matrix, P).T
+    img_p[:, 0] /= img_p[:, 2]"
+"    img_xs = img_p[:, 0]
+    img_ys = img_p[:, 1]
+    img_zs = img_p[:, 2] # z = Distance from the camera
+    return img_xs, img_ys
+def _regr_preprocess(regr_dict):
+    for name in ['x', 'y', 'z']:
+        regr_dict[name] = regr_dict[name] / 100
+    regr_dict['roll'] = rotate(regr_dict['roll'], np.pi)
+    regr_dict['pitch_sin'] = sin(regr_dict['pitch'])"
+"    regr_dict.pop('pitch')
+    regr_dict.pop('id')
+    return regr_dict
+def _regr_back(regr_dict):
+    for name in ['x', 'y', 'z']:
+        regr_dict[name] = regr_dict[name] * 100
+    regr_dict['roll'] = rotate(regr_dict['roll'], -np.pi)
+    
+    pitch_sin = regr_dict['pitch_sin'] / np.sqrt(regr_dict['pitch_sin']**2 + regr_dict['pitch_cos']**2)"
+"    regr_dict['pitch'] = np.arccos(pitch_cos) * np.sign(pitch_sin)
+    return regr_dict
+def preprocess_image(img):
+    img = img[img.shape[0] // 2:]
+    bg = np.ones_like(img) * img.mean(1, keepdims=True).astype(img.dtype)
+    bg = bg[:, :img.shape[1] // 4]
+    img = np.concatenate([bg, img, bg], 1)
+    img = cv2.resize(img, (img_w, img_h))
+    return img"
+"    mask = np.zeros([img_h // model_scale, img_w // model_scale], dtype='float32')
+    regr_names = ['x', 'y', 'z', 'yaw', 'pitch', 'roll']
+    regr = np.zeros([img_h // model_scale, img_w // model_scale, 7], dtype='float32')
+    coords = str2coords(labels)
+    xs, ys = get_img_coords(labels)
+    for x, y, regr_dict in zip(xs, ys, coords):
+        x, y = y, x
+        x = (x - img_orig_height // 2) * img_h / (img_orig_height // 2) / model_scale
+        x = np.round(x).astype('int')"
+"        y = np.round(y).astype('int')
+        if x >= 0 and x < img_h // model_scale and y >= 0 and y < img_w // model_scale:
+            mask[x, y] = 1
+            regr_dict = _regr_preprocess(regr_dict)
+            regr[x, y] = [regr_dict[n] for n in sorted(regr_dict)]
+    return mask, regr
+datagen = ImageDataGenerator(
+        rotation_range=10,  
+        zoom_range = 0.10,  "
+"        height_shift_range=0.1)
+def a2v(yaw, pitch, roll):
+    # Euler Angle -> Rotation Matrix
+    # I think the pitch and yaw should be exchanged
+    yaw, pitch = pitch, yaw
+    Y = np.array([[cos(yaw), -sin(yaw), 0],
+                  [sin(yaw), cos(yaw), 0],
+                  [0, 0, 1]])
+    P = np.array([[cos(pitch), 0, sin(pitch)],"
+"    
+    return rotation_v
+def v2a(rotation_v):
+    # Rotation Vector -> Rotation Matrix
+    R = Rodrigues(rotation_v)[0]
+    
+    sq = sqrt(R[0,0] ** 2 +  R[1,0] ** 2)
+
+    if  not (sq < 1e-6) :"
+"        yaw = atan2(-R[2,0], sq)
+        pitch = atan2(R[1,0], R[0,0])
+    else :
+        roll = atan2(-R[1,2], R[1,1])
+        yaw = atan2(-R[2,0], sq)
+        pitch = 0
+
+    return yaw, pitch, roll
+def flip_hor_at_u(img, cx, flag_plot=False):"
+"    cx_rounded = np.round(cx * 2).astype(np.int)
+    u_flip = cx_rounded / 2
+
+    # determine new width
+    height, width, nchannels = img.shape
+    if cx_rounded % 2 == 1:
+        # if flipping line lies between two pixels...
+        width_left = np.ceil(u_flip)
+        width_right = np.floor(width - u_flip)"
+"    # create new image and flip horizontally
+    bg = img.mean(1, keepdims=True).astype(img.dtype)
+    bg_left = np.repeat(bg, pad_left, axis=1)
+    bg_right = np.repeat(bg, pad_right, axis=1)
+    img_padded = np.hstack((bg_left, img, bg_right))
+    img_padded_flipped = img_padded[:, ::-1, :]
+
+    # crop back to org size s.t. cx=const
+    dim_right = width_new-pad_right"
+"                  pad_left.astype(np.int):dim_right.astype(np.int)
+                  :]
+    width_cropped = img_cropped.shape[1]
+    assert width_cropped== width, ""width changed during flipping ?!""
+
+    # plot images
+    if flag_plot:
+        fig_width, fig_height = max(4,width/100), max(6, 2*height/100)
+        fig,ax = plt.subplots(2,1, sharey=True, sharex=True, figsize=(fig_width,fig_height))"
+"        ax[1].imshow(img_cropped)
+        for axi in ax:
+            axi.vlines(u_flip, 0, height-1)
+        plt.show()
+
+    return img_cropped
+def euler_to_Rot(yaw, pitch, roll):
+    Y = np.array([[cos(yaw), 0, sin(yaw)],
+                  [0, 1, 0],"
+"    P = np.array([[1, 0, 0],
+                  [0, cos(pitch), -sin(pitch)],
+                  [0, sin(pitch), cos(pitch)]])
+    R = np.array([[cos(roll), -sin(roll), 0],
+                  [sin(roll), cos(roll), 0],
+                  [0, 0, 1]])
+    return np.dot(Y, np.dot(P, R))
+def str2coords(s, names=['id', 'yaw', 'pitch', 'roll', 'x', 'y', 'z']):
+    '''"
+"        s: PredictionString (e.g. from train dataframe)
+        names: array of what to extract from the string
+    Output:
+        list of dicts with keys from `names`
+    '''
+    coords = []
+    for l in np.array(s.split()).reshape([-1, 7]):
+        coords.append(dict(zip(names, l.astype('float'))))
+        if 'id' in coords[-1]:"
+"    return coords
+def get_img_coords(s):
+    '''
+    Input is a PredictionString (e.g. from train dataframe)
+    Output is two arrays:
+        xs: x coordinates in the image
+        ys: y coordinates in the image
+    '''
+    coords = str2coords(s)"
+"    ys = [c['y'] for c in coords]
+    zs = [c['z'] for c in coords]
+    P = np.array(list(zip(xs, ys, zs))).T
+    img_p = np.dot(camera_matrix, P).T
+    img_p[:, 0] /= img_p[:, 2]
+    img_p[:, 1] /= img_p[:, 2]
+    img_xs = img_p[:, 0]
+    img_ys = img_p[:, 1]
+    return img_xs, img_ys"
+"    x_l = 1.02
+    y_l = 0.80
+    z_l = 2.31
+    
+    img = img.copy()
+    for point in coords:
+        # Get values
+        x, y, z = point['x'], point['y'], point['z']
+        yaw, pitch, roll = point['yaw'], point['pitch'], point['roll']"
+"        img_cor_points = np.dot(camera_matrix, np.dot(Rt, P))
+        img_cor_points = img_cor_points.T
+        img_cor_points[:, 0] /= img_cor_points[:, 2]
+        img_cor_points[:, 1] /= img_cor_points[:, 2]
+        img_cor_points = img_cor_points.astype(int)
+        # Drawing
+        img = draw_points(img, img_cor_points[-1:])
+        if pose_name == 'X':
+            cv2.putText(img, str(int(x)), (img_cor_points[-1,0]-60, img_cor_points[-1,1]-20), cv2.FONT_HERSHEY_PLAIN, 6, (0, 255, 0), 3, cv2.LINE_AA)"
+"            cv2.putText(img, str(int(y)), (img_cor_points[-1,0]-60, img_cor_points[-1,1]-20), cv2.FONT_HERSHEY_PLAIN, 6, (0, 255, 0), 3, cv2.LINE_AA)
+        elif pose_name == 'Z':
+            cv2.putText(img, str(int(z)), (img_cor_points[-1,0]-60, img_cor_points[-1,1]-20), cv2.FONT_HERSHEY_PLAIN, 6, (0, 255, 0), 3, cv2.LINE_AA)
+        elif pose_name == 'Yaw':
+            cv2.putText(img, str(round(yaw,1)), (img_cor_points[-1,0]-60, img_cor_points[-1,1]-20), cv2.FONT_HERSHEY_PLAIN, 6, (0, 255, 0), 3, cv2.LINE_AA)
+        elif pose_name == 'Pitch':
+            cv2.putText(img, str(round(pitch,1)), (img_cor_points[-1,0]-60, img_cor_points[-1,1]-20), cv2.FONT_HERSHEY_PLAIN, 6, (0, 255, 0), 3, cv2.LINE_AA)
+        elif pose_name == 'Roll':
+            cv2.putText(img, str(round(roll,1)), (img_cor_points[-1,0]-60, img_cor_points[-1,1]-20), cv2.FONT_HERSHEY_PLAIN, 6, (0, 255, 0), 3, cv2.LINE_AA)"
+"            print('Please input right pose name (X, Y, Z, Yaw, Pitch, Roll)')
+            
+    return img
+def warp_image(image):
+    image = (image/255.0).reshape(28,28)
+    image = thin(image,max_iter=np.random.randint(0,3))
+    image = rotate(image,angle=np.random.normal(-15,15))
+    return image.flatten()
+# Normalize the data"
+"test = test / 255.0
+# Reshape image in 3 dimensions (height = 28px, width = 28px , canal = 1)
+X_train = X_train.values.reshape(-1,28,28,1)
+test = test.values.reshape(-1,28,28,1)
+# Encode labels to one hot vectors (ex : 2 -> [0,0,1,0,0,0,0,0,0,0])
+Y_train = to_categorical(Y_train, num_classes = 10)
+X_train, X_val, Y_train, Y_val = train_test_split(X_train, Y_train, test_size = 0.1, random_state=random_seed)
+#expand 1 more dimention as 1 for colour channel gray
+X_train = X_train.reshape(X_train.shape[0], 28, 28,1)"
+"X_test = X_test.reshape(X_test.shape[0], 28, 28,1)
+X_test.shape
+mean_px = X_train.mean().astype(np.float32)
+std_px = X_train.std().astype(np.float32)
+
+def standardize(x): 
+    return (x-mean_px)/std_px
+def get_image_file_path(image_file_name):
+    """"""returns the path of image file"""""""
+"def get_images(n):
+    """"""reads all the files from `../input/test` directory and returns paths for n files from top""""""
+    all_image_files = os.listdir(""../input/test/"")
+    # let's save all these Path (image)s for later
+    image_paths = list(map(get_image_file_path, all_image_files))
+    # rather than using all, we will use a subset of these Path (image)s for working on our model
+    image_paths = image_paths[:n]
+    return image_paths
+def get_image_id_from_path(image_path):"
+"    return image_path.split('../input/test/')[1].split('.jpg')[0]
+def show_image_by_index(i):
+    sample_image = plt.imread(f'../input/test/{test_filename[i]}')
+    plt.imshow(sample_image)
+def show_image_by_filename(filename):
+    sample_image = plt.imread(filename)
+    plt.imshow(sample_image)
+def draw_boxes(image, boxes, class_names, scores, max_boxes=10, min_score=0.1):
+  """"""Overlay labeled boxes on an image with formatted scores and label names."""""""
+"
+#   try:
+#     font = ImageFont.truetype(""/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Regular.ttf"",
+#                               25)
+#   except IOError:
+#     print(""Font not found, using default font."")
+  font = ImageFont.load_default()
+
+  for i in range(min(boxes.shape[0], max_boxes)):"
+"      ymin, xmin, ymax, xmax = tuple(boxes[i].tolist())
+      display_str = ""{}: {}%"".format(class_names[i].decode(""ascii""),
+                                     int(100 * scores[i]))
+      color = colors[hash(class_names[i]) % len(colors)]
+      image_pil = Image.fromarray(np.uint8(image)).convert(""RGB"")
+      draw_bounding_box_on_image(
+          image_pil,
+          ymin,
+          xmin,"
+"          xmax,
+          color,
+          font,
+          display_str_list=[display_str])
+      np.copyto(image, np.array(image_pil))
+  return image
+def draw_bounding_box_on_image(image,
+                               ymin,
+                               xmin,"
+"                               xmax,
+                               color,
+                               font,
+                               thickness=4,
+                               display_str_list=()):
+  """"""Adds a bounding box to an image.""""""
+  draw = ImageDraw.Draw(image)
+  im_width, im_height = image.size
+  (left, right, top, bottom) = (xmin * im_width, xmax * im_width,"
+"  draw.line([(left, top), (left, bottom), (right, bottom), (right, top),
+             (left, top)],
+            width=thickness,
+            fill=color)
+
+  # If the total height of the display strings added to the top of the bounding
+  # box exceeds the top of the image, stack the strings below the bounding box
+  # instead of above.
+  display_str_heights = [font.getsize(ds)[1] for ds in display_str_list]"
+"  total_display_str_height = (1 + 2 * 0.05) * sum(display_str_heights)
+
+  if top > total_display_str_height:
+    text_bottom = top
+  else:
+    text_bottom = bottom + total_display_str_height
+  # Reverse list and print from bottom to top.
+  for display_str in display_str_list[::-1]:
+    text_width, text_height = font.getsize(display_str)"
+"    draw.rectangle([(left, text_bottom - text_height - 2 * margin),
+                    (left + text_width, text_bottom)],
+                   fill=color)
+    draw.text((left + margin, text_bottom - text_height - margin),
+              display_str,
+              fill=""black"",
+              font=font)
+    text_bottom -= text_height - 2 * margin
+pic = imageio.imread('../input/open-images-2019-object-detection/test/d0d394a4b854c49d.jpg')"
+"h,w = pic.shape[:2]
+
+im_small_long = pic.reshape((h * w, 3))
+im_small_wide = im_small_long.reshape((h,w,3))
+def draw_boxes(image, boxes, class_names, scores, max_boxes=10, min_score=0.1):
+    """"""Overlay labeled boxes on an image with formatted scores and label names.""""""
+    colors = list(ImageColor.colormap.values())
+
+    try:"
+"            ""/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Regular.ttf"",
+            25)
+    except IOError:
+        print(""Font not found, using default font."")
+        font = ImageFont.load_default()
+
+    for i in range(min(boxes.shape[0], max_boxes)):
+        if scores[i] >= min_score:
+            ymin, xmin, ymax, xmax = tuple(boxes[i].tolist())"
+"                                           int(100 * scores[i]))
+            color = colors[hash(class_names[i]) % len(colors)]
+            image_pil = Image.fromarray(np.uint8(image)).convert(""RGB"")
+            draw_bounding_box_on_image(
+                image_pil,
+                ymin,
+                xmin,
+                ymax,
+                xmax,"
+"                font,
+                display_str_list=[display_str])
+            np.copyto(image, np.array(image_pil))
+    return image
+def draw_bounding_box_on_image(image,
+                               ymin,
+                               xmin,
+                               ymax,
+                               xmax,"
+"                               font,
+                               thickness=4,
+                               display_str_list=()):
+    """"""Adds a bounding box to an image.""""""
+    draw = ImageDraw.Draw(image)
+    im_width, im_height = image.size
+    (left, right, top, bottom) = (xmin * im_width, xmax * im_width,
+                                  ymin * im_height, ymax * im_height)
+    draw.line([(left, top), (left, bottom), (right, bottom), (right, top),"
+"              width=thickness,
+              fill=color)
+
+    # If the total height of the display strings added to the top of the bounding
+    # box exceeds the top of the image, stack the strings below the bounding box
+    # instead of above.
+    display_str_heights = [font.getsize(ds)[1] for ds in display_str_list]
+    # Each display_str has a top and bottom margin of 0.05x.
+    total_display_str_height = (1 + 2 * 0.05) * sum(display_str_heights)"
+"    if top > total_display_str_height:
+        text_bottom = top
+    else:
+        text_bottom = bottom + total_display_str_height
+    # Reverse list and print from bottom to top.
+    for display_str in display_str_list[::-1]:
+        text_width, text_height = font.getsize(display_str)
+        margin = np.ceil(0.05 * text_height)
+        draw.rectangle([(left, text_bottom - text_height - 2 * margin),"
+"                       fill=color)
+        draw.text((left + margin, text_bottom - text_height - margin),
+                  display_str,
+                  fill=""black"",
+                  font=font)
+        text_bottom -= text_height - 2 * margin
+def _make_openimage2019_mask(split_name):
+    img_paths = []
+    mask_paths = []"
+"    mask_folder = os.path.join(BASE_DIR, 'mask-images-'+split_name)
+    join_folder = os.path.join(TEMP_DIR, 'join-masks')
+    img_folder_list = sorted(list(os.listdir(img_folder)))
+    image_mask = {}
+    for filename in os.listdir(mask_folder):
+        basename, _ = os.path.splitext(filename)
+        maskname = basename.split(""_"")
+        if filename.endswith("".png""):
+            imgpath = os.path.join(img_folder, filename)"
+"            imagepath = os.path.join(img_folder, imagename)
+            if os.path.isfile(imagepath):
+                if imagepath not in image_mask:
+                    image_mask[imagename] = [filename]
+                else:
+                    image_mask[imagename].append(filename)
+            else:
+                print('cannot find the image:', imagepath)
+"
+"        for nc in range(NUM_CROP):
+            imgpath = os.path.join(img_folder, imagename)
+            basename, _ = os.path.splitext(imagename)
+            joinpath = os.path.join(join_folder, basename+""-""+str(nc)+"".pkl"")
+            if os.path.isfile(joinpath):
+                continue
+
+            img_rs = _create_resize_image(Image.open(imgpath)).convert('RGB')
+            "
+"            crop_y = np.random.randint(img_rs.height-CLOP_SIZE)
+            img = img_rs.crop((crop_x, crop_y, crop_x+CLOP_SIZE, crop_y+CLOP_SIZE))
+
+            boxes = []
+            masks = []
+            labels = []
+
+            for filename in masknames:
+                basename, _ = os.path.splitext(filename)"
+"                maskpath = os.path.join(mask_folder, filename)
+                maskflag = _create_resize_image(Image.open(maskpath), ismask=True, tosize=(img_rs.width,img_rs.height))
+                maskflag = maskflag.crop((crop_x, crop_y, crop_x+CLOP_SIZE, crop_y+CLOP_SIZE))
+                maskflag = np.array(maskflag.convert('1'))
+                maskclass = _mask_filepart_classname(maskname[1])
+                if np.sum(maskflag) > 0 and maskclass in CLASSES:
+                    labels.append(CLASSES.index(maskclass))
+                    pos = np.where(maskflag)
+                    xmin = np.min(pos[1])"
+"                    ymin = np.min(pos[0])
+                    ymax = np.max(pos[0])
+                    boxes.append([xmin, ymin, xmax, ymax])
+                    masks.append(maskflag)
+
+            if len(boxes) > 0:
+
+                boxes = np.array(boxes)
+                masks = np.array(masks)"
+"
+                idx = 0
+                if imagename in img_folder_list:
+                    idx = img_folder_list.index(imagename)
+                image_id = [idx]
+
+                if boxes.shape[0] == 0:
+                    area = 0
+                else:"
+"
+                iscrowd = np.zeros((len(boxes),), dtype=np.int64)
+
+                target = {}
+                target[""boxes""] = boxes
+                target[""labels""] = labels
+                target[""masks""] = masks
+                target[""image_id""] = image_id
+                target[""area""] = area"
+"
+                imgf = np.array(img, dtype=np.float32).transpose(2,0,1)
+
+                with open(joinpath, 'wb') as f:
+                    pickle.dump((imgf,target), f)
+def get_transform(train):
+    transforms = []
+    transforms.append(T.ToTensor())
+    if train:"
+"    return T.Compose(transforms)
+def to_2regions(image):
+    gray = rgb2gray(image)
+    m = gray.mean()
+    for i in range(image.shape[0]):
+        for j in range(image.shape[1]):    
+            gray[i,j] = int(gray[i,j] > m)
+    return gray
+def to_4regions(image):"
+"    m = g_image.mean()
+    m1 = 0.5 * m
+    m2 = 0.25 * m
+    for i in range(image.shape[0]):
+        for j in range(image.shape[1]):
+            pxl = g_image[i,j]
+            if pxl > m:
+                g_image[i,j] = 3
+            elif pxl > m1:"
+"            elif pxl > m2:
+                g_image[i,j] = 1
+            else:
+                g_image[i,j] = 0            
+    return g_image
+def generate_df(train_df,sample_num=1):
+    train_df['path'] = train_df['experiment'].str.cat(train_df['plate'].astype(str).str.cat(train_df['well'],sep='/'),sep='/Plate') + '_s'+str(sample_num) + '_w'
+    train_df = train_df.drop(columns=['id_code','experiment','plate','well']).reindex(columns=['path','sirna'])
+    return train_df"
+"    images = []
+    for i in range(6):
+        file_name = fn+str(i+1)+'.png'
+        im = cv2.imread(file_name)
+        im = cv2.cvtColor(im, cv2.COLOR_RGB2GRAY)
+        images.append(im)
+    image = np.dstack(images)
+    #print(pil2tensor(image, np.float32).shape)#.div_(255).shape)
+    return Image(pil2tensor(image, np.float32).div_(255))"
+"Y_train3 = Y_train[9,].reshape((1,10))
+plt.figure(figsize=(15,4.5))
+for i in range(30):  
+    plt.subplot(3, 10, i+1)
+    X_train2, Y_train2 = datagen.flow(X_train3,Y_train3).next()
+    plt.imshow(X_train2[0].reshape((28,28)),cmap=plt.cm.binary)
+    plt.axis('off')
+    if i==9: X_train3 = X_train[11,].reshape((1,28,28,1))
+    if i==19: X_train3 = X_train[18,].reshape((1,28,28,1))"
+"plt.show()
+fig1, ax1 = plt.subplots(1,15, figsize=(15,10))
+for i in range(15):
+    ax1[i].imshow(X_test[i].reshape((28,28)), cmap=""gray_r"")
+    ax1[i].axis('off')
+    ax1[i].set_title(y_test[i])
+import re
+
+# EMOTICONS can be found by the following github link: https://github.com/NeelShah18/emot/blob/master/emot/emo_unicode.py"
+"    emoticon_pattern = re.compile(u'(' + u'|'.join(k for k in EMOTICONS) + u')')
+    return emoticon_pattern.sub(r'', text)
+
+df['column_name'] = df['column_name'].apply(lambda x: remove_emoticons(x))
+import re
+
+# EMOTICONS can be found by the following github link: https://github.com/NeelShah18/emot/blob/master/emot/emo_unicode.py
+def remove_emoticons(text):
+    emoticon_pattern = re.compile(u'(' + u'|'.join(k for k in EMOTICONS) + u')')"
+"
+for row, index in df.iterrows():
+    row['column_name'] = remove_emoticons(row['column_name'])
+
+import re
+
+# EMOTICONS can be found by the following github link: https://github.com/NeelShah18/emot/blob/master/emot/emo_unicode.py
+def convert_emoticons(text):
+    for emot in EMOTICONS:"
+"    return text
+
+df['column_name'] = df['column_name'].apply(lambda x: convert_emoticons(x))
+
+import re
+
+# EMOTICONS can be found by the following github link: https://github.com/NeelShah18/emot/blob/master/emot/emo_unicode.py
+def convert_emoticons(text):
+    for emot in EMOTICONS:"
+"    return text
+
+for row, index in df.iterrows():
+    row['column_name'] = convert_emoticons(row['column_name'])
+import re
+
+# UNICODE_EMO can be found by the following github link: https://github.com/NeelShah18/emot/blob/master/emot/emo_unicode.py
+def convert_emojis(text):
+    for emot in UNICODE_EMO:"
+"    return text
+
+df['column_name'] = df['column_name'].apply(lambda x: convert_emojis(x))
+import re
+
+# UNICODE_EMO can be found by the following github link: https://github.com/NeelShah18/emot/blob/master/emot/emo_unicode.py
+def convert_emojis(text):
+    for emot in UNICODE_EMO:
+        text = re.sub(r'('+emot+')', ""_"".join(UNICODE_EMO[emot].replace("","","""").replace("":"","""").split()), text)"
+"
+for row, index in df.iterrows():
+    row['column_name'] = convert_emojis(row['column_name'])
+from bs4 import BeautifulSoup
+
+df['column_name'] = df['column_name'].apply(lambda x: BeautifulSoup(x, ""lxml"").text)
+from bs4 import BeautifulSoup
+
+def remove_html(ttt):"
+"
+df['column_name'] = df['column_name'].apply(lambda x: remove_html(x))
+from bs4 import BeautifulSoup
+
+def remove_html(ttt):
+    return BeautifulSoup(ttt, ""lxml"").text
+
+for row, index in df.iterrows():
+    row['column_name'] = remove_html(row['column_name'])"
+"from collections import Counter
+
+
+def words(text): return re.findall(r'\w+', text.lower())
+WORDS = Counter(words(open('../input/big.txt').read()))
+
+
+def P(word, N=sum(WORDS.values())):
+    ""Probability of `word`."""
+"
+
+def correction(word):
+    ""Most probable spelling correction for word.""
+    return max(candidates(word), key=P)
+
+
+def candidates(word):
+    ""Generate possible spelling corrections for word."""
+"
+
+def known(words):
+    ""The subset of `words` that appear in the dictionary of WORDS.""
+    return set(w for w in words if w in WORDS)
+
+
+def edits1(word):
+    ""All edits that are one edit away from `word`."""
+"    splits = [(word[:i], word[i:]) for i in range(len(word) + 1)]
+    deletes = [L + R[1:] for L, R in splits if R]
+    transposes = [L + R[1] + R[0] + R[2:] for L, R in splits if len(R) > 1]
+    replaces = [L + c + R[1:] for L, R in splits if R for c in letters]
+    inserts = [L + c + R for L, R in splits for c in letters]
+    return set(deletes + transposes + replaces + inserts)
+
+
+def edits2(word):"
