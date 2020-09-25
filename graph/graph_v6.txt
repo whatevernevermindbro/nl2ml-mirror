@@ -1,0 +1,58 @@
+{	
+	"import": ["import \\w+ as \\w+", "import \\w+", "from \\w+ import \\w+", "from \\w+ import \\w+ as \\w+"],
+
+	"data_import": ["[ ]{0,1}=[ ]{0,1}open[ ]{0,1}(",
+			"with open[ ]{0,1}\\([ ]{0,1}[\\'\"]\\w+.\\w+[\\'\"][ ]{0,1},[ ]{0,1}[\\'\"]\\w+[\\'\"]\\)) as \\w+[ ]{0,1}:",
+			"read_csv", "read_fwf", "read_json", "read_html", "read_clipboard", "read_excel", "read_hdf",
+			"read_feather", "read_parquet", "read_orc", "read_msgpack", "read_stata", "read_sas",
+			"read_spss", "read_pickle", "read_sql", "read_gbq"],
+	
+	"data_export": ["to_csv", "to_json", "to_clipboard", "to_excel", "to_hdf", "to_feather", "to_parquet",
+			"to_msgpack", "to_stata", "to_pickle", "to_sql", "to_gbq"],
+
+	"preprocessing": ["train_test_split", "Normalizer", "StandardScaler", "normalize", "scale", "DictVectorizer",
+			"CountVectorizer", "HashingVectorizer", "TfidfVectorizer", "Stemmer", "WordNetLemmartizer",
+			"Word2Vec", "LancasterStemmer", "SnowballStemmer", "PorterStemmer", "stemmer", "encode",
+			"decode", "lemmatize", "stem", "minmaxscaler", "labelencoder", "LabelEncoder", "concat",
+			"concatenate", "merge", "fill", "fillna", "normalize", "crop", "drop", "preprocess_image",
+			"vectorizer", "tokenizer", "tfidf", "replace", "test_size", "map", "filter", "getdummies",
+			"fit_transform", "transform", "strip", "split", "apply", "dropna", "clean", "duplicated",
+			"drop_duplicates", "reset_index", "reshape", "stemming", "deskew", "str.contains",
+			"augmentation", "flatten", "groupby", "sort_values", "pad", "set_vscale", "pivot", "melt",
+			"sent_tokenize", "word_tokenize", "join", "preprocess", "preprocessing", "test_split",
+			"font_scale", "scale", "color_continuous_scale", "colorscale", "preprocessor", "rescale",
+			"reversescale", "inverse_transform", "simple_preprocess", "generation", "augmentation",
+			"lemmatization", "scale", "resize", "invertxaxis", "attention", "polynomialfeatures", "autoscale"],
+
+	"visualization": [".subplots", ".scatter", ".set_title", ".set_xlabel", ".set_ylabel",
+			".plot", ".legend", ".hist", ".bar", ".barh", ".scatterplot", ".lineplot", ".distplot",
+			".countplot", ".boxplot", ".imshow", ".set_xticks", ".set_yticks", ".set_xticklabels",
+			".set_yticklabels", ".setp", ".heatmap", ".FacetGrid", ".map", ".kdeplot",
+			".pairplot", "scatter_matrix"],
+
+	"model": ["LinearRegression", "RandomForest", "Ridge", "RidgeCV", "RidgeClassifier", "RidgeClassifierCV",
+			"SGD", "LogisticRegression", "LogisticRegressionCV", "SVC", "SVR", "Layer", "XGboost", "LGBM",
+			"Perceptron", "KNeighborsRegressor", "KNeighborsClassifier", "SGDRegressor", "ElasticNet",
+			"KMeans", "AgglomerativeClustering", "SpectralClustering", "CategoricalNB", "ComplementNB",
+			"DecisionTreeClassifier", "DecisionTreeRegressor", "Lasso", "CatBoost", "ElasticNetCV"],
+    
+    	"deep_learning_model": ["Dense", "Activation", "Embedding", "Masking", "Lambda", "Conv\\dD", "SeparableConv\\dD",
+                            	"DepthwiseConv\\dD", "Conv\\dDTranspose", "MaxPooling\\dD", "AveragePooling\\dD",
+                            	"GlobalPooling\\dD", "GlobalAveragePooling\\dD", "LSTM", "GRU", "RNN", "SimpleRNN",
+                            	"Bidirectional", "ConvLSTM2D", "CategoryEncoding", "CategoryCrossing", "BatchNormalization",
+                            	"LayerNormalization", "Dropout", "SpatialDropout\\dD", "GaussianDropout", "GaussianNoise",
+                            	"ActivityRegularization", "AlphaDropout", "Attention", "AdditiveAttention", "Cropping\\dD",
+				"UpSampling\\dD", "ZeroPadding\\dD", "LocallyConnected\\dD", "ReLU", "Softmax", "LeakyReLU",
+				"PReLU", "ELU", "ThresholdedReLU"],
+
+	"train": ["fit", "Adam", "SGD", "RMSprop", "Adadelta", "Adamax", "Nadam", "Ftrl",
+			"apply_gradients", "epoch", "EPOCH"],
+
+	"predict": ["predict", "BinaryCrossetropy", "CategoricalCrossentropy", "binary_crossentropy",
+			"categorical_crossentropy", "categorical_crossentropy", "KLDivergence class",
+			"kl_divergence function", "MeanSquaredError", "MeanAbsoluteError", "mean_squared_error",
+               		"MeanAbsolutePercentageError", "MeanSquaredLogarithmicError", "CosineSimilarity",
+                	"mean_absolute_error", "mean_absolute_percentage_error", "mean_squared_logarithmic_error",
+                	"cosine_similarity", "Huber", "huber", "LogCosh", "log_cosh", "Hinge", "SquaredHinge",
+                	"CategoricalHinge", "hinge", "squared_hinge", "categorical_hinge"]
+}

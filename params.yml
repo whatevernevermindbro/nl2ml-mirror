@@ -1,13 +1,10 @@
-C: 100
-data: ./data/chunks_20_validate.csv
-kernel: linear
-label: tag
-max_df: 0.3
-min_df: 5
-model: ./models/svm_regex_graph_v3.sav
-nrows: 280
-random_state: 241
-script_dir: logreg_classifier.ipynb
-smooth_idf: true
-task: evaluation/validation
-verbose: 1
+DATASET_PATH: ./data/golden_884_set.csv
+MODEL_DIR: ./models/svm_regex_graph_v5.sav
+TFIDF_DIR: ./models/tfidf_svm_graph_v5.pickle
+graph_ver: 5
+label: '[''import'', ''data_import'', ''data_export'', ''preprocessing'', ''visualization'',
+  ''model'', ''deep_learning_model'', ''train'', ''predict'']'
+model: svm
+nrows: 884
+script_dir: ./predict_tag.ipynb
+task: model validation
