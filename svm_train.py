@@ -90,8 +90,8 @@ def SVM_multioutput_evaluate(df, code_blocks, tfidf_params, TFIDF_DIR, SVM_param
     return metrics
 
 if __name__ == '__main__':
-    GRAPH_VERSION = 5
-    DATASET_PATH = './data/code_blocks_regex_graph_v{}.csv'.format(GRAPH_VERSION)
+    GRAPH_VERSION = 6
+    DATASET_PATH = './data_mini/code_blocks_regex_graph_v{}.csv'.format(GRAPH_VERSION)
     MODEL_DIR = './models/svm_regex_graph_v{}.sav'.format(GRAPH_VERSION)
     TFIDF_DIR = './models/tfidf_svm_graph_v{}.pickle'.format(GRAPH_VERSION)
     CODE_COLUMN = 'code_block'
