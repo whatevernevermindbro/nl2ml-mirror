@@ -5,7 +5,7 @@ label: '[''import'', ''data_import'', ''data_export'', ''preprocessing'', ''visu
   ''model'', ''deep_learning_model'', ''train'', ''predict'']'
 max_df: 0.3
 min_df: 5
-model: ./models/svm_regex.sav
+model: ./models/nurx2/svm_regex.sav
 nrows: 884
 random_state: 241
 script_dir: svm_train.py

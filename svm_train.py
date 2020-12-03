@@ -95,8 +95,8 @@ if __name__ == '__main__':
     # MODEL_DIR = './models/svm_regex_graph_v{}.sav'.format(GRAPH_VERSION)
     # TFIDF_DIR = './models/tfidf_svm_graph_v{}.pickle'.format(GRAPH_VERSION)
     DATASET_PATH = './data_mini/golden_884_set.csv'
-    MODEL_DIR = './models/svm_regex.sav'
-    TFIDF_DIR = './models/tfidf_svm.pickle'
+    MODEL_DIR = './models/nurx2/svm_regex.sav'
+    TFIDF_DIR = './models/nurx2/tfidf_svm.pickle'
     CODE_COLUMN = 'code_block'
     TAGS_TO_PREDICT = ['import', 'data_import', 'data_export', 'preprocessing',
                         'visualization', 'model', 'deep_learning_model', 'train', 'predict']
