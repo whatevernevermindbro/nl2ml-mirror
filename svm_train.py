@@ -15,7 +15,7 @@ from sklearn.multioutput import MultiOutputRegressor
 import dagshub
 
 def load_code_blocks(DATASET_PATH, CODE_COLUMN):
-    df = pd.read_csv(DATASET_PATH, encoding='utf-8', comment='#', sep=',')#, quoting=csv.QUOTE_NONE, error_bad_lines=False)#, sep=','
+    df = pd.read_csv(DATASET_PATH, encoding='utf-8', comment='#', sep=',', error_bad_lines=False)#, quoting=csv.QUOTE_NONE, error_bad_lines=False)#, sep=','
     df.dropna(axis=0, inplace=True)
     code_blocks = df[CODE_COLUMN]
     # test_size = 0.1
@@ -72,7 +72,7 @@ def SVM_multioutput_evaluate(df, code_blocks, tfidf_params, TFIDF_DIR, SVM_param
     # C = gs.best_params_.get('C')
     # model = SVC(**SVM_params)
     print("Train SVM params:", model.get_params())
-    n_estimators = 10
+    n_estimators = 2  # was 10
     clf = MultiOutputRegressor(BaggingClassifier(model, max_samples=1.0 / n_estimators, n_estimators=n_estimators))
     # clf = model
     print("starting training..")
@@ -91,9 +91,12 @@ def SVM_multioutput_evaluate(df, code_blocks, tfidf_params, TFIDF_DIR, SVM_param
 
 if __name__ == '__main__':
     GRAPH_VERSION = 5
-    DATASET_PATH = './data/code_blocks_regex_graph_v{}.csv'.format(GRAPH_VERSION)
-    MODEL_DIR = './models/svm_regex_graph_v{}.sav'.format(GRAPH_VERSION)
-    TFIDF_DIR = './models/tfidf_svm_graph_v{}.pickle'.format(GRAPH_VERSION)
+    # DATASET_PATH = './data/code_blocks_regex_graph_v{}.csv'.format(GRAPH_VERSION)
+    # MODEL_DIR = './models/svm_regex_graph_v{}.sav'.format(GRAPH_VERSION)
+    # TFIDF_DIR = './models/tfidf_svm_graph_v{}.pickle'.format(GRAPH_VERSION)
+    DATASET_PATH = './data_mini/golden_884_set.csv'
+    MODEL_DIR = './models/svm_regex.sav'
+    TFIDF_DIR = './models/tfidf_svm.pickle'
     CODE_COLUMN = 'code_block'
     TAGS_TO_PREDICT = ['import', 'data_import', 'data_export', 'preprocessing',
                         'visualization', 'model', 'deep_learning_model', 'train', 'predict']

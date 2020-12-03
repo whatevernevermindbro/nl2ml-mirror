@@ -5,3 +5,4 @@ foldername/
 svm_classifier.ipynb
 /open_data
 /data_mini
+.DS_store
