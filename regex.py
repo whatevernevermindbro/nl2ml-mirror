@@ -64,3 +64,28 @@ if __name__ == '__main__':
         TAGS = vertices
         REGEX_TAGS = [el + '_regex_v{}'.format(GRAPH_VER) for el in TAGS]
         regexed_data = pd.read_csv(VALIDATION_DATA_PATH)
+        Y_test, Y_pred = regexed_data[TAGS], regexed_data[REGEX_TAGS]
+        base_f1 = f1_score(Y_test, Y_pred, average='weighted')
+        base_precision = precision_score(Y_test, Y_pred, average='weighted')
+        base_recall = recall_score(Y_test, Y_pred, average='weighted')
+        regex_results = {'test_f1_score': base_f1
+                    , 'test_precision': base_precision
+                    , 'test_recall': base_recall}
+        for i, tag in enumerate(TAGS):
+            tag_results = (round(f1_score(Y_test.iloc[:, i], Y_pred.iloc[:, i], average='weighted'),4),\
+                            round(precision_score(Y_test.iloc[:, i], Y_pred.iloc[:, i], average='weighted'),4),\
+                            round(recall_score(Y_test.iloc[:, i], Y_pred.iloc[:, i], average='weighted'),4))
+            print(tag)
+            print(tag_results)
+            regex_results.update({tag:tag_results})
+            print('------')
+        data_meta = {'DATASET_PATH': VALIDATION_DATA_PATH
+                    ,'nrows': regexed_data.shape[0]
+                    ,'graph_ver': GRAPH_VER
+                    ,'label': TAGS
+                    ,'model': 'regex_v{}'.format(GRAPH_VER)
+                    ,'script_dir': './regex.ipynb'
+                    ,'task': 'regex evaluation'}
+        with dagshub.dagshub_logger() as logger:
+            logger.log_hyperparams(data_meta)
+            logger.log_metrics(regex_results)
