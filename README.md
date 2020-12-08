@@ -42,3 +42,7 @@ __predict_tag.ipynb__ - a notebook with predicting class label (tag) with any mo
 __svm_classifier.ipynb__ - a notebook with training SVM (replaced by _svm_train.py_) and analyzing SVM outputs
 
 __svm_train.py__ - a script for training SVM model
+
+## Conventions:
+- Input CSV: encoding='utf-8', sep=',' and CODE_COLUMN has to be == 'code_block' in all input CSVs
+- Knowledge Graphs: GRAPH_DIR has to be in the following format: './graph/graph_v{}.txt'.format(GRAPH_VER)
