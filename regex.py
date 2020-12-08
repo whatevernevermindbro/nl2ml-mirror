@@ -1,9 +1,10 @@
-import pandas as pd
-import numpy as np
 import re
 import csv
 import json
 import argparse
+
+import pandas as pd
+import numpy as np
 
 def tokens_search(df, tokens, new_column_name):
     df[new_column_name] = 0
