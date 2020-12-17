@@ -15,9 +15,7 @@ def tfidf_transform(corpus, tfidf_params, TFIDF_DIR):
     return features
 
 def tfidf_fit_transform(code_blocks:pd.DataFrame, tfidf_params:dict, TFIDF_DIR:str):
-    tfidf = TfidfVectorizer(tfidf_params)
-    print(code_blocks.head())
-    tfidf = tfidf.fit(code_blocks)
+    tfidf = TfidfVectorizer(tfidf_params).fit(code_blocks)
     pickle.dump(tfidf, open(TFIDF_DIR, "wb"))
     code_blocks_tfidf = tfidf.transform(code_blocks)
     return code_blocks_tfidf
