@@ -21,3 +21,10 @@ def tfidf_fit_transform(code_blocks:pd.DataFrame, tfidf_params:dict, TFIDF_DIR:s
     pickle.dump(tfidf, open(TFIDF_DIR, "wb"))
     code_blocks_tfidf = tfidf.transform(code_blocks)
     return code_blocks_tfidf
+
+def mean_confidence_interval(data, confidence=0.95):
+    a = 1.0 * np.array(data)
+    n = len(a)
+    m, se = np.mean(a), scipy.stats.sem(a)
+    h = se * scipy.stats.t.ppf((1 + confidence) / 2., n-1)
+    return m, m-h, m+h
