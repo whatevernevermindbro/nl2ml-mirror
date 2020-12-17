@@ -46,6 +46,30 @@ from common.tools import *
 #                , 'test_f1_score': f1}
 #     return metrics
 
+# def get_predictions(X, y, TAGS_TO_PREDICT, MODEL_DIR):
+#     clf = pickle.load(open(MODEL_DIR, 'rb'))
+#     # result = loaded_model.score(X, y)
+#     y_pred = clf.predict(X)
+#     accuracy = accuracy_score(y_pred, y)
+#     f1 = f1_score(y_pred, y, average='weighted')
+#     print(f'Mean Accuracy {round(accuracy*100, 2)}%')
+#     print(f'F1-score {round(f1*100, 2)}%')
+#     errors = y - y_pred
+#     plt.hist(errors)
+#     plot_precision_recall_curve(clf, X, y)
+#     plot_confusion_matrix(clf, X, y, values_format='d')
+#     def mean_confidence_interval(data, confidence=0.95):
+#         a = 1.0 * np.array(data)
+#         n = len(a)
+#         m, se = np.mean(a), scipy.stats.sem(a)
+#         h = se * scipy.stats.t.ppf((1 + confidence) / 2., n-1)
+#         return m, m-h, m+h
+#     conf_interval = mean_confidence_interval(errors, 0.95)
+#     print(conf_interval)
+#     metrics = {'test_accuracy': accuracy
+#                , 'test_f1_score': f1}
+#     return metrics
+
 def logreg_multioutput_evaluate(df, code_blocks, TAGS_TO_PREDICT):
     code_blocks_tfidf = tfidf_fit_transform(code_blocks, tfidf_params, TFIDF_DIR)
     print("tfifd-ed")
@@ -64,38 +88,6 @@ def logreg_multioutput_evaluate(df, code_blocks, TAGS_TO_PREDICT):
     # plt.hist(errors)
     # plot_precision_recall_curve(clf, X_test, Y_test)
     # plot_confusion_matrix(clf, X_test, Y_test, values_format='d')
-    # def mean_confidence_interval(data, confidence=0.95):
-    #     a = 1.0 * np.array(data)
-    #     n = len(a)
-    #     m, se = np.mean(a), scipy.stats.sem(a)
-    #     h = se * scipy.stats.t.ppf((1 + confidence) / 2., n-1)
-    #     return m, m-h, m+h
-    # conf_interval = mean_confidence_interval(errors, 0.95)
-    # print(conf_interval)
-    metrics = {'test_accuracy': accuracy
-               , 'test_f1_score': f1}
-    return metrics
-
-def get_predictions(X, y, TAGS_TO_PREDICT, MODEL_DIR):
-    clf = pickle.load(open(MODEL_DIR, 'rb'))
-    # result = loaded_model.score(X, y)
-    y_pred = clf.predict(X)
-    accuracy = accuracy_score(y_pred, y)
-    f1 = f1_score(y_pred, y, average='weighted')
-    print(f'Mean Accuracy {round(accuracy*100, 2)}%')
-    print(f'F1-score {round(f1*100, 2)}%')
-    errors = y - y_pred
-    plt.hist(errors)
-    plot_precision_recall_curve(clf, X, y)
-    plot_confusion_matrix(clf, X, y, values_format='d')
-    def mean_confidence_interval(data, confidence=0.95):
-        a = 1.0 * np.array(data)
-        n = len(a)
-        m, se = np.mean(a), scipy.stats.sem(a)
-        h = se * scipy.stats.t.ppf((1 + confidence) / 2., n-1)
-        return m, m-h, m+h
-    conf_interval = mean_confidence_interval(errors, 0.95)
-    print(conf_interval)
     metrics = {'test_accuracy': accuracy
                , 'test_f1_score': f1}
     return metrics
@@ -142,4 +134,5 @@ if __name__ == '__main__':
         logger.log_hyperparams(data_meta)
         logger.log_hyperparams(tfidf_params)
         logger.log_metrics(metrics)
+        print("saved the dicts")
     print("finished")
