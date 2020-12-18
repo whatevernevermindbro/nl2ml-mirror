@@ -1,7 +1,3 @@
-##TODO:
-# Excessive functions -> parameters
-# Common module
-
 import pickle
 import argparse
 import json
@@ -92,14 +88,6 @@ def logreg_multioutput_evaluate(df, code_blocks, TAGS_TO_PREDICT):
                , 'test_f1_score': f1}
     return metrics
 
-def get_graph_vertices(GRAPH_VER):
-    GRAPH_DIR = './graph/graph_v{}.txt'.format(GRAPH_VER)
-    with open(GRAPH_DIR, "r") as graph_file:
-        graph = json.load(graph_file)
-        vertices = list(graph.keys())
-    print('vertices parsed')
-    return vertices
-
 parser = argparse.ArgumentParser()
 parser.add_argument("GRAPH_VER", help="version of the graph you want regex to label your CSV with", type=int)
 parser.add_argument("DATASET_PATH", help="path to your input CSV", type=str)
@@ -114,6 +102,7 @@ CODE_COLUMN = 'code_block'
 TAGS_TO_PREDICT = get_graph_vertices(GRAPH_VER)
 PREDICT_COL = 'pred_{}'.format(TAGS_TO_PREDICT)
 SCRIPT_DIR = 'logreg_classifier.ipynb'
+TASK = 'training LogReg'
 
 if __name__ == '__main__':
     df = load_data(DATASET_PATH)
@@ -124,11 +113,13 @@ if __name__ == '__main__':
                     , 'max_df': 0.3
                     , 'smooth_idf': True}
     data_meta = {'DATASET_PATH': DATASET_PATH
+                ,'TFIDF_DIR': TFIDF_DIR
+                ,'MODEL_DIR': MODEL_DIR
                 ,'nrows': nrows
                 ,'label': TAGS_TO_PREDICT
-                ,'model': MODEL_DIR
+                ,'graph_ver': GRAPH_VER
                 ,'script_dir': SCRIPT_DIR
-                ,'task': 'training and evaluation'}
+                ,'task': TASK}
     with dagshub.dagshub_logger() as logger:
         metrics = logreg_multioutput_evaluate(df, code_blocks, TAGS_TO_PREDICT)
         logger.log_hyperparams(data_meta)
