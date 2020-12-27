@@ -1,8 +1,9 @@
 data/
 models/
-.vscode/settings.json
+.vscode/
 foldername/
 svm_classifier.ipynb
 /open_data
 /data_mini
 models_scripts/common/__pycache__
+.ipynb_checkpoints/
