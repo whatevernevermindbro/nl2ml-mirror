@@ -5,4 +5,4 @@ foldername/
 svm_classifier.ipynb
 /open_data
 /data_mini
-model_scripts/common/__pycache__
+models_scripts/common/__pycache__

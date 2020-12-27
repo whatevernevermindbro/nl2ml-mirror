@@ -11,7 +11,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 import dagshub
 
-sys.path.append('./model_scripts/common/')
+sys.path.append('./models_scripts/common/')
 from tools import *
 
 parser = argparse.ArgumentParser()

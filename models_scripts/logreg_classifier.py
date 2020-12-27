@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import *
 import dagshub
 
-sys.path.append('./model_scripts/common/')
+sys.path.append('./models_scripts/common/')
 from tools import *
 
 # def logreg_evaluate(df, code_blocks, TAG_TO_PREDICT):
