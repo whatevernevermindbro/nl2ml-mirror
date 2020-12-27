@@ -1,5 +1,6 @@
 import pickle
 import argparse
+import sys
 
 import pandas as pd
 import numpy as np
@@ -10,7 +11,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
 import dagshub
 
-from common.tools import *
+sys.path.append('./model_scripts/common/')
+from tools import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument("GRAPH_VER", help="version of the graph you want regex to label your CSV with", type=int)
