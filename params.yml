@@ -1,10 +1,1 @@
-DATASET_PATH: ./data/golden_884_set.csv
-MODEL_DIR: ./models/svm_regex_graph_v5.sav
-TFIDF_DIR: ./models/tfidf_svm_graph_v5.pickle
-graph_ver: 5
-label: '[''import'', ''data_import'', ''data_export'', ''preprocessing'', ''visualization'',
-  ''model'', ''deep_learning_model'', ''train'', ''predict'']'
-model: svm
-nrows: 884
-script_dir: ./predict_tag.ipynb
-task: model validation
+{}
