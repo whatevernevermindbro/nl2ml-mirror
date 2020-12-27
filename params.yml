@@ -1,10 +1,8 @@
 DATASET_PATH: ./data/golden_884_set.csv
-MODEL_DIR: ./models/logreg_regex_graph_v6.sav
-TFIDF_DIR: ./models/tfidf_logreg_graph_v6.pickle
 graph_ver: 6
 label: '[''import'', ''data_import'', ''data_export'', ''preprocessing'', ''visualization'',
   ''model'', ''deep_learning_model'', ''train'', ''predict'']'
-model: logreg
+model: regex_v6
 nrows: 884
-script_dir: ./predict_tag.ipynb
-task: model validation
+script_dir: ./regex.ipynb
+task: regex evaluation
