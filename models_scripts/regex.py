@@ -60,10 +60,17 @@ if __name__ == '__main__':
     df.to_csv(OUTPUT_DATASET_PATH, index=False)
     print('saved and finished')
     if evaluation:
+        print('evaluating regex v{}'.format(GRAPH_VER))
         VALIDATION_DATA_PATH = "./data/golden_884_set.csv"
         TAGS = vertices
         REGEX_TAGS = [el + '_regex_v{}'.format(GRAPH_VER) for el in TAGS]
         regexed_data = pd.read_csv(VALIDATION_DATA_PATH)
+        print('loaded validation data')
+        for i, tag in enumerate(TAGS):
+            print('\n creating labels for {}'.format(tag))
+            tokens = graph[tag]
+            regexed_data = tokens_search(regexed_data, tokens, REGEX_TAGS[i])
+        print('val data labelled')
         Y_test, Y_pred = regexed_data[TAGS], regexed_data[REGEX_TAGS]
         base_f1 = f1_score(Y_test, Y_pred, average='weighted')
         base_precision = precision_score(Y_test, Y_pred, average='weighted')
