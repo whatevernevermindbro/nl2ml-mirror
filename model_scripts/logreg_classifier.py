@@ -74,7 +74,7 @@ def logreg_multioutput_evaluate(df, code_blocks, TAGS_TO_PREDICT):
     X_train, X_test, Y_train, Y_test = train_test_split(code_blocks_tfidf, df[TAGS_TO_PREDICT], test_size=0.25)
     print("splitted to train and test")
     clf = MultiOutputRegressor(LogisticRegression(random_state=421)).fit(X_train, Y_train)
-    print("inited the model")
+    print("trained the model")
     pickle.dump(clf, open(MODEL_DIR, 'wb'))
     print("saved the model")
     Y_pred = clf.predict(X_test)
