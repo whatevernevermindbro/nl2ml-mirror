@@ -1,6 +1,7 @@
 import pickle
 import argparse
 import json
+import sys, os
 
 import pandas as pd
 import numpy as np
@@ -12,7 +13,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import *
 import dagshub
 
-from common.tools import *
+sys.path.append('./model_scripts/common/')
+from tools import *
 
 # def logreg_evaluate(df, code_blocks, TAG_TO_PREDICT):
 #     code_blocks_tfidf = tfidf_fit_transform(code_blocks, tfidf_params, TFIDF_DIR)
@@ -96,6 +98,7 @@ args = parser.parse_args()
 GRAPH_VER = args.GRAPH_VER
 DATASET_PATH = args.DATASET_PATH
 
+# REPO_PATH = os.path.dirname(os.path.abspath(__file__)).replace('\\', '/') + '/'
 MODEL_DIR = './models/logreg_regex_graph_v{}.sav'.format(GRAPH_VER)
 TFIDF_DIR = './models/tfidf_logreg_graph_v{}.pickle'.format(GRAPH_VER)
 CODE_COLUMN = 'code_block'
