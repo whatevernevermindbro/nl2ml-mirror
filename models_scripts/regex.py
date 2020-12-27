@@ -51,7 +51,7 @@ if __name__ == '__main__':
     vertices = []
     for i in range(0, len(graph)):
         vertex = list(graph.keys())[i]
-        vertices.append(vertices)
+        vertices.append(vertex)
         print('\n creating labels for {}'.format(vertex))
         tokens = graph[vertex]
         df = tokens_search(df, tokens, vertex)
