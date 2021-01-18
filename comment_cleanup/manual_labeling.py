@@ -73,8 +73,10 @@ def main(stdscr):
         
         stdscr.erase()
 
-        _, cols = stdscr.getmaxyx()
+        rows, cols = stdscr.getmaxyx()
         comment = wrap_comment(comment, cols)
+        if comment.count("\n") + 6 >= rows:
+            continue
 
         stdscr.addstr(f"Current block: {comment_idx}\n")
         stdscr.addstr(f"Labeled {labeled_count} of {comments_to_label}\n")
