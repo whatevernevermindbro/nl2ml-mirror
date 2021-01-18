@@ -1,4 +1,5 @@
 import curses
+import os
 import textwrap
 
 import numpy as np
@@ -9,6 +10,8 @@ import utils.preprocessing as preprocessing
 
 LABELER_COUNT = 2
 LABELER_ID = 1
+
+LABELS_FILE = f"labeled_comments_partition{LABELER_ID}.npy"
 
 
 def preprocess(code_blocks):
@@ -63,12 +66,15 @@ def main(stdscr):
     if LABELER_ID <= comment_count % LABELER_COUNT:
         comments_to_label += 1
     
-    is_meaningful = np.full(comment_count, -1)
+    if os.path.exists(LABELS_FILE):
+        is_meaningful = np.load(LABELS_FILE)
+    else:
+        is_meaningful = np.full(comment_count, -1)
 
-    is_session_over = False
-    labeled_count = 0
+    labeled_count = (is_meaningful >= 0).sum()
+
     stdscr.clear()
-    for comment_idx in range(LABELER_ID, comment_count, LABELER_COUNT):
+    for comment_idx in range(LABELER_ID + LABELER_COUNT * labeled_count, comment_count, LABELER_COUNT):
         comment = comments[comment_idx][1]
         
         stdscr.erase()
@@ -92,12 +98,11 @@ def main(stdscr):
         elif label == "n":
             is_meaningful[comment_idx] = 0
         else:
-            is_session_over = True
             break
         
         labeled_count += 1
         
-    np.save(f"labeled_comments_partition{LABELER_ID}.npy", is_meaningful)
+    np.save(LABELS_FILE, is_meaningful)
     
     
 
