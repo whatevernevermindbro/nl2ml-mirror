@@ -1,4 +1,5 @@
 import curses
+import textwrap
 
 import numpy as np
 import pandas as pd
@@ -7,7 +8,7 @@ import utils.preprocessing as preprocessing
 
 
 LABELER_COUNT = 2
-LABELER_ID = 0
+LABELER_ID = 1
 
 
 def preprocess(code_blocks):
@@ -41,7 +42,17 @@ def load_comments():
     
     return preprocess(all_blocks[comment_blocks_idx].reset_index())
 
+
+def wrap_comment(text, max_width):
+    lines = text.split("\n")
+    new_lines = []
+    for line in lines:
+        line_parts = textwrap.wrap(line, width=max_width - 1)
+        new_lines.extend(line_parts)
     
+    return "\n".join(new_lines)
+
+
 def main(stdscr):
     break_line = "_" * 20
 
@@ -58,15 +69,17 @@ def main(stdscr):
     labeled_count = 0
     stdscr.clear()
     for comment_idx in range(LABELER_ID, comment_count, LABELER_COUNT):
-        
-        comment = comments[comment_idx]
+        comment = comments[comment_idx][1]
         
         stdscr.erase()
+
+        _, cols = stdscr.getmaxyx()
+        comment = wrap_comment(comment, cols)
 
         stdscr.addstr(f"Current block: {comment_idx}\n")
         stdscr.addstr(f"Labeled {labeled_count} of {comments_to_label}\n")
         stdscr.addstr(break_line + "\n")
-        stdscr.addstr(comment[1])
+        stdscr.addstr(comment)
         stdscr.addstr("\n" + break_line + "\n")
         stdscr.addstr("Is this a good comment? (y/n)\n")
 

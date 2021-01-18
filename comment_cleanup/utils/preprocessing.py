@@ -133,6 +133,8 @@ def extract_comments(code_chunk):
         comment_end = multiples.pop(0)
         comment = code[comment_start + 3:comment_end]
         
+        comment = comment.replace("\t", "    ")
+
         code_new = code[:comment_start] + code[comment_end + 3:]
         multiples = change_position(code, code_new, multiples)
         code = code_new
