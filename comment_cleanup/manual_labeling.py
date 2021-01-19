@@ -11,7 +11,7 @@ import utils.preprocessing as preprocessing
 LABELER_COUNT = 2
 LABELER_ID = 1
 
-LABELS_FILE = f"labeled_comments_partition{LABELER_ID}.npy"
+LABELS_FILE = f"data_parts/labeled_comments_partition{LABELER_ID}.npy"
 
 
 def preprocess(code_blocks):

@@ -4,11 +4,13 @@ import re
 def all_occur(text, substr):
     return [m.start() for m in re.finditer(substr, text)]
 
-def greater_than_in(value ,l, if_none):
+
+def greater_than_in(value, l, if_none):
     try:
         return next(y[1] for y in enumerate(l) if y[1] > value)
     except:
         return if_none
+
 
 def max_less(value ,l, if_none):
     try:
@@ -16,12 +18,11 @@ def max_less(value ,l, if_none):
     except:
         return if_none
 
+
 # проверка строки на наличие комментария
 def is_comment(text):
     return True
-#     comment = preprocess_comments(np.array([text]))
-#     pred = model.predict(comment)
-#     return pred[0] == 1
+
 
 def change_position(code, code_new, ar):
     dif = len(code) - len(code_new)
@@ -30,21 +31,19 @@ def change_position(code, code_new, ar):
 
 
 def trim_symbols(code_chunk):
-    code = code_chunk['code_block']
+    code = code_chunk["code_block"]
+
+    pattern1 = r"(#\s*)+"
+    pattern2 = r"[#]+"
     
-    patern1 = r"(#\s*)+"
-    patern2 = r"[#]+"
-    
-    p1 = re.compile(patern1)
-    p2 = re.compile(patern2)
+    p1 = re.compile(pattern1)
+    p2 = re.compile(pattern2)
     
     code = p2.sub('#', p1.sub('#', code))
     
-    # приводим кавычки к единому виду
-    code = code.replace('"', "'")
-
     # исправляем неправильно заданные многострочные комментарии
     code = code.replace("''''", "'''")
+    code = code.replace('""""', '"""')
     
     # убираем последний символ - ','
     code = code[:-1]
@@ -53,9 +52,10 @@ def trim_symbols(code_chunk):
     if code.strip()[:3] == code.strip()[-3:]:
         code = code.strip()[3:-3]
     
-    code_chunk['code_block'] = code
+    code_chunk["code_block"] = code
     return code_chunk
-    
+
+
 def single_lines(code_chunk):
     code = code_chunk['code_block']
     
@@ -106,17 +106,13 @@ def single_lines(code_chunk):
     code_chunk['code_block'] = code
     return code_chunk
 
+
 def multiple_lines(code_chunk):
     code = code_chunk['code_block']
     
     code_new = ""
     
     multiples = all_occur(code, "'''")
-    
-    # объединение соседних комментов
-#     patern3 = r"'''(\n)*'''"
-#     p3 = re.compile(patern3)
-#     code = p3.sub('\n', code)
     
     code_chunk['code_block'] = code
     return code_chunk
