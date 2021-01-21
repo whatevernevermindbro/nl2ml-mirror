@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from tqdm import trange
 
+from utils.source_scraping import SourceScraper
+
 
 KERNELS_PATH = "../data/kaggle_kernels.csv"
 CODE_BLOCKS_PATH = "../data/code_blocks_new.csv"
@@ -58,20 +60,32 @@ def collect_metadata(kernel_json):
     return result
 
 
-def collect_data_source(kernel_json):
+def collect_data_source(kernel_json, kernel_ref, source_scraper):
     '''
     Finds data source slug and figures out the link
     '''
-    if len(kernel_json["dataSources"]) < 1:
-        return None
+    user_dataset_count = 0
+    sources = []
+    for data_source in kernel_json["dataSources"]:
+        source_slug = data_source["mountSlug"]
+        source_type = data_source["sourceType"]
+        # Data source is either a competition or a user-made dataset
+        if source_type == "Competition":
+            sources.append(f"c/{source_slug}")
+        else:
+            user_dataset_count += 1
 
-    data_source = kernel_json["dataSources"][0]
-    source_slug = data_source["mountSlug"]
-    source_type = data_source["sourceType"]
-    # Data source is either a competition or a user-made dataset
-    if source_type == "Competition":
-        return f"c/{source_slug}"
-    return None
+    if user_dataset_count == 0:
+        return sources
+    try:
+        raw_links = source_scraper.get_source_links(KAGGLE_LINK + kernel_ref)
+    except Exception as e:
+        return sources
+
+    sources = []
+    for raw_link in raw_links:
+        sources.append(raw_link[len(KAGGLE_LINK):])
+    return sources
 
 
 def code_blocks(ipynb_source):
@@ -85,7 +99,7 @@ def code_blocks(ipynb_source):
             yield cell["source"]
 
 
-def process_notebook(notebook_ref):
+def process_notebook(notebook_ref, source_scraper):
     '''
     Loads notebook from kaggle and parses its codeblocks and metadata
     '''
@@ -107,7 +121,11 @@ def process_notebook(notebook_ref):
     notebook_data = json.loads(notebook_data_raw[data_begin: data_end])
 
     metadata = collect_metadata(notebook_data)
-    metadata[DATA_SOURCE_COLUMN] = collect_data_source(notebook_data)
+    metadata[DATA_SOURCE_COLUMN] = collect_data_source(
+        notebook_data,
+        notebook_ref,
+        source_scraper
+    )
 
     data = []
     for idx, block in enumerate(code_blocks(notebook_data["kernelBlob"]["source"])):
@@ -121,12 +139,14 @@ def process_notebook(notebook_ref):
 
 kernels_df = pd.read_csv(KERNELS_PATH)
 code_blocks_df = pd.DataFrame(columns=ALL_COLUMNS)
-with trange(kernels_df.shape[0]) as kernel_indices_iterator:
+with (trange(kernels_df.shape[0]) as kernel_indices_iterator,
+        SourceScraper() as source_scraper):
     for i in kernel_indices_iterator:
         kernel_ref = kernels_df.loc[i, "ref"]
         kernel_indices_iterator.set_description(f"Notebook {i: >7}")
 
-        new_blocks = process_notebook(kernel_ref)
+        new_blocks = process_notebook(kernel_ref, source_scraper)
+
         kernel_indices_iterator.set_postfix({"code blocks": new_blocks.shape[0]})
         code_blocks_df = code_blocks_df.append(new_blocks, ignore_index=True)
 
