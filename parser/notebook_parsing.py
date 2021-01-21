@@ -7,10 +7,10 @@ import pandas as pd
 from tqdm import trange
 
 
-KAGGLE_LINK = "https://www.kaggle.com/"
-
 KERNELS_PATH = "../data/kaggle_kernels.csv"
 CODE_BLOCKS_PATH = "../data/code_blocks_new.csv"
+
+KAGGLE_LINK = "https://www.kaggle.com/"
 
 METADATA_FIELDS = {
     "kaggle_score": "kernel__bestPublicScore",
@@ -21,9 +21,10 @@ METADATA_FIELDS = {
 }
 CODE_BLOCK_COLUMN = "code_blocks"
 CODE_BLOCK_ID_COLUMN = "code_block_id"
+DATA_SOURCE_COLUMN = "data_source"
 ALL_COLUMNS = (
     list(METADATA_FIELDS.keys()) +
-    [CODE_BLOCK_COLUMN, CODE_BLOCK_ID_COLUMN]
+    [CODE_BLOCK_COLUMN, CODE_BLOCK_ID_COLUMN, DATA_SOURCE_COLUMN]
 )
 
 
@@ -55,6 +56,22 @@ def collect_metadata(kernel_json):
     for field_name, field_json_key in METADATA_FIELDS.items():
         result[field_name] = nested_lookup(kernel_json, field_json_key)
     return result
+
+
+def collect_data_source(kernel_json):
+    '''
+    Finds data source slug and figures out the link
+    '''
+    if len(kernel_json["dataSources"]) < 1:
+        return None
+
+    data_source = kernel_json["dataSources"][0]
+    source_slug = data_source["mountSlug"]
+    source_type = data_source["sourceType"]
+    # Data source is either a competition or a user-made dataset
+    if source_type == "Competition":
+        return f"c/{source_slug}"
+    return None
 
 
 def code_blocks(ipynb_source):
@@ -90,6 +107,8 @@ def process_notebook(notebook_ref):
     notebook_data = json.loads(notebook_data_raw[data_begin: data_end])
 
     metadata = collect_metadata(notebook_data)
+    metadata[DATA_SOURCE_COLUMN] = collect_data_source(notebook_data)
+
     data = []
     for idx, block in enumerate(code_blocks(notebook_data["kernelBlob"]["source"])):
         code_block_data = copy.copy(metadata)
@@ -102,8 +121,13 @@ def process_notebook(notebook_ref):
 
 kernels_df = pd.read_csv(KERNELS_PATH)
 code_blocks_df = pd.DataFrame(columns=ALL_COLUMNS)
-for i in trange(kernels_df.shape[0]):
-    new_blocks = process_notebook(kernels_df.loc[i, "ref"])
-    code_blocks_df = code_blocks_df.append(new_blocks, ignore_index=True)
+with trange(kernels_df.shape[0]) as kernel_indices_iterator:
+    for i in kernel_indices_iterator:
+        kernel_ref = kernels_df.loc[i, "ref"]
+        kernel_indices_iterator.set_description(f"Notebook {i: >7}")
+
+        new_blocks = process_notebook(kernel_ref)
+        kernel_indices_iterator.set_postfix({"code blocks": new_blocks.shape[0]})
+        code_blocks_df = code_blocks_df.append(new_blocks, ignore_index=True)
 
 code_blocks_df.to_csv(CODE_BLOCKS_PATH)
