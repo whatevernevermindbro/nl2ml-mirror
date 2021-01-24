@@ -9,9 +9,6 @@ from tqdm import trange
 from utils.source_scraping import SourceScraper
 
 
-KERNELS_PATH = "../data/kaggle_kernels.csv"
-CODE_BLOCKS_PATH = "../data/code_blocks_new.csv"
-
 KAGGLE_LINK = "https://www.kaggle.com/"
 
 METADATA_FIELDS = {
@@ -137,17 +134,16 @@ def process_notebook(notebook_ref, source_scraper):
     return pd.DataFrame(data, columns=ALL_COLUMNS)
 
 
-kernels_df = pd.read_csv(KERNELS_PATH)
-code_blocks_df = pd.DataFrame(columns=ALL_COLUMNS)
-with (trange(kernels_df.shape[0]) as kernel_indices_iterator,
-        SourceScraper() as source_scraper):
-    for i in kernel_indices_iterator:
-        kernel_ref = kernels_df.loc[i, "ref"]
-        kernel_indices_iterator.set_description(f"Notebook {i: >7}")
+def extract_code_blocks(kernels_df, filters=None):
+    code_blocks_df = pd.DataFrame(columns=ALL_COLUMNS)
+    with (trange(kernels_df.shape[0]) as kernel_indices_iterator,
+            SourceScraper() as source_scraper):
+        for i in kernel_indices_iterator:
+            kernel_ref = kernels_df.loc[i, "ref"]
+            kernel_indices_iterator.set_description(f"Notebook {i: >7}")
 
-        new_blocks = process_notebook(kernel_ref, source_scraper)
+            new_blocks = process_notebook(kernel_ref, source_scraper)
 
-        kernel_indices_iterator.set_postfix({"code blocks": new_blocks.shape[0]})
-        code_blocks_df = code_blocks_df.append(new_blocks, ignore_index=True)
-
-code_blocks_df.to_csv(CODE_BLOCKS_PATH)
+            kernel_indices_iterator.set_postfix({"code blocks": new_blocks.shape[0]})
+            code_blocks_df = code_blocks_df.append(new_blocks, ignore_index=True)
+    return code_blocks_df
