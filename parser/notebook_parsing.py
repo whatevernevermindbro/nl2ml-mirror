@@ -136,8 +136,7 @@ def process_notebook(notebook_ref, source_scraper):
 
 def extract_code_blocks(kernels_df, filters=None):
     code_blocks_df = pd.DataFrame(columns=ALL_COLUMNS)
-    with (trange(kernels_df.shape[0]) as kernel_indices_iterator,
-            SourceScraper() as source_scraper):
+    with trange(kernels_df.shape[0]) as kernel_indices_iterator, SourceScraper() as source_scraper:
         for i in kernel_indices_iterator:
             kernel_ref = kernels_df.loc[i, "ref"]
             kernel_indices_iterator.set_description(f"Notebook {i: >7}")
@@ -146,4 +145,20 @@ def extract_code_blocks(kernels_df, filters=None):
 
             kernel_indices_iterator.set_postfix({"code blocks": new_blocks.shape[0]})
             code_blocks_df = code_blocks_df.append(new_blocks, ignore_index=True)
+
+    code_blocks_df['kaggle_score'] = pd.to_numeric(code_blocks_df['kaggle_score'], errors='ignore')
+    code_blocks_df['kaggle_comments'] = pd.to_numeric(code_blocks_df['kaggle_comments'], errors='ignore')
+    code_blocks_df['kaggle_upvotes'] = pd.to_numeric(code_blocks_df['kaggle_upvotes'], errors='ignore')
+
+    if (filters['kaggle_score'] and filters['--competition']):
+        if (filters['minimize_score']):
+            code_blocks_df = code_blocks_df[code_blocks_df['kaggle_score'] <= float(filters['kaggle_score'])]
+        else:
+            code_blocks_df = code_blocks_df[code_blocks_df['kaggle_score'] >= float(filters['kaggle_score'])]
+
+    if(filters['upvotes']):
+        code_blocks_df = code_blocks_df[code_blocks_df['kaggle_upvotes'] >= int(filters['upvotes'])]
+    if(filters['comments']):
+        code_blocks_df = code_blocks_df[code_blocks_df['kaggle_comments'] >= int(filters['comments'])]
+
     return code_blocks_df
