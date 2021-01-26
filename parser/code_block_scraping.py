@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from tqdm import trange
 
-from utils.source_scraping import SourceScraper
+from utils.notebook_scraping import NotebookScraper
 
 
 KAGGLE_LINK = "https://www.kaggle.com/"
@@ -136,7 +136,7 @@ def process_notebook(notebook_ref, source_scraper):
 
 def extract_code_blocks(kernels_df, filters=None):
     code_blocks_df = pd.DataFrame(columns=ALL_COLUMNS)
-    with trange(kernels_df.shape[0]) as kernel_indices_iterator, SourceScraper() as source_scraper:
+    with trange(kernels_df.shape[0]) as kernel_indices_iterator, NotebookScraper() as source_scraper:
         for i in kernel_indices_iterator:
             kernel_ref = kernels_df.loc[i, "ref"]
             kernel_indices_iterator.set_description(f"Notebook {i: >7}")

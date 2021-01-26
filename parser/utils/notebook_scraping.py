@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class SourceScraper:
+class NotebookScraper:
     def __init__(self, max_load_wait=15.0):
         self.options = webdriver.ChromeOptions()
         self.options.add_argument("--ignore-certificate-errors")

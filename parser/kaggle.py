@@ -5,7 +5,7 @@ import subprocess
 
 import pandas as pd
 
-from notebook_parsing import extract_code_blocks
+from code_block_scraping import extract_code_blocks
 
 
 PAGE_COUNT = 10
