@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from base_scraper import BaseScraper
+from kaggle_scraping.base_scraper import BaseScraper
 
 
 KAGGLE_LINK = "https://www.kaggle.com/"
@@ -46,7 +46,7 @@ class SearchScraper(BaseScraper):
         return len(notebook_entries)
 
 
-    def get_all_notebooks(self, lang, approx_notebook_count, chunk_size=1000):
+    def get_all_notebooks(self, lang, approx_notebook_count):
         data = StringIO()
         csv_writer = writer(data)
 

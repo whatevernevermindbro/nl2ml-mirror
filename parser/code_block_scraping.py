@@ -1,6 +1,6 @@
 import copy
 from io import StringIO
-from csv import csv_writer
+from csv import writer
 import json
 import requests
 
@@ -126,19 +126,20 @@ def process_notebook(notebook_ref, source_scraper, csv_writer):
         source_scraper
     ))
 
-    data = []
+    new_notebooks = 0
     for idx, block in enumerate(code_blocks(notebook_data["kernelBlob"]["source"])):
         code_block_data = copy.copy(metadata)
         code_block_data.append(block)
         code_block_data.append(idx)
         csv_writer.writerow(code_block_data)
+        new_notebooks += 1
 
-    return pd.DataFrame(data, columns=ALL_COLUMNS)
+    return new_notebooks
 
 
 def extract_code_blocks(kernels_df, filters=None):
     code_blocks_data = StringIO()
-    code_blocks_writer = csv_writer(code_blocks)
+    code_blocks_writer = writer(code_blocks_data)
     code_blocks_writer.writerow(ALL_COLUMNS)
     with trange(kernels_df.shape[0]) as kernel_indices_iterator, NotebookScraper() as source_scraper:
         for i in kernel_indices_iterator:
