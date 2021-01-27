@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from tqdm import trange
 
-from utils.notebook_scraping import NotebookScraper
+from kaggle_scraping import NotebookScraper
 
 
 KAGGLE_LINK = "https://www.kaggle.com/"

@@ -8,7 +8,7 @@ import pandas as pd
 from code_block_scraping import extract_code_blocks
 
 
-PAGE_COUNT = 10
+PAGE_COUNT = 11
 CODEBLOCKS_FILENAME_TEMPLATE = "../data/code_blocks_new_{}.csv"
 
 
@@ -29,7 +29,7 @@ parser = argparse.ArgumentParser(description='Process kaggle notebooks.')
 
 kaggle_args = ['--page-size', '--language', '--kernel-type', '--sort-by', '--competition', '--dataset']
 
-parser.add_argument('--page-size', dest='--page-size', default='1001')
+parser.add_argument('--page-size', dest='--page-size', default='100')  # API doesn't allow more than 100
 parser.add_argument('--language', dest='--language', default='python')
 parser.add_argument('--kernel-type', dest='--kernel-type', default='notebook')
 parser.add_argument('--sort-by', dest='--sort-by', nargs='+', default='dateCreated')
@@ -75,6 +75,7 @@ for n in range(1, PAGE_COUNT + 1):
         continue
 
     frames.append(pd.read_csv(StringIO(result.stdout), header=0))
+
 
 kernel_df = pd.concat(frames, ignore_index=True)
 codeblocks_df = extract_code_blocks(kernel_df, filters)

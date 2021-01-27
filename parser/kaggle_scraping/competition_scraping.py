@@ -1,3 +1,4 @@
+import requests
 import tempfile
 import zipfile
 
@@ -8,35 +9,20 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from common import download_file
+from kaggle_scraping.base_scraper import BaseScraper
 
 
-class CompetitionScraper:
+def download_file(link, target_file, cookie_list=None, chunk_size=1024):
+    cookies = dict(map(lambda cookie: (cookie["name"], cookie["value"]), cookie_list))
+    resp = requests.get(link, stream=True, cookies=cookies)
+    for chunk in resp.iter_content(chunk_size=chunk_size):
+        if chunk:
+            target_file.write(chunk)
+
+
+class CompetitionScraper(BaseScraper):
     def __init__(self, max_load_wait=15.0):
-        self.options = webdriver.ChromeOptions()
-        self.options.add_argument("--ignore-certificate-errors")
-        self.options.add_argument("--incognito")
-        self.options.add_argument("--headless")
-        self.options.add_argument("window-size=1400,600")
-
-        # Yes, I created a new account for this...
-        self.acc_email = "leburner010203@gmail.com"
-        self.acc_pwd = "12345678"
-
-        self.max_load_wait = max_load_wait
-
-
-    def __enter__(self):
-        self.driver = webdriver.Chrome(options=self.options)
-        _ = self.driver.implicitly_wait(self.max_load_wait)
-
-        self.accepted_cookies = False
-        self.logged_in = False
-        return self
-
-
-    def __exit__(self, exc_type, ecx_value, exc_traceback):
-        self.driver.close()
+        super().__init__(max_load_wait)
 
 
     def _extract_public_leaderboard_score(self, leaderboard_row):
@@ -44,23 +30,6 @@ class CompetitionScraper:
             "./td[contains(@data-th, 'Score')]"
         )
         return float(score_block.text)
-
-
-    def _log_in(self):
-        prev_page = self.driver.current_url
-
-        self.driver.get("https://www.kaggle.com/account/login?phase=emailSignIn")
-
-        fields = self.driver.find_elements_by_css_selector("input")
-        fields[0].send_keys(self.acc_email)
-        fields[1].send_keys(self.acc_pwd)
-
-        sign_in_button = self.driver.find_element_by_xpath(
-            "//span[contains(@class, 'cyTXUp')]"
-        )
-        sign_in_button.click()
-
-        self.driver.get(prev_page)
 
 
     def _load_full_leaderboard(self):

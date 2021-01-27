@@ -4,28 +4,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from kaggle_scraping.base_scraper import BaseScraper
 
-class NotebookScraper:
+
+class NotebookScraper(BaseScraper):
     def __init__(self, max_load_wait=15.0):
-        self.options = webdriver.ChromeOptions()
-        self.options.add_argument("--ignore-certificate-errors")
-        self.options.add_argument("--incognito")
-        self.options.add_argument("--headless")
-        self.options.add_argument("window-size=1400,600")
-
-        self.max_load_wait = max_load_wait
-
-
-    def __enter__(self):
-        self.driver = webdriver.Chrome(options=self.options)
-        _ = self.driver.implicitly_wait(self.max_load_wait)
-
-        self.accepted_cookies = False
-        return self
-
-
-    def __exit__(self, exc_type, ecx_value, exc_traceback):
-        self.driver.close()
+        super().__init__(max_load_wait)
 
 
     def get_source_links(self, kernel_link):
