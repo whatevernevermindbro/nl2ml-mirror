@@ -66,10 +66,12 @@ class SearchScraper(BaseScraper):
             if notebook_count >= approx_notebook_count:
                 is_done = True
 
-            button_next = self.driver.find_element_by_xpath(
+            buttons = self.driver.find_elements_by_xpath(
                 "//button[contains(@class, 'mulrx')]"
             )
-            button_next.click()
+            if len(buttons) == 0:
+                is_done = True
+            buttons[0].click()
             sleep(5)
 
         data.seek(0)
