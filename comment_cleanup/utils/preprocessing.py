@@ -49,8 +49,8 @@ def trim_symbols(code_chunk):
     code = code[:-1]
     
     # для случаев '''code_chunk''' убираем скобочки
-    if code.strip()[:3] == code.strip()[-3:]:
-        code = code.strip()[3:-3]
+    #if code.strip()[:3] == code.strip()[-3:]:
+    #    code = code.strip()[3:-3]
     
     code_chunk["code_block"] = code
     return code_chunk
@@ -129,11 +129,11 @@ def extract_comments(code_chunk):
         comment_end = multiples.pop(0)
         comment = code[comment_start + 3:comment_end]
         
-        comment = comment.replace("\t", "    ")
+        #comment = comment.replace("\t", "    ")
 
-        code_new = code[:comment_start] + code[comment_end + 3:]
-        multiples = change_position(code, code_new, multiples)
-        code = code_new
+        #code_new = code[:comment_start] + code[comment_end + 3:]
+        #multiples = change_position(code, code_new, multiples)
+        #code = code_new
         
         if (len(comment) > 0) and (is_comment(comment)):
             comments.append((comment_start, comment))
