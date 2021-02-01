@@ -1,0 +1,9 @@
+stages:
+  regex:
+    cmd: python ./models_scripts/regex.py
+    deps:
+    - ./data/code_blocks_clean.csv
+    params:
+    - GRAPH_VER
+    - regex.DATASET_PATH
+    - regex.evaluation
