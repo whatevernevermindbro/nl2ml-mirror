@@ -82,7 +82,7 @@ args = parser.parse_args()
 
 GRAPH_VER = args.GRAPH_VER
 DATASET_PATH = args.DATASET_PATH
-MODEL_DIR = './models/test_svm_regex_graph_v{}.sav'.format(GRAPH_VER)
+MODEL_DIR = './models/svm_regex_graph_v{}.sav'.format(GRAPH_VER)
 TFIDF_DIR = './models/tfidf_svm_graph_v{}.pickle'.format(GRAPH_VER)
 CODE_COLUMN = 'code_block'
 TAGS_TO_PREDICT = get_graph_vertices(GRAPH_VER)
