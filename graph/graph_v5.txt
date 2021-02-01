@@ -1,4 +1,4 @@
-graph = {
+{
 	"import": [r'import \w+ as \w+', r'import \w+', r'from \w+ import \w+', r'from \w+ import \w+ as \w+'],
 
 	"data_import": [r'[ ]{0,1}=[ ]{0,1}open[ ]{0,1}\(',
