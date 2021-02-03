@@ -90,13 +90,21 @@ def logreg_multioutput_evaluate(df, code_blocks, TAGS_TO_PREDICT):
                , 'test_f1_score': f1}
     return metrics
 
-parser = argparse.ArgumentParser()
-parser.add_argument("GRAPH_VER", help="version of the graph you want regex to label your CSV with", type=int)
-parser.add_argument("DATASET_PATH", help="path to your input CSV", type=str)
-args = parser.parse_args()
+try:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("GRAPH_VER", help="version of the graph you want regex to label your CSV with", type=int)
+    parser.add_argument("DATASET_PATH", help="path to your input CSV", type=str)
+    args = parser.parse_args()
 
-GRAPH_VER = args.GRAPH_VER
-DATASET_PATH = args.DATASET_PATH
+    GRAPH_VER = args.GRAPH_VER
+    DATASET_PATH = args.DATASET_PATH
+
+except:
+    print('Got no arguments, taking default arguments from params.yaml')
+    with open("params.yaml", 'r') as fd:
+        params = yaml.safe_load(fd)
+    GRAPH_VER = params['GRAPH_VER']
+    DATASET_PATH = params['regex']['DATASET_PATH']
 
 # REPO_PATH = os.path.dirname(os.path.abspath(__file__)).replace('\\', '/') + '/'
 MODEL_DIR = './models/logreg_regex_graph_v{}.sav'.format(GRAPH_VER)
