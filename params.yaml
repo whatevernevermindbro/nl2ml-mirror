@@ -4,3 +4,5 @@ regex:
   DATASET_PATH: ./data/code_blocks_clean.csv
   evaluation:
 
+logreg_classifier:
+  DATASET_PATH: ./data/code_blocks_regex_graph_v6.csv
