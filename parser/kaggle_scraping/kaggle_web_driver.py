@@ -35,7 +35,7 @@ class KaggleWebDriver:
     def __exit__(self, exc_type, ecx_value, exc_traceback):
         self.close()
 
-    def _log_in(self):
+    def log_in(self):
         if self.logged_in:
             return
 
@@ -57,7 +57,7 @@ class KaggleWebDriver:
         self.driver.get(prev_page)
         self.logged_in = True
 
-    def _accept_cookies(self):
+    def accept_cookies(self):
         if self.accepted_cookies:
             return
 
