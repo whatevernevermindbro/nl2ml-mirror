@@ -58,27 +58,14 @@ def collect_metadata(kernel_json):
     return result
 
 
-def collect_data_sources(webdriver, kernel_json, kernel_ref):
+def collect_data_sources(webdriver, kernel_ref):
     """
     Finds data source slug and figures out the link
     """
-    user_dataset_count = 0
-    sources = []
-    for data_source in kernel_json["dataSources"]:
-        source_slug = data_source["mountSlug"]
-        source_type = data_source["sourceType"]
-        # Data source is either a competition or a user-made dataset
-        if source_type == "Competition":
-            sources.append(f"c/{source_slug}")
-        else:
-            user_dataset_count += 1
-
-    if user_dataset_count == 0:
-        return sources
     try:
         raw_links = get_source_links(webdriver, KAGGLE_LINK + kernel_ref)
     except Exception as e:
-        return sources
+        return None
 
     sources = []
     for raw_link in raw_links:
@@ -121,8 +108,7 @@ def process_kernel(buffer_writer, webdriver, kernel_ref):
     metadata = collect_metadata(kernel_json)
     metadata.append(collect_data_sources(
         webdriver,
-        kernel_json,
-        kernel_ref,
+        kernel_ref
     ))
 
     new_notebooks = 0

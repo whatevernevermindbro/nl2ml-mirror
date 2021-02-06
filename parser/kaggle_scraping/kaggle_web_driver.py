@@ -62,8 +62,7 @@ class KaggleWebDriver:
             return
 
         accept_cookies_button = WebDriverWait(self.driver, self.max_load_wait).until(
-            EC.element_to_be_clickable((By.XPATH, "//*[@id='site-container']/div/div[6]/div/div[2]/div"))
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "div.sc-pJjas div.gsXzyw"))
         )
-
         accept_cookies_button.click()
         self.accepted_cookies = True

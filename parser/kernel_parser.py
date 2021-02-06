@@ -21,7 +21,7 @@ ERRORS_FILENAME = "errors_blocks.csv"
 webdriver = KaggleWebDriver()
 webdriver.load()
 
-pbar = tqdm(total=(refs.shape[0] // 3))
+pbar = tqdm(total=((refs.shape[0] + 2)// 3))
 
 with open(CODEBLOCK_FILENAME, mode='w') as f:
     with open(ERRORS_FILENAME, mode='w') as e:
@@ -29,7 +29,7 @@ with open(CODEBLOCK_FILENAME, mode='w') as f:
             try:
                 buf = extract_code_blocks(webdriver, refs.ref[i])
                 print(buf.getvalue(), file=f)
-            except Exception as exept:
+            except Exception as expt:
                 e.write(refs.ref[i] + "\n")
             pbar.update(1)
 
