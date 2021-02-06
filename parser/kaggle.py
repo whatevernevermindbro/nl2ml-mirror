@@ -1,17 +1,20 @@
 import argparse
+import asyncio
 from datetime import datetime
 from io import StringIO
+from shutil import copyfileobj
 import subprocess
 
 import pandas as pd
 
-from code_block_scraping import extract_code_blocks
-from kaggle_scraping import SearchScraper
+from kaggle_scraping import KaggleWebDriver, iter_kernel_batches, extract_code_blocks
 
 
 PAGE_COUNT = 11
-# CODEBLOCKS_FILENAME_TEMPLATE = "../data/code_blocks_new_{}.csv"
-CODEBLOCKS_FILENAME_TEMPLATE = "./uhh{}.csv"
+CODEBLOCKS_FILENAME_TEMPLATE = "../data/code_blocks_new_{}.csv"
+
+lock = asyncio.Lock()
+codeblocks_filename = CODEBLOCKS_FILENAME_TEMPLATE.format(datetime.date(datetime.now()))
 
 
 def flatten(l):
@@ -25,6 +28,13 @@ def flatten(l):
         else:
             flatList.append(elem)
     return flatList
+
+
+async def process_batch(kernels_batch, fd):
+    buffer = StringIO()
+    extract_code_blocks(buffer, kernels_batch)
+    async with lock:
+        copyfileobj(buffer, fd)
 
 
 parser = argparse.ArgumentParser(description='Process kaggle notebooks.')
@@ -83,14 +93,15 @@ if all_args.get("--competition") or all_args.get("--dataset"):
         frames.append(pd.read_csv(StringIO(result.stdout), header=0))
 
     kernel_df = pd.concat(frames, ignore_index=True)
+
+    codeblocks_df = extract_code_blocks(kernel_df, filters)
+    codeblocks_df.to_csv(codeblocks_filename)
 else:
-    with SearchScraper() as scraper:
-        kernel_df = scraper.get_all_notebooks(
-            all_args["--language"],
-            int(all_args["--max_notebooks"])
-        )
+    codeblocks_fd = open(codeblocks_filename, "w")
 
-codeblocks_df = extract_code_blocks(kernel_df, filters)
-
-codeblocks_filename = CODEBLOCKS_FILENAME_TEMPLATE.format(datetime.date(datetime.now()))
-codeblocks_df.to_csv(codeblocks_filename)
+    kdriver = KaggleWebDriver()
+    kdriver.load()
+    for batch in iter_kernel_batches(kdriver, all_args["--language"], int(all_args["--max_notebooks"])):
+        asyncio.run(process_batch(batch, codeblocks_fd))
+    kdriver.close()
+    codeblocks_fd.close()

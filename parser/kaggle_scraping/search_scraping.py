@@ -1,83 +1,101 @@
 from csv import writer
 from io import StringIO
-from time import sleep
 
-import pandas as pd
-from selenium import webdriver
-from selenium.common.exceptions import TimeoutException, StaleElementReferenceException
+# import pandas as pd
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
-from kaggle_scraping.base_scraper import BaseScraper
+from kaggle_scraping.conditions import element_disappeared, found_n_elements
 
 
 KAGGLE_LINK = "https://www.kaggle.com/"
 
 
-class SearchScraper(BaseScraper):
-    def __init__(self, max_load_wait=15.0):
-        super().__init__(max_load_wait)
+def _get_all_notebooks_current_page(webdriver, csv_writer, max_notebooks):
+    try:
+        notebook_entries = WebDriverWait(webdriver.driver, webdriver.max_load_wait).until(
+            found_n_elements((By.CSS_SELECTOR, "a.sc-qOvHb"), 20)
+        )
+    except TimeoutException:
+        return 0
+
+    notebook_count = 0
+    for entry in notebook_entries:
+        collected_data = []
+        collected_data.append(entry.get_attribute("href")[len(KAGGLE_LINK):])
+
+        csv_writer.writerow(collected_data)
+
+        notebook_count += 1
+        if notebook_count >= max_notebooks:
+            break
+
+    return notebook_count
 
 
-    def _get_all_notebooks_current_page(self, csv_writer):
-        notebook_entries = self.driver.find_elements_by_xpath(
-            "//a[contains(@class, 'sc-pIJmg')]"
+def wait_loading_screen(webdriver):
+    _ = WebDriverWait(webdriver.driver, webdriver.max_load_wait).until(
+        element_disappeared((By.CSS_SELECTOR, "div.sc-pQrUA"))
+    )
+
+
+def move_to_page(webdriver, page_id):
+    # move to page 6, so we can avoid the loop
+    buttons = WebDriverWait(webdriver.driver, webdriver.max_load_wait).until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, "span.ePLZfR"))
+    )
+    buttons[-1].click()
+    wait_loading_screen(webdriver)
+
+    if page_id == 0:
+        return
+
+    buttons = WebDriverWait(webdriver.driver, webdriver.max_load_wait).until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, "span.ePLZfR"))
+    )
+    buttons[page_id + 1].click()
+    wait_loading_screen(webdriver)
+
+
+def write_kernels_to_file(fd, webdriver, lang, max_notebook_count, start, pbar):
+    assert 0 <= start < 3
+
+    csv_writer = writer(fd)
+
+    columns = ["ref"]
+    csv_writer.writerow(columns)
+
+    lang = lang.capitalize()
+    search_result_link = f'{KAGGLE_LINK}search?q=in%3Anotebooks+kernelLanguage%3A{lang}+tag%3Anlp'
+
+    webdriver.driver.get(search_result_link)
+
+    move_to_page(webdriver, start)
+    notebook_count = 0
+    is_done = False
+    while not is_done:
+        notebooks_added = _get_all_notebooks_current_page(
+            webdriver,
+            csv_writer,
+            max_notebook_count - notebook_count
         )
 
-        for entry in notebook_entries:
-            collected_data = []
-            collected_data.append(entry.get_attribute("href")[len(KAGGLE_LINK):])
+        notebook_count += notebooks_added
+        pbar.update(notebooks_added)
+        if notebooks_added == 0 or notebook_count >= max_notebook_count:
+            is_done = True
+            continue
 
-            data_containers = entry.find_elements_by_xpath(
-                "./li/div[2]/div"
-            )
-            collected_data.append(data_containers[1].text)
-            collected_data.append(data_containers[2].text[3:])
+        buttons = WebDriverWait(webdriver.driver, webdriver.max_load_wait).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "span.ePLZfR"))
+        )
 
-            data_containers = data_containers[3].find_elements_by_xpath(
-                "./div/div"
-            )
+        button_id = 4
+        if len(buttons) <= button_id:
+            is_done = True
+            continue
+        buttons[button_id].click()
 
-            collected_data.append(int(data_containers[3].text.split()[-1]))
-
-            csv_writer.writerow(collected_data)
-
-        return len(notebook_entries)
-
-
-    def get_all_notebooks(self, lang, approx_notebook_count):
-        data = StringIO()
-        csv_writer = writer(data)
-
-        columns = ["ref", "title", "author", "totalVotes"]
-        csv_writer.writerow(columns)
-
-        lang = lang.capitalize()
-        search_result_link = f"{KAGGLE_LINK}search?q=in%3Anotebooks+kernelLanguage%3A{lang}+sortBy%3Adate"
-
-        self.driver.get(search_result_link)
-
-        notebook_count = 0
-        is_done = False
-        while not is_done:
-            notebooks_added = self._get_all_notebooks_current_page(csv_writer)
-            notebook_count += notebooks_added
-            if notebook_count >= approx_notebook_count:
-                is_done = True
-
-            buttons = self.driver.find_elements_by_xpath(
-                "//button[contains(@class, 'mulrx')]"
-            )
-            if len(buttons) == 0:
-                is_done = True
-            buttons[0].click()
-            sleep(5)
-
-        data.seek(0)
-        return pd.read_csv(data)
-
-
-if __name__ == "__main__":
-    with SearchScraper() as scraper:
-        print(scraper.get_all_notebooks("python", 30).head())
+        wait_loading_screen(webdriver)

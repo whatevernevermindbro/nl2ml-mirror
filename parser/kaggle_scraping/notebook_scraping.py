@@ -11,17 +11,11 @@ class NotebookScraper(BaseScraper):
     def __init__(self, max_load_wait=15.0):
         super().__init__(max_load_wait)
 
-
     def get_source_links(self, kernel_link):
         self.driver.get(kernel_link)
 
         # Close cookie warning, if it is there
-        if not self.accepted_cookies:
-            accept_cookies_button = self.driver.find_element_by_xpath(
-                "//*[@id='site-container']/div/div[6]/div/div[2]/div"
-            )
-            accept_cookies_button.click()
-            self.accepted_cookies = True
+        self._accept_cookies()
 
         # Now onto the data source scraping
         sources_list = self.driver.find_element_by_xpath(

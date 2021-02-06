@@ -1,14 +1,11 @@
+import asyncio
 import copy
-from io import StringIO
 from csv import writer
 import json
-import requests
 
 from bs4 import BeautifulSoup
 import pandas as pd
-from tqdm import trange
-
-from kaggle_scraping import NotebookScraper
+import requests
 
 
 KAGGLE_LINK = "https://www.kaggle.com/"
@@ -35,9 +32,9 @@ def is_notebook_view(tag):
 
 
 def collect_metadata(kernel_json):
-    '''
+    """
     Collects data for fields in METADATA_FIELDS
-    '''
+    """
     def nested_lookup(json_obj, complex_key):
         keys = complex_key.split("__")
         current_level = json_obj
@@ -60,9 +57,9 @@ def collect_metadata(kernel_json):
 
 
 def collect_data_source(kernel_json, kernel_ref, source_scraper):
-    '''
+    """
     Finds data source slug and figures out the link
-    '''
+    """
     user_dataset_count = 0
     sources = []
     for data_source in kernel_json["dataSources"]:
@@ -88,9 +85,9 @@ def collect_data_source(kernel_json, kernel_ref, source_scraper):
 
 
 def code_blocks(ipynb_source):
-    '''
+    """
     Code block generator
-    '''
+    """
     ipynb_source = json.loads(ipynb_source)
 
     for cell in ipynb_source["cells"]:
@@ -99,9 +96,9 @@ def code_blocks(ipynb_source):
 
 
 def process_notebook(notebook_ref, source_scraper, csv_writer):
-    '''
+    """
     Loads notebook from kaggle and parses its codeblocks and metadata
-    '''
+    """
     response = requests.get(KAGGLE_LINK + notebook_ref)
 
     soup = BeautifulSoup(response.text, "html.parser")
@@ -137,22 +134,7 @@ def process_notebook(notebook_ref, source_scraper, csv_writer):
     return new_notebooks
 
 
-def extract_code_blocks(kernels_df, filters=None):
-    code_blocks_data = StringIO()
-    code_blocks_writer = writer(code_blocks_data)
-    code_blocks_writer.writerow(ALL_COLUMNS)
-    with trange(kernels_df.shape[0]) as kernel_indices_iterator, NotebookScraper() as source_scraper:
-        for i in kernel_indices_iterator:
-            kernel_ref = kernels_df.loc[i, "ref"]
-            kernel_indices_iterator.set_description(f"Notebook {i: >7}")
-
-            new_blocks = process_notebook(kernel_ref, source_scraper, code_blocks_writer)
-
-            kernel_indices_iterator.set_postfix({"code blocks": new_blocks})
-
-    code_blocks_data.seek(0)
-    code_blocks_df = pd.read_csv(code_blocks_data)
-
+def apply_filters(code_blocks_df, filters):
     code_blocks_df['kaggle_score'] = pd.to_numeric(code_blocks_df['kaggle_score'], errors='ignore')
     code_blocks_df['kaggle_comments'] = pd.to_numeric(code_blocks_df['kaggle_comments'], errors='ignore')
     code_blocks_df['kaggle_upvotes'] = pd.to_numeric(code_blocks_df['kaggle_upvotes'], errors='ignore')
@@ -163,9 +145,22 @@ def extract_code_blocks(kernels_df, filters=None):
         else:
             code_blocks_df = code_blocks_df[code_blocks_df['kaggle_score'] >= float(filters['kaggle_score'])]
 
-    if(filters['upvotes']):
+    if filters['upvotes']:
         code_blocks_df = code_blocks_df[code_blocks_df['kaggle_upvotes'] >= int(filters['upvotes'])]
-    if(filters['comments']):
+    if filters['comments']:
         code_blocks_df = code_blocks_df[code_blocks_df['kaggle_comments'] >= int(filters['comments'])]
-
     return code_blocks_df
+
+
+def extract_code_blocks(buffer, kernels_df, filters=None):
+    code_blocks_writer = writer(buffer)
+    code_blocks_writer.writerow(ALL_COLUMNS)
+
+    with NotebookScraper() as source_scraper:
+        for i in range(0, kernels_df.shape[0]):
+            kernel_ref = kernels_df.loc[j, "ref"]
+            process_notebook(kernel_ref, source_scraper, code_blocks_writer)
+
+    buffer.seek(0)
+
+    # return apply_filters(code_blocks_df, filters)

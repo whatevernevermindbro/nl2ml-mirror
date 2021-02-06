@@ -24,17 +24,15 @@ class CompetitionScraper(BaseScraper):
     def __init__(self, max_load_wait=15.0):
         super().__init__(max_load_wait)
 
-
+    @staticmethod
     def _extract_public_leaderboard_score(self, leaderboard_row):
         score_block = leaderboard_row.find_element_by_xpath(
             "./td[contains(@data-th, 'Score')]"
         )
         return float(score_block.text)
 
-
     def _load_full_leaderboard(self):
-        if not self.logged_in:
-            self._log_in()
+        self._log_in()
 
         leaderboard_data_link_container = self.driver.find_element_by_xpath(
             "//div[@class='competition-leaderboard__actions']/a"
@@ -49,7 +47,6 @@ class CompetitionScraper(BaseScraper):
                 leaderboard_df = pd.read_csv(tmp_zip.open(csv_file))
 
         return leaderboard_df
-
 
     def get_optimization_type(self, kernel_link):
         self.driver.get(kernel_link + "leaderboard")
