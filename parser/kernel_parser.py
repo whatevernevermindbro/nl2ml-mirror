@@ -7,7 +7,7 @@ from tqdm import tqdm
 from kaggle_scraping import KaggleWebDriver, extract_code_blocks
 
 
-KERNEL_FILENAME = "../also_data/kernels_list21.csv"
+KERNEL_FILENAME = "./kernels_list21.csv"
 refs = pd.read_csv(KERNEL_FILENAME)
 
 parser = argparse.ArgumentParser(description="Parse kaggle notebooks")
