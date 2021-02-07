@@ -62,10 +62,7 @@ def collect_data_sources(webdriver, kernel_ref):
     """
     Finds data source slug and figures out the link
     """
-    try:
-        raw_links = get_source_links(webdriver, KAGGLE_LINK + kernel_ref)
-    except Exception as e:
-        return None
+    raw_links = get_source_links(webdriver, KAGGLE_LINK + kernel_ref)
 
     sources = []
     for raw_link in raw_links:

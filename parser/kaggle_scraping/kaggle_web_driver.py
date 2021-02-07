@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,6 +12,7 @@ class KaggleWebDriver:
         self.options.add_argument("--incognito")
         self.options.add_argument("--remote-debugging-port=9222")
         self.options.add_argument("--headless")
+        self.options.add_argument("--no-sandbox")
         self.options.add_argument("window-size=1400,600")
 
         # Yes, I created a new account for this...
@@ -61,8 +63,11 @@ class KaggleWebDriver:
         if self.accepted_cookies:
             return
 
-        accept_cookies_button = WebDriverWait(self.driver, self.max_load_wait).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, "div.sc-pJjas div.gsXzyw"))
-        )
-        accept_cookies_button.click()
+        try:
+            accept_cookies_button = WebDriverWait(self.driver, self.max_load_wait).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, "div.sc-pJjas div.gsXzyw"))
+            )
+            accept_cookies_button.click()
+        except TimeoutException:
+            pass
         self.accepted_cookies = True

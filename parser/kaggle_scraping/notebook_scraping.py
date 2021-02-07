@@ -6,14 +6,17 @@ from selenium.webdriver.support import expected_conditions as EC
 
 def get_source_links(webdriver, kernel_link):
     webdriver.driver.get(kernel_link)
+
+    webdriver.accept_cookies()
+
     # Now onto the data source scraping
     some_source = WebDriverWait(webdriver.driver, webdriver.max_load_wait).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "ul>ul"))
     )
     sources_list = some_source.find_element_by_xpath("./..")
     # Close all data source content lists
-    open_spoiler_buttons = WebDriverWait(sources_list, webdriver.max_load_wait).until(
-        EC.presence_of_all_elements_located((By.XPATH, ".//i[contains(text(), 'arrow_drop_down')]"))
+    open_spoiler_buttons = sources_list.find_elements_by_xpath(
+        ".//i[contains(text(), 'arrow_drop_down')]"
     )
     for button in open_spoiler_buttons:
         button.click()
