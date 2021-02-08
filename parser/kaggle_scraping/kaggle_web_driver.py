@@ -13,6 +13,7 @@ class KaggleWebDriver:
         self.options.add_argument("--remote-debugging-port=9222")
         self.options.add_argument("--headless")
         self.options.add_argument("--no-sandbox")
+        self.options.add_argument("--disable-dev-shm-usage")
         self.options.add_argument("window-size=1400,600")
 
         # Yes, I created a new account for this...

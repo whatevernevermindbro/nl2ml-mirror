@@ -66,7 +66,10 @@ def collect_data_sources(webdriver, kernel_ref):
 
     sources = []
     for raw_link in raw_links:
-        sources.append(raw_link[len(KAGGLE_LINK):])
+        if raw_link is not None:
+            sources.append(raw_link[len(KAGGLE_LINK):])
+        else:
+            sources.append(raw_link)
     return sources
 
 
@@ -85,7 +88,7 @@ def process_kernel(buffer_writer, webdriver, kernel_ref):
     """
     Loads notebook from kaggle and parses its codeblocks and metadata
     """
-    response = requests.get(KAGGLE_LINK + kernel_ref)
+    response = requests.get(KAGGLE_LINK + kernel_ref, timeout=webdriver.max_load_wait)
 
     soup = BeautifulSoup(response.text, "html.parser")
     potential_notebook_views = soup.find_all(is_kernel_view)
@@ -101,6 +104,8 @@ def process_kernel(buffer_writer, webdriver, kernel_ref):
     data_end = kernel_raw.index(data_end_marker)
 
     kernel_json = json.loads(kernel_raw[data_begin: data_end])
+    if kernel_json.get("kernelBlob") is None or kernel_json["kernelBlob"].get("source") is None:
+        return 0
 
     metadata = collect_metadata(kernel_json)
     metadata.append(collect_data_sources(
@@ -108,15 +113,15 @@ def process_kernel(buffer_writer, webdriver, kernel_ref):
         kernel_ref
     ))
 
-    new_notebooks = 0
+    new_blocks = 0
     for idx, block in enumerate(code_blocks(kernel_json["kernelBlob"]["source"])):
         code_block_data = copy.copy(metadata)
         code_block_data.append(block)
         code_block_data.append(idx)
         buffer_writer.writerow(code_block_data)
-        new_notebooks += 1
+        new_blocks += 1
 
-    return new_notebooks
+    return new_blocks
 
 
 def apply_filters(code_blocks_df, filters):
@@ -140,6 +145,8 @@ def apply_filters(code_blocks_df, filters):
 def extract_code_blocks(webdriver, kernel_ref):
     buffer = StringIO()
     buffer_writer = writer(buffer)
-    process_kernel(buffer_writer, webdriver, kernel_ref)
+    new_blocks = process_kernel(buffer_writer, webdriver, kernel_ref)
+    if new_blocks == 0:
+        raise RuntimeError("No new blocks =(")
     buffer.seek(0)
     return buffer

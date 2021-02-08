@@ -1,14 +1,11 @@
-ssh selectel_playground "
-  cd /home/kek;
-  sudo -u kek nohup python3 kernel_parser.py --process_id 0 1>./parser.err 2>./parser.log &
-"
+for n in 1 2 3
+do
+    server="selectel_playground$n"
+    process_id=$(( n - 1 ))
+    ssh $server "
+        cd /home/kek;
+        sudo -u kek nohup python3 kernel_parser.py --process_id $process_id 1>./parser.err 2>./parser.log &
+    "
+    echo "===== SUCCESSFUL START AT $server ====="
+done
 
-ssh selectel_playground2 "
-  cd /home/kek;
-  sudo -u kek nohup python3 kernel_parser.py --process_id 1 1>./parser.err 2>./parser.log &
-"
-
-ssh selectel_playground3 "
-  cd /home/kek;
-  sudo -u kek nohup python3 kernel_parser.py --process_id 2 1>./parser.err 2>./parser.log &
-"
