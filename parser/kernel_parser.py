@@ -9,7 +9,7 @@ from kaggle_scraping import KaggleWebDriver, extract_code_blocks
 
 KERNEL_FILENAME = "./kernels_list21.csv"
 COOLDOWN_LIMIT = 50
-COOLDOWN_TIME = 120
+COOLDOWN_TIME = 60
 
 refs = pd.read_csv(KERNEL_FILENAME)
 
@@ -41,7 +41,9 @@ with open(CODEBLOCK_FILENAME, mode='w') as f:
             pbar.update(1)
             if processed_count >= COOLDOWN_LIMIT:
                 processed_count = 0
+                webdriver.close()
                 sleep(COOLDOWN_TIME)
+                webdriver.load()
 
 webdriver.close()
 pbar.close()

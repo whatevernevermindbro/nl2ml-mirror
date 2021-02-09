@@ -14,6 +14,9 @@ def get_source_links(webdriver, kernel_link):
         EC.presence_of_element_located((By.CSS_SELECTOR, "ul>ul"))
     )
     sources_list = some_source.find_element_by_xpath("./..")
+    # Stop loading the kernel
+    webdriver.driver.execute_script("window.stop();")
+
     # Close all data source content lists
     open_spoiler_buttons = sources_list.find_elements_by_xpath(
         ".//i[contains(text(), 'arrow_drop_down')]"

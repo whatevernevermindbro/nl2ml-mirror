@@ -13,7 +13,7 @@ class KaggleWebDriver:
         self.options.add_argument("--remote-debugging-port=9222")
         self.options.add_argument("--headless")
         self.options.add_argument("--no-sandbox")
-        self.options.add_argument("--disable-dev-shm-usage")
+        # self.options.add_argument("--disable-dev-shm-usage")
         self.options.add_argument("window-size=1400,600")
 
         # Yes, I created a new account for this...
@@ -21,6 +21,14 @@ class KaggleWebDriver:
         self.acc_pwd = "12345678"
 
         self.max_load_wait = max_load_wait
+
+        self.driver = None
+        self.accepted_cookies = False
+        self.logged_in = False
+
+    def __del__(self):
+        if self.driver is not None:
+            self.driver.quit()
 
     def load(self):
         self.driver = webdriver.Chrome(options=self.options)
@@ -34,6 +42,7 @@ class KaggleWebDriver:
 
     def close(self):
         self.driver.quit()
+        self.driver = None
 
     def __exit__(self, exc_type, ecx_value, exc_traceback):
         self.close()
