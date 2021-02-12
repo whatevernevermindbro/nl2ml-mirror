@@ -1,6 +1,7 @@
-scp selectel_playground:/home/kek/code_blocks.csv ./cb1.csv
-
-scp selectel_playground2:/home/kek/code_blocks.csv ./cb2.csv
-
-scp selectel_playground3:/home/kek/code_blocks.csv ./cb3.csv
+for n in 1 2 3
+do
+  server="selectel_playground$n"
+  filename="./cb$n.sh"
+  scp "$server:/home/kek/code_blocks.csv" $filename
+done
 

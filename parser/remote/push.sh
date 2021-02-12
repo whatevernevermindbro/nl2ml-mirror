@@ -1,4 +1,4 @@
-for n in 1 2 3
+for n in 3
 do
     server="selectel_playground$n"
     scp -q kernel_parser.py "$server:/home/kek"
