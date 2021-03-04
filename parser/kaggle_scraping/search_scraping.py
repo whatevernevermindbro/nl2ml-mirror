@@ -1,7 +1,8 @@
 from csv import writer
 from io import StringIO
 
-# import pandas as pd
+from time import sleep
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,26 +14,26 @@ from kaggle_scraping.conditions import element_disappeared, found_n_elements
 KAGGLE_LINK = "https://www.kaggle.com/"
 
 
-def _get_all_notebooks_current_page(webdriver, csv_writer, max_notebooks):
+def _get_all_objects_current_page(webdriver, csv_writer, max_objects):
     try:
-        notebook_entries = WebDriverWait(webdriver.driver, webdriver.max_load_wait).until(
+        object_entries = WebDriverWait(webdriver.driver, webdriver.max_load_wait).until(
             found_n_elements((By.CSS_SELECTOR, "a.sc-qOvHb"), 20)
         )
     except TimeoutException:
         return 0
 
-    notebook_count = 0
-    for entry in notebook_entries:
+    object_count = 0
+    for entry in object_entries:
         collected_data = []
         collected_data.append(entry.get_attribute("href")[len(KAGGLE_LINK):])
 
         csv_writer.writerow(collected_data)
 
-        notebook_count += 1
-        if notebook_count >= max_notebooks:
+        object_count += 1
+        if object_count >= max_objects:
             break
 
-    return notebook_count
+    return object_count
 
 
 def wait_loading_screen(webdriver):
@@ -59,32 +60,42 @@ def move_to_page(webdriver, page_id):
     wait_loading_screen(webdriver)
 
 
-def write_kernels_to_file(fd, webdriver, lang, max_notebook_count, start, pbar):
-    assert 0 <= start < 3
+def build_search_link(object_type, filters):
+    link = f"{KAGGLE_LINK}search?q=in%3A{object_type}"
+    if filters is not None:
+        for filter_name, value in filters.items():
+            link += f"+{filter_name}%2A{value}"
+    return link
+
+
+def search_and_write_to_file(fd, webdriver, object_type, max_object_count, pbar, process_id, total_processes, filters=None):
+    assert 0 <= process_id < total_processes
 
     csv_writer = writer(fd)
 
     columns = ["ref"]
     csv_writer.writerow(columns)
 
-    lang = lang.capitalize()
-    search_result_link = f'{KAGGLE_LINK}search?q=in%3Anotebooks+kernelLanguage%3A{lang}+tag%3Anlp'
+    search_result_link = build_search_link(object_type, filters)
 
     webdriver.driver.get(search_result_link)
+    cur_page = 1
+    if total_processes > 1:
+        move_to_page(webdriver, process_id)
+        cur_page = 6 + process_id
 
-    move_to_page(webdriver, start)
-    notebook_count = 0
+    object_count = 0
     is_done = False
     while not is_done:
-        notebooks_added = _get_all_notebooks_current_page(
+        objects_added = _get_all_objects_current_page(
             webdriver,
             csv_writer,
-            max_notebook_count - notebook_count
+            max_object_count - object_count
         )
 
-        notebook_count += notebooks_added
-        pbar.update(notebooks_added)
-        if notebooks_added == 0 or notebook_count >= max_notebook_count:
+        object_count += objects_added
+        pbar.update(objects_added)
+        if objects_added == 0 or object_count >= max_object_count:
             is_done = True
             continue
 
@@ -92,10 +103,19 @@ def write_kernels_to_file(fd, webdriver, lang, max_notebook_count, start, pbar):
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "span.ePLZfR"))
         )
 
-        button_id = 4
+        if total_processes > 1:
+            button_id = total_processes + 1
+            cur_page += process_id
+        else:
+            button_id = 2
+            if cur_page < 6:
+                button_id = cur_page - 1
+            cur_page += 1
+
         if len(buttons) <= button_id:
             is_done = True
             continue
+        sleep(5)
         buttons[button_id].click()
 
         wait_loading_screen(webdriver)
