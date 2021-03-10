@@ -8,3 +8,4 @@ svm_classifier.ipynb
 models_scripts/common/__pycache__
 .ipynb_checkpoints/
 tmp_datafix.ipynb
+models_scripts/decoder_training_checkpoints/
