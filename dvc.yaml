@@ -1,0 +1,30 @@
+# regex:
+#   cmd: python ./models_scripts/regex.py ${GRAPH_VER} ${DATASET_PATH}
+#   deps:
+#   - ./data/code_blocks_clean.csv.
+#   params:
+#   - GRAPH_VER
+#   - regex.DATASET_PATH
+#   - regex.evaluation
+#   outs:
+#   - ./data/code_blocks_regex_graph_v${GRAPH_VER}.csv
+
+# train_logreg:
+#   cmd: python ./models_scripts/logreg_classifier.py ${GRAPH_VER} ${DATASET_PATH}
+#   deps:
+#   - ./data/code_blocks_regex_graph_v${GRAPH_VER}.csv
+#   params:
+#   - GRAPH_VER
+#   - train_logreg.DATASET_PATH
+#   outs:
+#   - ./models/_regex_graph_v${GRAPH_VER}.sav
+
+# train_svm:
+#   cmd: python ./models_scripts/svm_classifier.py ${GRAPH_VER} ${DATASET_PATH}
+#   deps:
+#   - ./data/code_blocks_regex_graph_v${GRAPH_VER}.csv
+#   params:
+#   - GRAPH_VER
+#   - train_svm.DATASET_PATH
+#   outs:
+#   - ./models/_regex_graph_v${GRAPH_VER}.sav

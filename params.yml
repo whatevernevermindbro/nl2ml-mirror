@@ -1,8 +1,12 @@
-DATASET_PATH: ./data/golden_884_set.csv
-graph_ver: 6
+C: 100
+DATASET_PATH: ./data/code_blocks_clean_regex_graph_v6.csv
+kernel: linear
 label: '[''import'', ''data_import'', ''data_export'', ''preprocessing'', ''visualization'',
   ''model'', ''deep_learning_model'', ''train'', ''predict'']'
-model: regex_v6
-nrows: 884
-script_dir: ./regex.ipynb
-task: regex evaluation
+max_df: 0.3
+min_df: 5
+model: ./models/svm_regex_graph_v6.sav
+nrows: 225565
+random_state: 241
+script_dir: c:/Users/Alex/OneDrive/Education/HSE/NL2ML/gitlab_repo/models_scripts/svm_train.py
+smooth_idf: true
