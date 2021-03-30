@@ -74,8 +74,11 @@ class KaggleWebDriver:
             return
 
         try:
-            accept_cookies_button = WebDriverWait(self.driver, self.max_load_wait).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, "div.sc-pJjas div.gsXzyw"))
+            cookies_prompt = WebDriverWait(self.driver, self.max_load_wait).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "div.sc-pRDlx"))
+            )
+            accept_cookies_button = WebDriverWait(cookies_prompt, self.max_load_wait).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "div.sc-AxgMl.dhjQgX"))
             )
             accept_cookies_button.click()
         except TimeoutException:
