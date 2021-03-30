@@ -1,7 +1,7 @@
 for n in 1 2 3
 do
-    echo "Selectel $n"
-    server="selectel_playground$n"
+    echo "Digital Ocean $n"
+    server="ocean$n"
     ssh $server "
       cat /home/kek/parser.log
     "
