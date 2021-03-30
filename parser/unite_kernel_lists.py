@@ -3,7 +3,7 @@ import os
 import pandas as pd
 
 LISTS_FOLDER = "./kernel_lists"
-OLD_LIST = "../data/kernels_list21.csv"
+OLD_LIST = "../data/additional_kernels.csv"
 
 all_refs = []
 for filename in os.listdir(LISTS_FOLDER):
