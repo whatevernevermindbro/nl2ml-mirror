@@ -10,3 +10,7 @@ models_scripts/common/__pycache__
 tmp_datafix.ipynb
 models_scripts/decoder_training_checkpoints/
 data_external/
+
+**.DS_Store
+**.idea
+**__pycache__
