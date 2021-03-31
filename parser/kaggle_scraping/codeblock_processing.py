@@ -80,7 +80,7 @@ def code_blocks_from_json(kernel_source):
     ipynb_source = json.loads(kernel_source)
 
     for cell in ipynb_source["cells"]:
-        if cell["cell_type"] == "code" and len(cell["source"].strip()) > 0:
+        if cell["cell_type"] == "code" and cell["source"] is not None and len(cell["source"].strip()) > 0:
             yield cell["source"]
 
 
