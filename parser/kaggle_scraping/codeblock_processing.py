@@ -73,15 +73,28 @@ def collect_data_sources(webdriver, kernel_ref):
     return sources
 
 
-def code_blocks(kernel_source):
+def code_blocks_from_json(kernel_source):
     """
     Code block generator
     """
     ipynb_source = json.loads(kernel_source)
 
     for cell in ipynb_source["cells"]:
-        if cell["cell_type"] == "code":
+        if cell["cell_type"] == "code" and cell["source"] is not None and len(cell["source"].strip()) > 0:
             yield cell["source"]
+
+
+def code_blocks_from_iframe(kernel_json):
+    if kernel_json.get("kernelRun") is None or kernel_json["kernelRun"].get("renderedOutputUrl") is None:
+        return
+    link_to_rendered = kernel_json["kernelRun"]["renderedOutputUrl"]
+    response = requests.get(link_to_rendered, timeout=15)
+    soup = BeautifulSoup(response.text, "html.parser")
+    cells = soup.find_all("div", "highlight")
+    for cell in cells:
+        code = cell.text
+        if len(code.strip()) > 0:
+            yield code
 
 
 def process_kernel(buffer_writer, webdriver, kernel_ref):
@@ -104,8 +117,6 @@ def process_kernel(buffer_writer, webdriver, kernel_ref):
     data_end = kernel_raw.index(data_end_marker)
 
     kernel_json = json.loads(kernel_raw[data_begin: data_end])
-    if kernel_json.get("kernelBlob") is None or kernel_json["kernelBlob"].get("source") is None:
-        return 0
 
     metadata = collect_metadata(kernel_json)
     metadata.append(collect_data_sources(
@@ -114,12 +125,24 @@ def process_kernel(buffer_writer, webdriver, kernel_ref):
     ))
 
     new_blocks = 0
-    for idx, block in enumerate(code_blocks(kernel_json["kernelBlob"]["source"])):
-        code_block_data = copy.copy(metadata)
-        code_block_data.append(block)
-        code_block_data.append(idx)
-        buffer_writer.writerow(code_block_data)
-        new_blocks += 1
+    if kernel_json.get("kernelBlob") is None:
+        for idx, block in enumerate(code_blocks_from_iframe(kernel_json)):
+            code_block_data = copy.copy(metadata)
+            code_block_data.append(block)
+            code_block_data.append(idx)
+            buffer_writer.writerow(code_block_data)
+            new_blocks += 1
+
+    elif kernel_json["kernelBlob"].get("source") is None:
+        return 0
+
+    else:
+        for idx, block in enumerate(code_blocks_from_json(kernel_json["kernelBlob"]["source"])):
+            code_block_data = copy.copy(metadata)
+            code_block_data.append(block)
+            code_block_data.append(idx)
+            buffer_writer.writerow(code_block_data)
+            new_blocks += 1
 
     return new_blocks
 
