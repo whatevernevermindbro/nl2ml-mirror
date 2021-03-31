@@ -75,7 +75,7 @@ class KaggleWebDriver:
 
         try:
             cookies_prompt = WebDriverWait(self.driver, self.max_load_wait).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, "div.sc-pRDlx"))
+                EC.presence_of_element_located((By.CSS_SELECTOR, "div.sc-qQwPu"))
             )
             accept_cookies_button = WebDriverWait(cookies_prompt, self.max_load_wait).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "div.sc-AxgMl.dhjQgX"))
