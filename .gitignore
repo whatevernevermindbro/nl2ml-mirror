@@ -14,3 +14,4 @@ data_external/
 **.DS_Store
 **.idea
 **__pycache__
+/data
