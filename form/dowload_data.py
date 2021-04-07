@@ -22,5 +22,10 @@ left join notebooks n on c.notebook_id = n.id'''
 
 data = pd.read_sql_query(sql, engine)
 print(data.shape)
-data.to_csv(f'../data/markup_data.csv')
+data.to_csv(f'../data/markup_data.csv', index=False)
 
+sql = '''select id, graph_vertex, graph_vertex_subclass from graph_vertices'''
+
+data = pd.read_sql_query(sql, engine)
+print(data.shape)
+data.to_csv(f'../data/actual_graph.csv', index=False)
