@@ -17,7 +17,7 @@ def get_graph_vertices(GRAPH_VER):
     with open(GRAPH_DIR, "r") as graph_file:
         graph = json.load(graph_file)
         vertices = list(graph.keys())
-    print('vertices parsed')
+    print('vertices parsed: {}'.format(vertices))
     return vertices
 
 def tfidf_transform(corpus, tfidf_params, TFIDF_DIR):

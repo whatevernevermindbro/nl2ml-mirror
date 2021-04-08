@@ -1,0 +1,10 @@
+regex:
+  cmd: python ./models_scripts/regex.py
+  deps:
+  - path: ./data/code_blocks_clean.csv
+    md5: aa503338e0da68a586d7b14380ecd7c5
+  params:
+    params.yaml:
+      GRAPH_VER: 6
+      regex.DATASET_PATH: ./data/code_blocks_clean.csv
+      regex.evaluation:
