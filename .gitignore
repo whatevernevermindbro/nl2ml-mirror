@@ -7,6 +7,11 @@ svm_classifier.ipynb
 /data_mini
 models_scripts/common/__pycache__
 .ipynb_checkpoints/
+tmp_datafix.ipynb
+models_scripts/decoder_training_checkpoints/
+data_external/
 
-**__pycache__
 **.DS_Store
+**.idea
+**__pycache__
+/data
