@@ -1,6 +1,12 @@
 import ast
 
-def get_docstrings_from_code(codeblock: str) -> str:
+
+def get_docstrings_from_code(codeblock: str, delimeter='<|||>') -> str:
+    """
+
+    Args:
+        delimeter (str):
+    """
     docstrings = []
     tree = ast.parse(codeblock)
     for child in ast.iter_child_nodes(tree):
@@ -8,7 +14,7 @@ def get_docstrings_from_code(codeblock: str) -> str:
             docstrings.append(ast.get_docstring(child))
         except:
             pass
-    return docstrings
+    return (delimeter).join(docstrings)
 
 
 def bad_way_to_do_stuff(func, *args):
