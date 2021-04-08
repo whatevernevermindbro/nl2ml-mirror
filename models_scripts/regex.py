@@ -2,6 +2,7 @@ import re
 import csv
 import json
 import argparse
+import yaml
 
 import pandas as pd
 import numpy as np
@@ -20,18 +21,26 @@ def tokens_search(df, tokens, new_column_name):
                 df[new_column_name][i] = 1
                 break
     return df
-
-parser = argparse.ArgumentParser()
-parser.add_argument("GRAPH_VER", help="version of the graph you want regex to label your CSV with", type=int)
-parser.add_argument("DATASET_PATH", help="path to your input CSV", type=str)
-parser.add_argument("-eval", "--evaluation", help="evalute regex after creating", type=bool)
-args = parser.parse_args()
-
-GRAPH_VER = args.GRAPH_VER
-DATASET_PATH = args.DATASET_PATH
 evaluation = False
-if args.evaluation is not None:
-    evaluation = args.evaluation
+try:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("GRAPH_VER", help="version of the graph you want regex to label your CSV with", type=int)
+    parser.add_argument("DATASET_PATH", help="path to your input CSV", type=str)
+    parser.add_argument("-eval", "--evaluation", help="evalute regex after creating", type=bool)
+    args = parser.parse_args()
+
+    GRAPH_VER = args.GRAPH_VER
+    DATASET_PATH = args.DATASET_PATH
+    if args.evaluation is not None:
+        evaluation = args.evaluation
+except:
+    print('Got no arguments, taking default arguments from params.yaml')
+    with open("params.yaml", 'r') as fd:
+        params = yaml.safe_load(fd)
+    GRAPH_VER = params['GRAPH_VER']
+    DATASET_PATH = params['regex']['DATASET_PATH']
+    if params['regex']['evaluation'] is not None:
+        evaluation = params['evaluation']
 
 OUTPUT_DATASET_PATH = '{}_regex_graph_v{}.csv'.format(DATASET_PATH[:-4], GRAPH_VER)
 CODE_COLUMN = 'code_block'

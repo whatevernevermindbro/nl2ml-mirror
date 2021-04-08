@@ -30,7 +30,7 @@ def get_source_links(webdriver, kernel_link):
     for i, source in enumerate(sources):
         source.click()
         source_thumbnail = WebDriverWait(webdriver.driver, webdriver.max_load_wait).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "div.sc-kNzByj"))
+            EC.presence_of_element_located((By.CSS_SELECTOR, "div.sc-jMGZtl"))
         )
         link_container = source_thumbnail.find_element_by_css_selector("a")
 

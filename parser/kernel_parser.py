@@ -8,7 +8,7 @@ from tqdm import tqdm
 from kaggle_scraping import KaggleWebDriver, extract_code_blocks
 
 
-KERNEL_FILENAME = "./kernels_list21.csv"
+KERNEL_FILENAME = "./additional_kernels.csv"
 COOLDOWN_LIMIT = 50
 COOLDOWN_TIME = 60
 
