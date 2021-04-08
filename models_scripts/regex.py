@@ -16,7 +16,7 @@ def tokens_search(df, tokens, new_column_name):
         print(percents + '%\r', end='')
         row = df[CODE_COLUMN][i]
         for token in tokens:
-            result = re.search(token.replace('(','\('), row)
+            result = re.search(token, row)
             if result!=None:
                 df[new_column_name][i] = 1
                 break
@@ -57,7 +57,7 @@ if __name__ == '__main__':
         graph = json.load(graph_file)
     print('opened graph')
 
-    vertices = []
+    vertices = ["Other.something_strange"]
     for i in range(0, len(graph)):
         vertex = list(graph.keys())[i]
         vertices.append(vertex)

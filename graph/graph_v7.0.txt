@@ -1,0 +1,62 @@
+{	
+	“Hypothesis.statistical_test”: [“shapiro(“, “normaltest(”, “anderson(”, “pearsonr(”, “spearmanr(”, “kendalltau(”, “chi2_contingency(“, “adfuller(“, “kpss(”, “ttest_ind”],
+
+	“Environment.import_modules”:  ["import \\w+ as \\w+", "import \\w+", "from \\w+ import \\w+", "from \\w+ import \\w+ as \\w+"],
+	“Environment.set_options”: [“os.environ”, “ pd.set_option”], 
+	“Environment.get_options”: [“import”],
+ 
+	“Data_Extraction.load_from_url”:[“read_html”],
+	“Data_Extraction.load_from_sql”: [“read_sql”],
+	“Data_Extraction.load_from_disk”: ["read_fwf", "read_json", "read_clipboard", "read_excel", "read_hdf", "read_feather", "read_parquet", "read_orc", "read_msgpack", "read_stata", "read_sas", "read_spss", "read_pickle", "read_gbq"],
+	“Data_Extraction.load_from_csv”: [“read_csv”],
+
+	“EDA.show_table”: [“.head”, “.tail”],
+	“EDA.show_table_attributes”: [“.columns”, “.index”],
+	“EDA.count_missing_values”: [“.isnull().sum”],
+	“EDA.count_duplicates” = [“len( \\w+)[  ]{0,1}-[  ]{0,1}len( \\w+).drop_duplicates”],
+	“EDA.count_data_types”: [“.dtypes.value_counts(”],
+
+	“Data_Transform.create_dataframe”: [“DataFrame”],
+	“Data_Transform.remove_duplicates”: [“drop_duplicates”],
+	“Data_Transform.correct_missing_values”: [“fillna”, “SimpleImputer(missing_values=”],
+	“Data_Transform.normalization”: [“normalize(”, “StandartScaler(”, “RobustScaler(, “MinMaxScaler(”, “mean(\\w+)[ ]{0, 1}/[ ]{0, 1}std”, “mean(\\w+))[ ]{0, 1}/[ ]{0, 1}np.std”, “.mean()/[ ]{0, 1}[ ]{0, 1}/[ ]{0, 1}\\w+.std”, “mean())/[ ]{0, 1}/[ ]{0, 1}\\w+.std”],
+	“Data_Transform.data_type_conversions”: [“to_numeric”, “astype”, “to_datetime”, “to_timedelta”, “infer_objects”, “convert_dtypes”],
+	“Data_Transform.randomize_order”: [“.random.shuffle”],
+	“Data_Transform.split”: [“.split”, “KFold(“],
+	“Data_Transform.filter”: [“.loc[\\w[ ]{0, 1}==]”, “.loc[\\w[ ]{0, 1}>]”, “.loc[\\w[ ]{0, 1}<]”, “.iloc[\\w[ ]{0, 1}==]”, “.iloc[\\w[ ]{0, 1}>]”, “.iloc[\\w[ ]{0, 1}<]”],
+	“Data_Transform.concatenate”: [“concatenate”],
+	“Data_Transform.drop_column”: [“drop_column”],
+	“Data_Transform.sort_values”: [“sort_values”],
+	“Data_Transform.feature_engineering”: [“OneHotEncoder(”, “Binarizer(”, “FunctionTransformer(”, “KBinsDiscretizer(”,  “KernelCenterer(”, “LabelBinarizer(”, “LabelEncoder(”, “MultiLabelBinarizer(”, “MaxAbsScaler(”, “MinMaxScaler(”, “Normalizer(”, “OrdinalEncoder(”, “PolynomialFeatures(”, “PowerTransformer(”, “QuantileTransformer(”, “binarize(”, “label_binarize(”, “power_transform(”, “.apply(”],
+“Data_Transform.to_dummies”:[“get_dummies(”, “add_dummy_feature(”],
+“Data_Transform.prepare_x_and_y”: [“\\w+x, \\w+y =”],
+“Data_Transform.categorify”: [“Categorify”],
+
+
+	“Model_Train.choose_model_class”: ["LinearRegression(", "RandomForest(", "Ridge(", "RidgeCV(", "RidgeClassifier(", "RidgeClassifierCV(", "SGD(", "LogisticRegression(", "LogisticRegressionCV(", "SVC(", "SVR(", "Layer(", "XGboost(", "LGBM(", "Perceptron(", "KNeighborsRegressor(", "KNeighborsClassifier(", "SGDRegressor(", "ElasticNet(", "KMeans(", "AgglomerativeClustering(", "SpectralClustering(", "CategoricalNB(", "ComplementNB(", "DecisionTreeClassifier(", "DecisionTreeRegressor(", "Lasso(", "CatBoost(", "ElasticNetCV(", "Dense(", "Activation(", "Embedding(", "Masking(", "Lambda(", "Conv\\dD(", "SeparableConv\\dD(", "DepthwiseConv\\dD(", "Conv\\dDTranspose(", "MaxPooling\\dD(", "AveragePooling\\dD(", "GlobalPooling\\dD(", "GlobalAveragePooling\\dD(", "LSTM(", "GRU(", "RNN(", "SimpleRNN(", "Bidirectional(", "ConvLSTM2D(", "CategoryEncoding(", "CategoryCrossing(", "BatchNormalization(", "LayerNormalization(", "Dropout(", "SpatialDropout\\dD(", "GaussianDropout(", "GaussianNoise(", "ActivityRegularization(", "AlphaDropout(", "Attention(", "AdditiveAttention(", "Cropping\\dD(", "UpSampling\\dD(", "ZeroPadding\\dD(", "LocallyConnected\\dD(", "ReLU(", "Softmax(", "LeakyReLU(", "PReLU(", "ELU(", "ThresholdedReLU("],
+	“Model_Train.train_model”: [“.fit(”],
+	“Model_Train.metric_computation”: [“history[\“loss\”]”, “history[\”accuracy\”]”],
+	“Model_Train.predict”: [“.predict(”, “.predict_proba(”],
+
+	“Model_Evaluation.compute_test_metric”: ["KLDivergence class", "kl_divergence function", "MeanSquaredError", "MeanAbsoluteError", "mean_squared_error", "MeanAbsolutePercentageError", "MeanSquaredLogarithmicError", "CosineSimilarity", "mean_absolute_error", "mean_absolute_percentage_error", "mean_squared_logarithmic_error", “huber”, “holdout”],	“Model_Evaluation.predict_on_test” [“.predict(test”, ““.predict(\\w+test”, “.predict_proba(test”, “.predict_proba(\\w+test”],
+
+	“Model_Interpretation.get_coefficients”: [“.coef_”],
+
+	“Hyperparam_Tuning.find_best_score”: [ “best_score_”],
+	“Hyperparam_Tuning.find_best_params”: [“.best_params_”, “.best_params”, “best_index_”],
+	“Hyperparam_Tuning.find_best_model_class”: [“for model\\w+ in”, “for \\w+model in”, “best_estimator_”],
+	“Hyperparam_Tuning.train_on_grid”: [“GridSearchCV(”],
+	“Hyperparam_Tuning.define_search_space”: [“hp.choice(”, “hp.uniform(”, “hp.randint(”, “hp.quniform(”, “hp.loguniform(”, “hp.qloguniform(”, “hp.normal(“, “hp.qnormal(“, “hp.lognormal(”, “hp.qlognormal(”] ,
+“Hyperparam_Tuning.fit_one_cycle”: [“fit_one_cycle(”],
+
+	“Visualization.learning_history”: [“plot(\\w+history”], 
+	“Visualization.distribution”: [“distplot(”, ".heatmap", ".hist"],
+	“Visualization.wandb”: [“wandb"],
+	“Visualization.missing_values”: [“msno.”],
+
+	“Data_Export.save_to_csv”: [“to_csv”],
+
+	“Production.send_to_prod_environment”: [“kaggle competitions submit”],
+	“Production.save_weights”: [“save_weights(”],
+
+}
