@@ -15,7 +15,7 @@ warnings.simplefilter('ignore')
 from simpletransformers.classification import ClassificationModel
 
 DATASET = './train.csv'
-MODEL_FOLDER = './outputs/'
+MODEL_FOLDER = '../model/comment_cleanup/outputs/'
 RESULT_FILE = './metrics.txt'
 
 train_data = pd.read_csv(DATASET)
