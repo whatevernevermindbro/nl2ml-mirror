@@ -1,6 +1,6 @@
-for n in 3
+for n in 1 2 3
 do
-    server="selectel_playground$n"
+    server="ocean$n"
     proc_info=`ssh $server "ps -fA | grep 'nohup' | head -n1"`
     proc=`echo $proc_info | awk '{ print $2 }'`
     ssh $server "kill $proc"
