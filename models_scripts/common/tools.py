@@ -32,9 +32,10 @@ def tfidf_transform(corpus, tfidf_params, TFIDF_DIR):
     return features
 
 
-def tfidf_fit_transform(code_blocks: pd.DataFrame, tfidf_params: dict, TFIDF_DIR: str):
+def tfidf_fit_transform(code_blocks: pd.DataFrame, tfidf_params: dict, tfidf_path=None):
     tfidf = TfidfVectorizer(**tfidf_params).fit(code_blocks)
-    pickle.dump(tfidf, open(TFIDF_DIR, "wb"))
+    if tfidf_path is not None:
+        pickle.dump(tfidf, open(tfidf_path, "wb"))
     code_blocks_tfidf = tfidf.transform(code_blocks)
     return code_blocks_tfidf
 
