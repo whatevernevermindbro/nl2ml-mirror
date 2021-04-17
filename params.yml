@@ -20,15 +20,17 @@ data:
     ''Production.save_weights'']'
   model: ../models/linear_svm_regex_graph_v7.0.sav
   nrows: 1453
-  script_dir: /Users/negativex/School/research/nl2ml/models_scripts/./linear_svm_train.py
+  script_dir: /Users/negativex/School/research/nl2ml/models_scripts/./svm_hyperparam_train.py
 kfold:
   n_splits: 10
   random_state: 42
   shuffle: true
 model:
-  C: 0.9644223232787479
+  C: 12.156623992607505
+  kernel: linear
+  max_iter: 10000
   random_state: 42
 tfidf:
-  max_df: 0.2787812273644817
+  max_df: 0.24584405242686796
   min_df: 3
   smooth_idf: true
