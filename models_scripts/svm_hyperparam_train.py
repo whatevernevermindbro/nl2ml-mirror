@@ -1,16 +1,15 @@
-import pickle
-from datetime import datetime
 import argparse
-import sys
 import os
+import pickle
+import sys
 
-import pandas as pd
+import dagshub
 import numpy as np
 import optuna
+import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import KFold
-from sklearn.svm import LinearSVC
-import dagshub
+from sklearn.svm import SVC
 
 from common.tools import *
 
@@ -33,11 +32,15 @@ CODE_COLUMN = "code_block"
 TARGET_COLUMN = "graph_vertex_id"
 
 RANDOM_STATE = 42
-N_TRIALS = 50
+N_TRIALS = 70
+MAX_ITER = 10000
+
 HYPERPARAM_SPACE = {
-    "svm_c": (1e-3, 1e3),
+    "svm_c": (1e-1, 1e3),
     "tfidf_min_df": (1, 50),
     "tfidf_max_df": (0.2, 1.0),
+    "svm_kernel": ["linear", "poly", "rbf"],
+    "svm_degree": (2, 6),  # in case of poly kernel
 }
 
 
@@ -51,7 +54,7 @@ def cross_val_scores(kf, clf, X, y):
         clf.fit(X_train, y_train)
 
         y_pred = clf.predict(X_test)
-        f1s.append(f1_score(y_test, y_pred, average='weighted'))
+        f1s.append(f1_score(y_test, y_pred, average="weighted"))
         accuracies.append(accuracy_score(y_test, y_pred))
 
     f1s = np.array(f1s)
@@ -60,11 +63,13 @@ def cross_val_scores(kf, clf, X, y):
 
 
 class Objective:
-    def __init__(self, df, kfold_params, svm_c, tfidf_min_df, tfidf_max_df):
+    def __init__(self, df, kfold_params, svm_c, tfidf_min_df, tfidf_max_df, svm_kernel, svm_degree):
         self.kf = KFold(**kfold_params)
         self.c_range = svm_c
         self.min_df_range = tfidf_min_df
         self.max_df_range = tfidf_max_df
+        self.kernels = svm_kernel
+        self.poly_degrees = svm_degree
         self.df = df
 
     def __call__(self, trial):
@@ -78,9 +83,13 @@ class Objective:
 
         svm_params = {
             "C": trial.suggest_loguniform("svm__C", *self.c_range),
+            "kernel": trial.suggest_categorical("svm__kernel", self.kernels),
             "random_state": RANDOM_STATE,
+            "max_iter": MAX_ITER,
         }
-        clf = LinearSVC(**svm_params)
+        if svm_params["kernel"] == "poly":
+            svm_params["degree"] = trial.suggest_int("svm__degree", *self.poly_degrees)
+        clf = SVC(**svm_params)
 
         f1_mean, _ = cross_val_scores(self.kf, clf, X, y)
         return f1_mean
@@ -94,7 +103,7 @@ def select_hyperparams(df, kfold_params, tfidf_path, model_path):
     :param tfidf_dir: where to save trained tf-idf
     :return: dict with parameters and metrics
     """
-    study = optuna.create_study(direction="maximize")
+    study = optuna.create_study(direction="maximize", study_name="svm with kernels")
     objective = Objective(df, kfold_params, **HYPERPARAM_SPACE)
 
     study.optimize(objective, n_trials=N_TRIALS)
@@ -104,6 +113,7 @@ def select_hyperparams(df, kfold_params, tfidf_path, model_path):
     }
     best_svm_params = {
         "random_state": RANDOM_STATE,
+        "max_iter": MAX_ITER,
     }
     for key, value in study.best_params.items():
         model_name, param_name = key.split("__")
@@ -114,14 +124,14 @@ def select_hyperparams(df, kfold_params, tfidf_path, model_path):
 
     code_blocks_tfidf = tfidf_fit_transform(df[CODE_COLUMN], best_tfidf_params, tfidf_path)
     X, y = code_blocks_tfidf, df[TARGET_COLUMN].values
-    clf = LinearSVC(**best_svm_params)
+    clf = SVC(**best_svm_params)
 
     f1_mean, accuracy_mean = cross_val_scores(objective.kf, clf, X, y)
 
     clf.fit(X, y)
     pickle.dump(clf, open(model_path, "wb"))
 
-    metrics = dict(test_f1=f1_mean, test_accuracy=accuracy_mean)
+    metrics = dict(test_f1_score=f1_mean, test_accuracy=accuracy_mean)
 
     return best_tfidf_params, best_svm_params, metrics
 
@@ -139,11 +149,11 @@ if __name__ == "__main__":
         "shuffle": True,
     }
     data_meta = {
-        'DATASET_PATH': DATASET_PATH,
-        'nrows': nrows,
-        'label': TAGS_TO_PREDICT,
-        'model': MODEL_DIR,
-        'script_dir': __file__,
+        "DATASET_PATH": DATASET_PATH,
+        "nrows": nrows,
+        "label": TAGS_TO_PREDICT,
+        "model": MODEL_DIR,
+        "script_dir": __file__,
     }
 
     metrics_path = os.path.join(EXPERIMENT_DATA_PATH, "metrics.csv")
