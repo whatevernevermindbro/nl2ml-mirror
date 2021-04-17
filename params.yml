@@ -22,12 +22,13 @@ data:
   nrows: 1453
   script_dir: /Users/negativex/School/research/nl2ml/models_scripts/./linear_svm_train.py
 kfold:
+  n_splits: 10
   random_state: 42
   shuffle: true
 model:
-  C: 5
-  random_state: 241
+  C: 0.9644223232787479
+  random_state: 42
 tfidf:
-  max_df: 0.3
-  min_df: 5
+  max_df: 0.2787812273644817
+  min_df: 3
   smooth_idf: true
