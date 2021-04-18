@@ -9,6 +9,7 @@ models_scripts/common/__pycache__
 .ipynb_checkpoints/
 .idea/*
 tmp_datafix.ipynb
+models_scripts/task2seq/saved_checkpoints/
 models_scripts/decoder_training_checkpoints/
 data_external/
 **.DS_Store
