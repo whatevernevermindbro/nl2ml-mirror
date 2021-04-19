@@ -18,19 +18,20 @@ data:
     ''Visualization.learning_history'', ''Visualization.distribution'', ''Visualization.wandb'',
     ''Visualization.missing_values'', ''Data_Export.save_to_csv'', ''Production.send_to_prod_environment'',
     ''Production.save_weights'']'
-  model: ../models/linear_svm_regex_graph_v7.0.sav
+  model: ../models/catboost_regex_graph_v7.0.sav
   nrows: 1453
-  script_dir: /Users/negativex/School/research/nl2ml/models_scripts/./svm_hyperparam_train.py
+  script_dir: /Users/negativex/School/research/nl2ml/models_scripts/./boosting_train.py
 kfold:
-  n_splits: 10
+  n_splits: 3
   random_state: 42
   shuffle: true
 model:
-  C: 12.156623992607505
-  kernel: linear
-  max_iter: 10000
-  random_state: 42
+  depth: 4
+  iterations: 1471
+  learning_rate: 0.6116064376739949
+  random_seed: 42
+  verbose: false
 tfidf:
-  max_df: 0.24584405242686796
-  min_df: 3
+  max_df: 0.4841180203699505
+  min_df: 1
   smooth_idf: true
