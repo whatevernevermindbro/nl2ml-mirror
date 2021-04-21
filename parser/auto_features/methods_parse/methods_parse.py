@@ -23,11 +23,11 @@ def UsedMethods2(code):
     
 def UsedMethods(code):
   try:
-    p = ast.parse(code)
+    p = ast.parse(code.strip('`'))
     names = sorted({node.attr for node in ast.walk(p) if isinstance(node, ast.Attribute)})
     return names
   except Exception as e:
-    print(e)
+    # print(e)
     return list()
     
 
