@@ -23,7 +23,7 @@ UPDATED_DATA = args.UPDATED_DATA
 # DATA = "../data/code_blocks_clean.csv"
 # UPDATED_DATA = "./data_parts/code_blocks_updated.csv"
 SAVE_UPDATED_DATA = False
-MODEL_FOLDER = '../models/comment_cleanup_model/outputs/'
+MODEL_FOLDER = '../../../models/comment_cleanup_model/outputs/'
 DELETED_COMMETNS_FILE = './deleted_comments.txt'
 NUM_OF_COMMENTS_TO_WRITE_TO_FILE = 20
 
