@@ -72,7 +72,7 @@ if __name__ == '__main__':
     print('saved and finished')
     if evaluation:
         print('evaluating regex v{}'.format(GRAPH_VER))
-        VALIDATION_DATA_PATH = "./data/golden_884_set.csv"
+        VALIDATION_DATA_PATH = "../markup_data.csv"
         TAGS = vertices
         REGEX_TAGS = [el + '_regex_v{}'.format(GRAPH_VER) for el in TAGS]
         regexed_data = pd.read_csv(VALIDATION_DATA_PATH)

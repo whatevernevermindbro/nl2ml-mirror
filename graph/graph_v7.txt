@@ -1,9 +1,11 @@
 {	
 	"Hypothesis.statistical_test": ["shapiro(", "normaltest(", "anderson(", "pearsonr(", "spearmanr(", "kendalltau(", "chi2_contingency(", "adfuller(", "kpss(", "ttest_ind"],
+	"Hyperparam_Tuning.choose_model_class": [".get_params().*?classifier"],
+	"Hypothesis.pipeline_type_spec": ["YAML", "yaml"],
 
 	"Environment.import_modules":  ["import \\w+ as \\w+", "import \\w+", "from \\w+ import \\w+", "from \\w+ import \\w+ as \\w+"],
 	"Environment.set_options": ["os.environ", " pd.set_option"], 
-	"Environment.get_options": ["import"],
+	"Environment.get_options": [".get_config_var"],
  
 	"Data_Extraction.load_from_url":["read_html"],
 	"Data_Extraction.load_from_sql": ["read_sql"],
@@ -15,6 +17,9 @@
 	"EDA.count_missing_values": [".isnull().sum"],
 	"EDA.count_duplicates": ["len(\\w+)[  ]{0,1}-[  ]{0,1}len(\\w+).drop_duplicates"],
 	"EDA.count_data_types": [".dtypes.value_counts("],
+	"EDA.count_unique_values": [".nunique"],
+	"EDA.get_unique_values": [".unique"],
+	"EDA.show_shape": [".shape$", ".shape[.*]$"],
 
 	"Data_Transform.create_dataframe": ["DataFrame"],
 	"Data_Transform.remove_duplicates": ["drop_duplicates"],
@@ -31,12 +36,17 @@
 "Data_Transform.to_dummies":["get_dummies(", "add_dummy_feature("],
 "Data_Transform.prepare_x_and_y": ["\\w+x, \\w+y ="],
 "Data_Transform.categorify": ["Categorify"],
-
+	"Data_Transform.augment":["augment", ".RandomFlip", ".RandomRotation", ".RandomHorizontalFlip", ".RandomColorJitter", "Augmentor.", "DeepAugment("],
+ "Data_Transform.merge": [".merge"],
+	"Data_Transform.groupby":[".groupby("],
+	"Data_Transform.rename_columns":[".rename(columns", ".rename(.*columns.*)$", ".rename(.*axis=1)$"],
 
 	"Model_Train.choose_model_class": ["LinearRegression(", "RandomForest(", "Ridge(", "RidgeCV(", "RidgeClassifier(", "RidgeClassifierCV(", "SGD(", "LogisticRegression(", "LogisticRegressionCV(", "SVC(", "SVR(", "Layer(", "XGboost(", "LGBM(", "Perceptron(", "KNeighborsRegressor(", "KNeighborsClassifier(", "SGDRegressor(", "ElasticNet(", "KMeans(", "AgglomerativeClustering(", "SpectralClustering(", "CategoricalNB(", "ComplementNB(", "DecisionTreeClassifier(", "DecisionTreeRegressor(", "Lasso(", "CatBoost(", "ElasticNetCV(", "Dense(", "Activation(", "Embedding(", "Masking(", "Lambda(", "Conv\\dD(", "SeparableConv\\dD(", "DepthwiseConv\\dD(", "Conv\\dDTranspose(", "MaxPooling\\dD(", "AveragePooling\\dD(", "GlobalPooling\\dD(", "GlobalAveragePooling\\dD(", "LSTM(", "GRU(", "RNN(", "SimpleRNN(", "Bidirectional(", "ConvLSTM2D(", "CategoryEncoding(", "CategoryCrossing(", "BatchNormalization(", "LayerNormalization(", "Dropout(", "SpatialDropout\\dD(", "GaussianDropout(", "GaussianNoise(", "ActivityRegularization(", "AlphaDropout(", "Attention(", "AdditiveAttention(", "Cropping\\dD(", "UpSampling\\dD(", "ZeroPadding\\dD(", "LocallyConnected\\dD(", "ReLU(", "Softmax(", "LeakyReLU(", "PReLU(", "ELU(", "ThresholdedReLU("],
 	"Model_Train.train_model": [".fit("],
 	"Model_Train.metric_computation": ["history[\"loss\"]", "history[\"accuracy\"]"],
 	"Model_Train.predict": [".predict(", ".predict_proba("],
+	"Model_Train.load_pretrained":["torch.load(", "load_tf_weights", "from_tf", ".from_pretrained("],
+	"Model_Train.init_hyperparams": [".set_params("],
 
 	"Model_Evaluation.compute_test_metric": ["KLDivergence class", "kl_divergence function", "MeanSquaredError", "MeanAbsoluteError", "mean_squared_error", "MeanAbsolutePercentageError", "MeanSquaredLogarithmicError", "CosineSimilarity", "mean_absolute_error", "mean_absolute_percentage_error", "mean_squared_logarithmic_error", "huber", "holdout"],
 	"Model_Evaluation.predict_on_test": [".predict(test", ".predict(\\w+test", ".predict_proba(test", ".predict_proba(\\w+test"],
@@ -54,10 +64,10 @@
 	"Visualization.distribution": ["distplot(", ".heatmap", ".hist"],
 	"Visualization.wandb": ["wandb"],
 	"Visualization.missing_values": ["msno."],
+	"Visualization.plot_predictions": ["plot(.*test", "plot(.*pred"],
 
 	"Data_Export.save_to_csv": ["to_csv"],
 
 	"Production.send_to_prod_environment": ["kaggle competitions submit"],
 	"Production.save_weights": ["save_weights("]
-
 }
