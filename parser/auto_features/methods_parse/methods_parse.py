@@ -1,12 +1,18 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[8]:
+
+
 import numpy as np
 import pandas as pd
 import ast
-
+import traceback
 
 
 def UsedMethods2(code):
   try:
-    p = ast.parse(code)
+    p = ast.parse(code.strip('`'))
     names = sorted({node.attr for node in ast.walk(p) if isinstance(node, ast.Attribute)}) #but here we also have node.id for example
     result = list()
     for instance in names:
@@ -26,9 +32,23 @@ def UsedMethods(code):
     p = ast.parse(code.strip('`'))
     names = sorted({node.attr for node in ast.walk(p) if isinstance(node, ast.Attribute)})
     return names
-  except Exception as e:
-    # print(e)
-    return list()
+  except:
+    names = list()
+    dot_pos = code.find('.')
+    
+    while dot_pos != -1:
+        dot_pos += 1
+        name = ""
+        while (dot_pos < len(code)) and (code[dot_pos].isalpha() or code[dot_pos].isdigit() or code[dot_pos] in {'(', '.'}):
+            if code[dot_pos] in {'(', '.'}:
+                names.append(name)
+                break
+            name += code[dot_pos]
+            dot_pos += 1
+
+        dot_pos = code.find('.', dot_pos)  
+    
+    return names
     
 
 #load dataframe    
@@ -65,4 +85,5 @@ def shift_methods(df):
 
 # #export dataframe
 # df.to_csv(filename[:-4] + "python_methods.csv", index=False)
+
 
