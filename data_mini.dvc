@@ -1,5 +1,5 @@
 outs:
-- md5: cb8e5f77cd1916c0e64cd9e4b17bc416.dir
+- md5: 27ad70fb3374f579cdef4ddb8965d609.dir
   path: data_mini
-  size: 326526908
-  nfiles: 6
+  size: 326160003
+  nfiles: 5
