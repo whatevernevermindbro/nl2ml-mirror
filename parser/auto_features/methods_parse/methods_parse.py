@@ -67,6 +67,7 @@ def UsedMethods(code):
 
 #fill methods for nearrby blocks
 def shift_methods(df, shift_range):
+    """
     # df['python_methods_p1'] = np.NaN
     # df['python_methods_p2'] = np.NaN
     # df['python_methods_p3'] = np.NaN
@@ -77,6 +78,8 @@ def shift_methods(df, shift_range):
     for i in range(1, shift_range + 1):
         df['python_methods_m{}'.format(i)] = np.NaN
         df['python_methods_p{}'.format(i)] = np.NaN
+        
+        
         # df['graph_vertex_m{}'.format(i)] = np.NaN
         # df['graph_vertex_p{}'.format(i)] = np.NaN
         
@@ -91,6 +94,22 @@ def shift_methods(df, shift_range):
     # df['python_methods_p1'][:-1] = df['python_methods'][1:]
     # df['python_methods_p2'][:-2] = df['python_methods'][2:]
     # df['python_methods_p3'][:-3] = df['python_methods'][3:]
+    """
+    for i in range(1, shift_range + 1):
+        df['python_methods_m{}'.format(i)] = np.NaN
+    for i in range(1, shift_range + 1):    
+        df['python_methods_p{}'.format(i)] = np.NaN
+    
+    nb_list = df['kaggle_id'].unique()
+    
+    for name in nb_list: 
+        df_name = df[df['kaggle_id'] == name]
+    
+        for i in range(1, min(shift_range + 1, df_name.shape[0])):
+            df_name['python_methods_m{}'.format(i)][i:] = df_name['python_methods'][:-i]
+            df_name['python_methods_p{}'.format(i)][:-i] = df_name['python_methods'][i:]
+        df[df['kaggle_id'] == name] = df_name
+    
     return df
 
 
