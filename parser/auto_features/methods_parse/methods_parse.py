@@ -66,20 +66,24 @@ def UsedMethods(code):
 
 
 #fill methods for nearrby blocks
-def shift_methods(df):
-    df['python_methods_p1'] = np.NaN
-    df['python_methods_p2'] = np.NaN
-    df['python_methods_p3'] = np.NaN
-    df['python_methods_m1'] = np.NaN
-    df['python_methods_m2'] = np.NaN
-    df['python_methods_m3'] = np.NaN
+def shift_methods(df, shift_range):
+    # df['python_methods_p1'] = np.NaN
+    # df['python_methods_p2'] = np.NaN
+    # df['python_methods_p3'] = np.NaN
+    # df['python_methods_m1'] = np.NaN
+    # df['python_methods_m2'] = np.NaN
+    # df['python_methods_m3'] = np.NaN
 
-    df['python_methods_m1'][1:] = df['python_methods'][:-1]
-    df['python_methods_m2'][2:] = df['python_methods'][:-2]
-    df['python_methods_m3'][3:] = df['python_methods'][:-3]
-    df['python_methods_p1'][:-1] = df['python_methods'][1:]
-    df['python_methods_p2'][:-2] = df['python_methods'][2:]
-    df['python_methods_p3'][:-3] = df['python_methods'][3:]
+    for i in range(1, shift_range + 1):
+        df['python_methods_m{}'.format(i)] = np.NaN
+        df['python_methods_m{}'.format(i)][i:] = df['python_methods'][:-i]
+        df['python_methods_p{}'.format(i)][:-i] = df['python_methods'][i:]
+    # df['python_methods_m1'][1:] = df['python_methods'][:-1]
+    # df['python_methods_m2'][2:] = df['python_methods'][:-2]
+    # df['python_methods_m3'][3:] = df['python_methods'][:-3]
+    # df['python_methods_p1'][:-1] = df['python_methods'][1:]
+    # df['python_methods_p2'][:-2] = df['python_methods'][2:]
+    # df['python_methods_p3'][:-3] = df['python_methods'][3:]
     return df
 
 
