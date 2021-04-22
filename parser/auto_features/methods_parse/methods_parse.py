@@ -76,8 +76,15 @@ def shift_methods(df, shift_range):
 
     for i in range(1, shift_range + 1):
         df['python_methods_m{}'.format(i)] = np.NaN
+        df['python_methods_p{}'.format(i)] = np.NaN
+        # df['graph_vertex_m{}'.format(i)] = np.NaN
+        # df['graph_vertex_p{}'.format(i)] = np.NaN
+        
         df['python_methods_m{}'.format(i)][i:] = df['python_methods'][:-i]
         df['python_methods_p{}'.format(i)][:-i] = df['python_methods'][i:]
+        # df['graph_vertex_m{}'.format(i)][i:] = df['graph_vertex_m'][:-i]
+        # df['graph_vertex_p{}'.format(i)][:-i] = df['graph_vertex_p'][i:]
+
     # df['python_methods_m1'][1:] = df['python_methods'][:-1]
     # df['python_methods_m2'][2:] = df['python_methods'][:-2]
     # df['python_methods_m3'][3:] = df['python_methods'][:-3]
