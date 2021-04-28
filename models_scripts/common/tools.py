@@ -4,7 +4,7 @@ import json
 import pandas as pd
 import numpy as np
 import scipy
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics import f1_score
 
 
@@ -38,6 +38,20 @@ def tfidf_fit_transform(code_blocks: pd.DataFrame, tfidf_params: dict, tfidf_pat
         pickle.dump(tfidf, open(tfidf_path, "wb"))
     code_blocks_tfidf = tfidf.transform(code_blocks)
     return code_blocks_tfidf
+
+
+def count_transform(code_blocks, countvec_path):
+    count_vec = pickle.load(open(countvec_path, "rb"))
+    features = count_vec.transform(code_blocks)
+    return features
+
+
+def count_fit_transform(code_blocks, countvec_params, countvec_path=None):
+    count_vec = CountVectorizer(**countvec_params).fit(code_blocks)
+    if countvec_path is not None:
+        pickle.dump(count_vec, open(countvec_path, "wb"))
+    counts = count_vec.transform(code_blocks)
+    return counts
 
 
 def mean_confidence_interval(data, confidence=0.95):
