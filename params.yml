@@ -1,3 +1,6 @@
+countvec:
+  max_df: 0.5035157986505288
+  min_df: 2
 data:
   DATASET_PATH: ../data/markup_data_2021-04-28.csv
   label: '[''Hypothesis.statistical_test'', ''Environment.import_modules'', ''Environment.set_options'',
@@ -26,9 +29,5 @@ kfold:
   random_state: 42
   shuffle: true
 model:
-  alpha: 0.006012821990073284
+  alpha: 0.012506102572507111
   nb_type: MultinomialNB
-tfidf:
-  max_df: 0.4347352314049584
-  min_df: 9
-  smooth_idf: true
