@@ -1,0 +1,4 @@
+Name,Value,Timestamp,Step
+"completeness_score_AgglomerativeClustering",0.5709727516028528,1619706335524,1
+"completeness_score_KMeans_results",0.5392800336814833,1619706335524,1
+"completeness_score_MiniBatchKMeans",0.5217326357676815,1619706335524,1
