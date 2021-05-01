@@ -1,5 +1,5 @@
 data:
-  DATASET_PATH: ../data/markup_data_2021-04-28.csv
+  DATASET_PATH: /home/nastya/Documents/nl2ml/data/markup_data_2021-04-28.csv
   label: '[''Hypothesis.statistical_test'', ''Environment.import_modules'', ''Environment.set_options'',
     ''Environment.get_options'', ''Data_Extraction.load_from_url'', ''Data_Extraction.load_from_sql'',
     ''Data_Extraction.load_from_disk'', ''Data_Extraction.load_from_csv'', ''EDA.show_table'',
@@ -20,17 +20,20 @@ data:
     ''Production.save_weights'']'
   model: ../models/linear_svm_regex_graph_v7.0.sav
   nrows: 3485
-  script_dir: /Users/negativex/School/research/nl2ml/models_scripts/./svm_hyperparam_train.py
+  script_dir: svm_train_rff.py
 kfold:
   n_splits: 10
   random_state: 42
   shuffle: true
 model:
-  C: 8.712989316706176
+  C: 5.631826028745277
   kernel: rbf
   max_iter: 10000
   random_state: 42
+rff:
+  n_features: 997
+  random_state: 42
 tfidf:
-  max_df: 0.3949067242984124
-  min_df: 7
+  max_df: 0.6020045671028786
+  min_df: 11
   smooth_idf: true
