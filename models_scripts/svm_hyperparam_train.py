@@ -22,8 +22,8 @@ args = parser.parse_args()
 GRAPH_VER = args.GRAPH_VER
 DATASET_PATH = args.DATASET_PATH
 
-MODEL_DIR = "../models/linear_svm_regex_graph_v{}.sav".format(GRAPH_VER)
-TFIDF_DIR = "../models/tfidf_svm_graph_v{}.pickle".format(GRAPH_VER)
+MODEL_DIR = "../models/hyper_svm_regex_graph_v{}.sav".format(GRAPH_VER)
+TFIDF_DIR = "../models/tfidf_hyper_svm_graph_v{}.pickle".format(GRAPH_VER)
 
 TAGS_TO_PREDICT = get_graph_vertices(GRAPH_VER)
 
@@ -32,7 +32,7 @@ CODE_COLUMN = "code_block"
 TARGET_COLUMN = "graph_vertex_id"
 
 RANDOM_STATE = 42
-N_TRIALS = 70
+N_TRIALS = 100
 MAX_ITER = 10000
 
 HYPERPARAM_SPACE = {
@@ -59,7 +59,7 @@ def cross_val_scores(kf, clf, X, y):
 
     f1s = np.array(f1s)
     accuracies = np.array(accuracies)
-    return f1s.mean(), accuracies.mean()
+    return f1s.mean(), f1s.std(), accuracies.mean(), accuracies.std()
 
 
 class Objective:
@@ -91,7 +91,7 @@ class Objective:
             svm_params["degree"] = trial.suggest_int("svm__degree", *self.poly_degrees)
         clf = SVC(**svm_params)
 
-        f1_mean, _ = cross_val_scores(self.kf, clf, X, y)
+        f1_mean, _, _, _ = cross_val_scores(self.kf, clf, X, y)
         return f1_mean
 
 
@@ -126,12 +126,17 @@ def select_hyperparams(df, kfold_params, tfidf_path, model_path):
     X, y = code_blocks_tfidf, df[TARGET_COLUMN].values
     clf = SVC(**best_svm_params)
 
-    f1_mean, accuracy_mean = cross_val_scores(objective.kf, clf, X, y)
+    f1_mean, f1_std, accuracy_mean, accuracy_std = cross_val_scores(objective.kf, clf, X, y)
 
     clf.fit(X, y)
     pickle.dump(clf, open(model_path, "wb"))
 
-    metrics = dict(test_f1_score=f1_mean, test_accuracy=accuracy_mean)
+    metrics = dict(
+        test_f1_score=f1_mean,
+        test_accuracy=accuracy_mean,
+        test_f1_std=f1_std,
+        test_accuracy_std=accuracy_std,
+    )
 
     return best_tfidf_params, best_svm_params, metrics
 
@@ -144,7 +149,7 @@ if __name__ == "__main__":
     print("loaded")
 
     kfold_params = {
-        "n_splits": 10,
+        "n_splits": 15,
         "random_state": RANDOM_STATE,
         "shuffle": True,
     }
