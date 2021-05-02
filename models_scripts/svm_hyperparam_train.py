@@ -36,13 +36,13 @@ CODE_COLUMN = "code_block"
 TARGET_COLUMN = "graph_vertex_id"
 
 RANDOM_STATE = 42
-N_TRIALS = 15
+N_TRIALS = 20
 MAX_ITER = 10000
 
 HYPERPARAM_SPACE = {
     "svm_c": (1e-1, 1e3),
-    "tfidf_min_df": (1, 50),
-    "tfidf_max_df": (0.2, 1.0),
+    "tfidf_min_df": (1, 10),
+    "tfidf_max_df": (0.2, 0.7),
     "svm_kernel": ["linear", "poly", "rbf"],
     "svm_degree": (2, 6),  # in case of poly kernel
     "b_estimators": (3, 10),
@@ -146,7 +146,7 @@ def select_hyperparams(df, kfold_params, tfidf_path, model_path):
             best_bagging_params[param_name] = value
 
     code_blocks_tfidf = tfidf_fit_transform(df[CODE_COLUMN], best_tfidf_params, tfidf_path)
-    X, y = code_blocks_tfidf, df[TARGET_COLUMN].values
+    X, y = code_blocks_tfidf.toarray(), df[TARGET_COLUMN].values
     clf = BaggingClassifier(base_estimator=SVC(**best_svm_params), **best_bagging_params)
 
     f1_mean, f1_std, accuracy_mean, accuracy_std = cross_val_scores(objective.kf, clf, X, y)
