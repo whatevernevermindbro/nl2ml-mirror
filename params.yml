@@ -1,5 +1,5 @@
 data:
-  DATASET_PATH: /home/nastya/Documents/nl2ml/data/markup_data_2021-04-28.csv
+  DATASET_PATH: ../data/clean_markup_data_2021-04-28.csv
   label: '[''Hypothesis.statistical_test'', ''Environment.import_modules'', ''Environment.set_options'',
     ''Environment.get_options'', ''Data_Extraction.load_from_url'', ''Data_Extraction.load_from_sql'',
     ''Data_Extraction.load_from_disk'', ''Data_Extraction.load_from_csv'', ''EDA.show_table'',
@@ -18,23 +18,19 @@ data:
     ''Visualization.learning_history'', ''Visualization.distribution'', ''Visualization.wandb'',
     ''Visualization.missing_values'', ''Data_Export.save_to_csv'', ''Production.send_to_prod_environment'',
     ''Production.save_weights'']'
-  model: ../models/linear_svm_regex_graph_v7.0.sav
-  nrows: 3485
-  script_dir: svm_train_rff_pca.py
+  model: ../models/hyper_svm_regex_graph_v7.0.sav
+  nrows: 3423
+  script_dir: /Users/negativex/School/research/nl2ml/models_scripts/./svm_hyperparam_train.py
 kfold:
-  n_splits: 10
+  n_splits: 15
   random_state: 42
   shuffle: true
 model:
-  C: 344.0948110094933
-  kernel: rbf
+  C: 14.116384278257954
+  kernel: linear
   max_iter: 10000
   random_state: 42
-rff:
-  n_features: 958
-  pca_dim: 100
-  random_state: 42
 tfidf:
-  max_df: 0.5897239297716368
+  max_df: 0.5634595573072166
   min_df: 3
   smooth_idf: true
