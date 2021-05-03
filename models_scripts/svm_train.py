@@ -8,7 +8,7 @@ import numpy as np
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import KFold, GridSearchCV
-from sklearn.svm import SVC
+from sklearn.svm import LinearSVC
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import BaggingClassifier
 from sklearn.multiclass import OneVsRestClassifier
@@ -52,7 +52,7 @@ def SVM_multioutput_evaluate(df, tfidf_params, TFIDF_DIR, SVM_params):
     X_train, X_test, y_train, y_test = train_test_split(code_blocks_tfidf, df[TAGS_TO_PREDICT], test_size=0.3)
     # grid = {"C": [100]}
     # cv = KFold(n_splits=2, shuffle=True, random_state=241)
-    model = SVC(kernel="linear", random_state=241)
+    model = LinearSVC(random_state=241)
     # gs = GridSearchCV(model, grid, scoring="accuracy", cv=cv, verbose=1, n_jobs=-1)
     # gs.fit(X_train[:25000], y_train.ravel()[:25000])
     # C = gs.best_params_.get('C')
@@ -96,17 +96,23 @@ if __name__ == '__main__':
     print(df.columns)
     nrows = df.shape[0]
     print("loaded")
-    tfidf_params = {'min_df': 5
-            , 'max_df': 0.3
-            , 'smooth_idf': True}
-    SVM_params = {'C':100
-            , 'kernel':"linear"
-            , 'random_state':241}
-    data_meta = {'DATASET_PATH': DATASET_PATH
-                ,'nrows': nrows
-                ,'label': TAGS_TO_PREDICT
-                ,'model': MODEL_DIR
-                ,'script_dir': SCRIPT_DIR}
+    tfidf_params = {
+        'min_df': 5,
+        'max_df': 0.3,
+        'smooth_idf': True
+    }
+    SVM_params = {
+        'C': 100,
+        'kernel': "linear",
+        'random_state': 241
+    }
+    data_meta = {
+        'DATASET_PATH': DATASET_PATH,
+        'nrows': nrows,
+        'label': TAGS_TO_PREDICT,
+        'model': MODEL_DIR,
+        'script_dir': SCRIPT_DIR
+    }
 
     with dagshub.dagshub_logger() as logger:
         print("evaluating..")
