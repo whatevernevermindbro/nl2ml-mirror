@@ -35,8 +35,8 @@ EMBEDDING_SIZE = 768
 MAX_SEQUENCE_LENGTH = 512  # this is required by transformers for some reason
 RANDOM_SEED = 42
 
-N_EPOCHS = 50
-N_TRIALS = 8
+N_EPOCHS = 25
+N_TRIALS = 15
 
 torch.manual_seed(RANDOM_SEED)
 
@@ -48,9 +48,9 @@ CODE_COLUMN = "code_block"
 TARGET_COLUMN = "graph_vertex_id"
 
 SEARCH_SPACE = {
-    "rnn_size": (256, 512),
-    "n_rnn_layers": (2, 6),
-    "lin_size": (256, 512),
+    "rnn_size": (64, 512),
+    "n_rnn_layers": (1, 5),
+    "lin_size": (32, 512),
 }
 
 
@@ -151,10 +151,10 @@ def train_new_model(df_train, df_test, n_epochs, params, lr=3e-3):
     )
 
     optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9)
-    scheduler = torch.optim.lr_scheduler.OneCycleLR(
-        optimizer, max_lr=lr, steps_per_epoch=len(train_dataloader), epochs=n_epochs
-    )
-    criterion = nn.CrossEntropyLoss()
+    # scheduler = torch.optim.lr_scheduler.OneCycleLR(
+    #     optimizer, max_lr=lr, steps_per_epoch=len(train_dataloader), epochs=n_epochs
+    # )
+    criterion = f1_loss()
 
     history = defaultdict(list)
     for epoch in range(n_epochs):
@@ -167,7 +167,7 @@ def train_new_model(df_train, df_test, n_epochs, params, lr=3e-3):
         history["test_loss"].append(test_loss)
         history["test_acc"].append(test_acc)
         history["test_f1"].append(test_f1)
-        scheduler.step()
+        # scheduler.step()
 
     return model, history
 
@@ -214,7 +214,7 @@ def select_hyperparams(df, n_classes, model_path):
 
     metrics = {
         "test_f1_score": history["test_f1"][-1],
-        "test_accuracy": history["test_accuracy"][-1],
+        "test_accuracy": history["test_acc"][-1],
         "history": history,
     }
 

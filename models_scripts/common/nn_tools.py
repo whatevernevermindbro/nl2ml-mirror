@@ -1,7 +1,9 @@
+from pytorch_lightning.metrics.functional import f1
 import torch
 
 
 def f1_loss(y_true: torch.Tensor, y_pred: torch.Tensor, is_training=False) -> torch.Tensor:
+    # based on https://www.kaggle.com/rejpalcz/best-loss-function-for-f1-score-metric
     assert y_true.ndim == 1
     assert y_pred.ndim == 1 or y_pred.ndim == 2
 
@@ -46,7 +48,7 @@ def train(model, device, dataloader, epoch, criterion, optimizer):
         loss_sum += loss.item()
 
         preds = output.argmax(dim=1)
-        f1_sum += f1_loss(preds, labels).item()
+        f1_sum += f1(preds, labels, output.size(1), average="weighted").item()
         correct_predictions += torch.sum((preds == labels).double()).item()
 
         if (batch_id + 1) % 10 == 0 or batch_id + 1 == batch_count:
@@ -81,14 +83,14 @@ def test(model, device, dataloader, epoch, criterion):
             loss_sum += loss.item()
 
             preds = output.argmax(dim=1)
-            f1_sum += f1_loss(preds, labels).item()
+            f1_sum += f1(preds, labels, output.size(1), average="weighted").item()
             correct_predictions += torch.sum((preds == labels).double()).item()
 
     mean_loss = loss_sum / batch_count
     mean_f1 = f1_sum / batch_count
     accuracy = correct_predictions / data_count
-    print("test epoch {} - accuracy {:.6f} - loss {:.6f}".format(
-        epoch, accuracy, mean_loss
+    print("test epoch {} - accuracy {:.6f} - f-score {:.6f} - loss {:.6f}".format(
+        epoch, accuracy, mean_f1, mean_loss
     ))
 
     return mean_loss, accuracy, mean_f1
