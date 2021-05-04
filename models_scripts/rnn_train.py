@@ -154,7 +154,7 @@ def train_new_model(df_train, df_test, n_epochs, params, lr=3e-3):
     # scheduler = torch.optim.lr_scheduler.OneCycleLR(
     #     optimizer, max_lr=lr, steps_per_epoch=len(train_dataloader), epochs=n_epochs
     # )
-    criterion = f1_loss()
+    criterion = F1_Loss()
 
     history = defaultdict(list)
     for epoch in range(n_epochs):
