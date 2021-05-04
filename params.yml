@@ -1,10 +1,10 @@
 bagging:
-  max_features: 0.9975405049754472
-  max_samples: 0.9963202177750194
-  n_estimators: 10
+  max_features: 0.9110248997726738
+  max_samples: 0.9184294722663913
+  n_estimators: 9
   random_state: 42
 data:
-  DATASET_PATH: /home/nastya/Documents/nl2ml/data/markup_data_2021-04-28.csv
+  DATASET_PATH: ../data/clean_markup_data_2021-04-28.csv
   label: '[''Hypothesis.statistical_test'', ''Environment.import_modules'', ''Environment.set_options'',
     ''Environment.get_options'', ''Data_Extraction.load_from_url'', ''Data_Extraction.load_from_sql'',
     ''Data_Extraction.load_from_disk'', ''Data_Extraction.load_from_csv'', ''EDA.show_table'',
@@ -24,21 +24,18 @@ data:
     ''Visualization.missing_values'', ''Data_Export.save_to_csv'', ''Production.send_to_prod_environment'',
     ''Production.save_weights'']'
   model: ../models/hyper_svm_regex_graph_v7.0.sav
-  nrows: 3485
-  script_dir: svm_train_rff.py
+  nrows: 3260
+  script_dir: svm_hyperparam_train.py
 kfold:
   n_splits: 15
   random_state: 42
   shuffle: true
 model:
-  C: 33.69516647387144
-  kernel: rbf
+  C: 18.94198916917761
+  kernel: linear
   max_iter: 10000
   random_state: 42
-rff:
-  n_features: 784
-  random_state: 42
 tfidf:
-  max_df: 0.4058412816529067
-  min_df: 14
+  max_df: 0.4413452790693051
+  min_df: 1
   smooth_idf: true
