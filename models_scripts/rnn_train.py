@@ -48,9 +48,11 @@ CODE_COLUMN = "code_block"
 TARGET_COLUMN = "graph_vertex_id"
 
 SEARCH_SPACE = {
-    "rnn_size": (64, 512),
-    "n_rnn_layers": (1, 5),
-    "lin_size": (32, 512),
+    "rnn_size": (64, 256),
+    "n_rnn_layers": (1, 4),
+    "lin_size": (32, 266),
+    "n_conv_layers": (1, 5),
+    "n_features": (32, 256),
 }
 
 
@@ -70,11 +72,57 @@ class CodeblocksDataset(torch.utils.data.Dataset):
         }
 
 
+class CNNLayerNorm(nn.Module):
+    def __init__(self, n_features):
+        super(CNNLayerNorm, self).__init__()
+        self.layer_norm = nn.LayerNorm(n_features)
+
+    def forward(self, x):
+        x = x.transpose(1, 2).contiguous()  # (batch_size, time, features)
+        x = self.layer_norm(x)
+        return x.transpose(1, 2).contiguous()  # (batch_size, features, time)
+
+
+class ResidualCNN(nn.Module):
+    """
+    skip connections are supposed to make loss surface flatter
+    for details see https://arxiv.org/abs/1712.09913
+    """
+    def __init__(self, in_channels, out_channels, kernel_size, stride_size, dropout=0.1):
+        super(ResidualCNN, self).__init__()
+
+        self.cnn1 = nn.Conv1d(in_channels, out_channels, kernel_size, stride_size, padding=kernel_size // 2)
+        self.cnn2 = nn.Conv1d(out_channels, out_channels, kernel_size, stride_size, padding=kernel_size // 2)
+        self.dropout1 = nn.Dropout(dropout)
+        self.dropout2 = nn.Dropout(dropout)
+        self.layer_norm1 = CNNLayerNorm(in_channels)
+        self.layer_norm2 = CNNLayerNorm(in_channels)
+
+    def forward(self, x):
+        out = F.gelu(self.layer_norm1(x))
+        out = self.dropout1(out)
+        out = self.cnn1(out)
+
+        out = F.gelu(self.layer_norm2(out))
+        out = self.dropout2(out)
+        out = self.cnn2(out)
+
+        return out + x
+
+
 class Classifier(nn.Module):
-    def __init__(self, rnn_size, n_rnn_layers, lin_size, n_classes):
+    def __init__(self, rnn_size, n_rnn_layers, lin_size, n_features, n_conv_layers, n_classes):
         super(Classifier, self).__init__()
 
-        # TODO: add convolutions?
+        self.cnn = nn.Conv1d(EMBEDDING_SIZE, n_features, kernel_size=3, stride=1, padding=1)
+        self.rcnn_layers = nn.Sequential(*[
+            ResidualCNN(n_features, n_features, kernel_size=3, stride_size=1)
+            for _ in range(n_conv_layers)
+        ])
+        self.fc = nn.Sequential(
+            nn.Linear(n_features, rnn_size),
+            nn.GELU(),
+        )
 
         self.birnn = nn.LSTM(
             EMBEDDING_SIZE,
@@ -100,12 +148,22 @@ class Classifier(nn.Module):
             size += p.nelement()
         print("Total param size: {}".format(size))
 
-    def forward(self, x):
-        out, _ = self.birnn(x)
-        unpacked, unpacked_len = nn.utils.rnn.pad_packed_sequence(out, batch_first=True)
-        indices = torch.LongTensor((unpacked_len - 1).view(-1, 1).expand(unpacked.size(0), unpacked.size(2)).unsqueeze(1))
+    def forward(self, x, lengths):
+        # initial shape (batch_size, time, features)
+        x = x.transpose(1, 2)  # (batch_size, features, time)
+        out = self.cnn(x)
+        out = self.rcnn_layers(out)
+
+        out = out.transpose(1, 2)  # (batch, time, feature)
+        out = self.fc(out)
+
+        packed_sequences = nn.utils.rnn.pack_padded_sequence(out, lengths, batch_first=True)
+        out, _ = self.birnn(packed_sequences)
+
+        out, _ = nn.utils.rnn.pad_packed_sequence(out, batch_first=True)
+        indices = torch.LongTensor((lengths - 1).view(-1, 1).expand(out.size(0), out.size(2)).unsqueeze(1))
         indices = indices.to(DEVICE)
-        out = unpacked.gather(dim=1, index=indices).squeeze(dim=1)
+        out = out.gather(dim=1, index=indices).squeeze(dim=1)
         return self.decoder(out)
 
 
@@ -135,8 +193,8 @@ def process_data(batch):
     tokens = tokens[indices]
     with torch.no_grad():
         tokens = codebert_model(tokens.to(DEVICE))[0]
-    pack = nn.utils.rnn.pack_padded_sequence(tokens, sorted_lengths, batch_first=True)
-    return pack, labels[indices]
+    # pack = nn.utils.rnn.pack_padded_sequence(tokens, sorted_lengths, batch_first=True)
+    return tokens, sorted_lengths, labels[indices]
 
 
 def train_new_model(df_train, df_test, n_epochs, params, lr=3e-3):
@@ -151,9 +209,9 @@ def train_new_model(df_train, df_test, n_epochs, params, lr=3e-3):
     )
 
     optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9)
-    # scheduler = torch.optim.lr_scheduler.OneCycleLR(
-    #     optimizer, max_lr=lr, steps_per_epoch=len(train_dataloader), epochs=n_epochs
-    # )
+    scheduler = torch.optim.lr_scheduler.OneCycleLR(
+        optimizer, max_lr=lr, steps_per_epoch=len(train_dataloader), epochs=n_epochs
+    )
     criterion = FocalLoss()
 
     history = defaultdict(list)
@@ -167,7 +225,7 @@ def train_new_model(df_train, df_test, n_epochs, params, lr=3e-3):
         history["test_loss"].append(test_loss)
         history["test_acc"].append(test_acc)
         history["test_f1"].append(test_f1)
-        # scheduler.step()
+        scheduler.step()
 
     return model, history
 
@@ -183,6 +241,8 @@ class Objective:
             "rnn_size": trial.suggest_int("rnn_size", *SEARCH_SPACE["rnn_size"]),
             "n_rnn_layers": trial.suggest_int("n_rnn_layers", *SEARCH_SPACE["n_rnn_layers"]),
             "lin_size": trial.suggest_int("lin_size", *SEARCH_SPACE["lin_size"]),
+            "n_features": trial.suggest_int("n_features", *SEARCH_SPACE["n_features"]),
+            "n_conv_layers": trial.suggest_int("n_conv_layers", *SEARCH_SPACE["n_conv_layers"]),
             "n_classes": self.n_classes,
         }
         model, history = train_new_model(self.df_train, self.df_test, N_EPOCHS, params)

@@ -94,10 +94,10 @@ def train(model, device, dataloader, epoch, criterion, optimizer):
     f1_sum = 0
 
     for batch_id, data in enumerate(dataloader):
-        tokens, labels = data
-        tokens, labels = tokens.to(device), labels.to(device)
+        tokens, lengths, labels = data
+        tokens, lengths, labels = tokens.to(device), lengths.to("cpu"), labels.to(device)
 
-        output = model(tokens)
+        output = model(tokens, lengths)
         loss = criterion(output, labels)
 
         optimizer.zero_grad()
@@ -133,10 +133,10 @@ def test(model, device, dataloader, epoch, criterion):
 
     with torch.no_grad():
         for data in dataloader:
-            tokens, labels = data
-            tokens, labels = tokens.to(device), labels.to(device)
+            tokens, lengths, labels = data
+            tokens, lengths, labels = tokens.to(device), lengths.to("cpu"), labels.to(device)
 
-            output = model(tokens)
+            output = model(tokens, lengths)
             loss = criterion(output, labels)
 
             loss_sum += loss.item()
