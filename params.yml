@@ -1,10 +1,12 @@
 data:
   DATASET_PATH: ../data/clean_markup_data_2021-04-28.csv
-  model: ../models/rnn_codebert.pt
+  model: ../models/crnn_codebert.pt
   random_seed: 42
   script_dir: /Users/negativex/School/research/nl2ml/models_scripts/commit_results.py
 model:
-  lin_size: 269
+  lin_size: 229
   n_classes: 67
-  n_rnn_layers: 1
-  rnn_size: 180
+  n_conv_layers: 2
+  n_features: 160
+  n_rnn_layers: 3
+  rnn_size: 228
