@@ -1,0 +1,25 @@
+{	
+	"Hypothesis": [],
+
+	"Environment": [],
+	
+	"Data_Extraction": [],
+
+	"EDA": [],
+
+	"Data_Transform": [],
+
+	"Model_Train": [],
+    
+    "Model_Evaluation": [],
+
+	"Hyperparam_Tuning": [],
+
+	"Vizualization": [],
+
+    "Data_Export": [],
+
+    "Model_Deploy": [],
+
+    "Other": []
+}
