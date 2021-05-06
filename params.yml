@@ -1,5 +1,5 @@
 data:
-  DATASET_PATH: /home/avdrozdova/nl2ml/data/markup_data_2021-04-28.csv
+  DATASET_PATH: /home/androzdova/Documents/nl2ml/data/clean_markup_data_2021-04-28.csv
   label: '[''Hypothesis.statistical_test'', ''Environment.import_modules'', ''Environment.set_options'',
     ''Environment.get_options'', ''Data_Extraction.load_from_url'', ''Data_Extraction.load_from_sql'',
     ''Data_Extraction.load_from_disk'', ''Data_Extraction.load_from_csv'', ''EDA.show_table'',
@@ -19,22 +19,22 @@ data:
     ''Visualization.missing_values'', ''Data_Export.save_to_csv'', ''Production.send_to_prod_environment'',
     ''Production.save_weights'']'
   model: ../models/linear_svm_regex_graph_v7.0.sav
-  nrows: 3485
+  nrows: 3260
   script_dir: svm_train_lda.py
 kfold:
   n_splits: 10
   random_state: 42
   shuffle: true
 lda:
-  learning_decay: 0.6000908152300908
-  n_components: 90
+  learning_decay: 0.8421761014479904
+  n_components: 85
   random_state: 42
 model:
-  C: 18.907717836077424
-  kernel: rbf
+  C: 181.13088117302132
+  kernel: linear
   max_iter: 10000
   random_state: 42
 tfidf:
-  max_df: 0.5729967755653319
-  min_df: 13
+  max_df: 0.8173162683293068
+  min_df: 16
   smooth_idf: true
