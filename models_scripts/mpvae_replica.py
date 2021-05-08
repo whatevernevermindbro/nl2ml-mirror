@@ -84,37 +84,37 @@ class MODEL:
         # since this made the training more stable. similar techniques used in Conditional VAE
         input_x = tf.concat([self.input_feat, self.input_label], 1)
         self.fe_1 = slim.dropout(slim.fully_connected
-                                 (input_x, 512, weights_regularizer=weights_regularizer, 
+                                 (input_x, 256, weights_regularizer=weights_regularizer, 
                                   activation_fn=tf.nn.relu, scope='label_encoder/fc_1'), 
-                                 keep_prob=self.keep_prob, is_training=is_training)
+                                 keep_prob=self.keep_prob, is_training=is_training) * 1e-2
         self.fe_2 = slim.dropout(slim.fully_connected
-                                 (self.fe_1, 256, weights_regularizer=weights_regularizer, 
+                                 (self.fe_1, 128, weights_regularizer=weights_regularizer, 
                                   activation_fn=tf.nn.relu, scope='label_encoder/fc_2'), 
-                                 keep_prob=self.keep_prob, is_training=is_training)
+                                 keep_prob=self.keep_prob, is_training=is_training) * 1e-2
         self.fe_mu = slim.fully_connected(self.fe_2, latent_dim, activation_fn=None, 
-                                          weights_regularizer=weights_regularizer,scope='encoder/z_miu')
+                                          weights_regularizer=weights_regularizer,scope='encoder/z_miu') * 1e-2
         self.fe_logvar = slim.fully_connected(self.fe_2, latent_dim, activation_fn=None, 
-                                              weights_regularizer=weights_regularizer,scope='encoder/z_logvar')
+                                              weights_regularizer=weights_regularizer,scope='encoder/z_logvar') * 1e-2
         eps = tf.random.normal(shape=tf.shape(self.fe_mu))
         fe_sample = eps * tf.exp(self.fe_logvar / 2) + self.fe_mu
 
         ## feature encoder (informative prior)
         self.fx_1 = slim.dropout(slim.fully_connected
-                                 (self.input_feat, 256, weights_regularizer=weights_regularizer, 
+                                 (self.input_feat, 128, weights_regularizer=weights_regularizer, 
                                   activation_fn=tf.nn.relu, scope='feat_encoder/fc_1'), 
-                                 keep_prob=self.keep_prob, is_training=is_training)
+                                 keep_prob=self.keep_prob, is_training=is_training) * 1e-2
         self.fx_2 = slim.dropout(slim.fully_connected
-                                 (self.fx_1, 512, weights_regularizer=weights_regularizer, 
+                                 (self.fx_1, 256, weights_regularizer=weights_regularizer, 
                                   activation_fn=tf.nn.relu, scope='feat_encoder/fc_2'), 
-                                 keep_prob=self.keep_prob, is_training=is_training)
+                                 keep_prob=self.keep_prob, is_training=is_training) * 1e-2
         self.fx_3 = slim.dropout(slim.fully_connected
-                                 (self.fx_2, 256, weights_regularizer=weights_regularizer, 
+                                 (self.fx_2, 128, weights_regularizer=weights_regularizer, 
                                   activation_fn=tf.nn.relu, scope='feat_encoder/fc_3'), 
-                                 keep_prob=self.keep_prob, is_training=is_training)
+                                 keep_prob=self.keep_prob, is_training=is_training) * 1e-2
         self.fx_mu = slim.fully_connected(self.fx_3, latent_dim, activation_fn=None, 
-                                          weights_regularizer=weights_regularizer,scope='feat_encoder/z_miu')
+                                          weights_regularizer=weights_regularizer,scope='feat_encoder/z_miu') * 1e-2
         self.fx_logvar = slim.fully_connected(self.fx_3, latent_dim, activation_fn=None, 
-                                              weights_regularizer=weights_regularizer,scope='feat_encoder/z_logvar')
+                                              weights_regularizer=weights_regularizer,scope='feat_encoder/z_logvar') * 1e-2
         fx_sample = eps * tf.exp(self.fx_logvar / 2) + self.fx_mu
         
         # kl divergence between two learnt normal distributions
@@ -126,19 +126,20 @@ class MODEL:
         # concatenate input_feat with samples. similar technique in Conditional VAE
         c_fe_sample = tf.concat([self.input_feat, fe_sample], 1)
         c_fx_sample = tf.concat([self.input_feat, fx_sample], 1)
+        self.cfs = self.fx_3
         
         ## label decoder
-        self.fd_1 = slim.fully_connected(c_fe_sample, 256, 
+        self.fd_1 = slim.fully_connected(c_fe_sample, 128, 
                                          weights_regularizer=weights_regularizer, activation_fn=tf.nn.relu, 
                                          scope='label_decoder/fc_1')
-        self.fd_2 = slim.fully_connected(self.fd_1, 512, 
+        self.fd_2 = slim.fully_connected(self.fd_1, 256, 
                                          weights_regularizer=weights_regularizer, activation_fn=tf.nn.relu, 
                                          scope='label_decoder/fc_2')
 
         ## feature decoder
-        self.fd_x_1 = slim.fully_connected(c_fx_sample, 256, weights_regularizer=weights_regularizer, 
+        self.fd_x_1 = slim.fully_connected(c_fx_sample, 128, weights_regularizer=weights_regularizer, 
                                            activation_fn=tf.nn.relu, reuse=True, scope='label_decoder/fc_1')
-        self.fd_x_2 = slim.fully_connected(self.fd_x_1, 512, weights_regularizer=weights_regularizer, 
+        self.fd_x_2 = slim.fully_connected(self.fd_x_1, 256, weights_regularizer=weights_regularizer, 
                                            activation_fn=tf.nn.relu, reuse=True, scope='label_decoder/fc_2')
         
         # derive the label mean in the Multivariate Probit model
@@ -150,9 +151,9 @@ class MODEL:
                                                activation_fn=None, weights_regularizer=weights_regularizer, scope='feat_mp_mu')
         
         # initialize the square root of the residual covariance matrix 
-        self.r_sqrt_sigma=tf.Variable(np.random.uniform(-np.sqrt(6.0/(label_dim+30)), 
-                                                        np.sqrt(6.0/(label_dim+30)), 
-                                                        (label_dim, 30)), dtype=tf.float32, name='r_sqrt_sigma')
+        self.r_sqrt_sigma=tf.Variable(np.random.uniform(-np.sqrt(6.0/(label_dim+10)), 
+                                                        np.sqrt(6.0/(label_dim+10)), 
+                                                        (label_dim, 10)), dtype=tf.float32, name='r_sqrt_sigma')
         # construct a semi-positive definite matrix
         self.sigma=tf.matmul(self.r_sqrt_sigma, tf.transpose(self.r_sqrt_sigma))
 
@@ -160,7 +161,7 @@ class MODEL:
         self.covariance=self.sigma + tf.eye(label_dim)
         
         # epsilon
-        self.eps1=tf.constant(1e-6, dtype="float32")
+        self.eps1=tf.constant(1e-4, dtype="float32")
 
         n_sample = n_train_sample
         if (is_training==False):
@@ -170,7 +171,7 @@ class MODEL:
         n_batch = tf.shape(self.label_mp_mu)[0]
 
         # standard Gaussian samples
-        self.noise = tf.random.normal(shape=[n_sample, n_batch, 30])
+        self.noise = tf.random.normal(shape=[n_sample, n_batch, 10])
         
         # see equation (3) in the paper for this block
         self.B = tf.transpose(self.r_sqrt_sigma)
@@ -195,7 +196,6 @@ class MODEL:
             maxlogprob=tf.reduce_max(logprob, axis=0)
             Eprob=tf.reduce_mean(tf.exp(logprob-maxlogprob), axis=0)
             nll_loss=tf.reduce_mean(-tf.math.log(Eprob)-maxlogprob)
-            print("----", nll_loss)
 
             # compute the ranking loss (RL loss) 
             c_loss = self.build_multi_classify_loss(E, self.input_label)
