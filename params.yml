@@ -1,5 +1,5 @@
 data:
-  DATASET_PATH: /home/nastya/Documents/nl2ml/data/clean_markup_oversample.csv
+  DATASET_PATH: /home/androzdova/Documents/nl2ml/data/clean_markup_oversample.csv
   label: '[''Hypothesis.statistical_test'', ''Environment.import_modules'', ''Environment.set_options'',
     ''Environment.get_options'', ''Data_Extraction.load_from_url'', ''Data_Extraction.load_from_sql'',
     ''Data_Extraction.load_from_disk'', ''Data_Extraction.load_from_csv'', ''EDA.show_table'',
@@ -18,19 +18,19 @@ data:
     ''Visualization.learning_history'', ''Visualization.distribution'', ''Visualization.wandb'',
     ''Visualization.missing_values'', ''Data_Export.save_to_csv'', ''Production.send_to_prod_environment'',
     ''Production.save_weights'']'
-  model: ../models/hyper_svm_regex_graph_v7.0.sav
+  model: ../models/linear_svm_regex_graph_v7.0.sav
   nrows: 4423
-  script_dir: svm_train_st.py
+  script_dir: svm_oversampling.py
 kfold:
   n_splits: 9
   random_state: 42
   shuffle: true
 model:
-  C: 37.17298114275879
+  C: 14.440896716106627
   kernel: linear
   max_iter: 10000
   random_state: 42
 tfidf:
-  max_df: 0.3145097636005717
+  max_df: 0.2698606815312755
   min_df: 2
   smooth_idf: true
