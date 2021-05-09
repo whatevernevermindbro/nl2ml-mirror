@@ -97,9 +97,11 @@ def shift_methods(df, shift_range):
     """
     for i in range(1, shift_range + 1):
         df['python_methods_m{}'.format(i)] = np.NaN
-    for i in range(1, shift_range + 1):    
+        df['graph_vertex_m{}'.format(i)] = np.NaN
+    for i in range(1, shift_range + 1):
         df['python_methods_p{}'.format(i)] = np.NaN
-    
+        df['graph_vertex_p{}'.format(i)] = np.NaN
+
     nb_list = df['kaggle_id'].unique()
     
     for name in nb_list: 
@@ -108,6 +110,14 @@ def shift_methods(df, shift_range):
         for i in range(1, min(shift_range + 1, df_name.shape[0])):
             df_name['python_methods_m{}'.format(i)][i:] = df_name['python_methods'][:-i]
             df_name['python_methods_p{}'.format(i)][:-i] = df_name['python_methods'][i:]
+            df_name['python_methods_m{}'.format(i)][i:] = df_name['python_methods'][:-i]
+            df_name['python_methods_p{}'.format(i)][:-i] = df_name['python_methods'][i:]
+
+            df_name['graph_vertex_m{}'.format(i)][i:] = df_name['graph_vertex'][:-i]
+            df_name['graph_vertex_p{}'.format(i)][:-i] = df_name['graph_vertex'][i:]
+            df_name['graph_vertex_m{}'.format(i)][i:] = df_name['graph_vertex'][:-i]
+            df_name['graph_vertex_p{}'.format(i)][:-i] = df_name['graph_vertex'][i:]
+
         df[df['kaggle_id'] == name] = df_name
     
     return df
