@@ -28,25 +28,25 @@ def UsedMethods2(code):
 # attributes
     
 def UsedMethods(code):
-  try:
-    p = ast.parse(code.strip('`'))
-    names = sorted({node.attr for node in ast.walk(p) if isinstance(node, ast.Attribute)})
-    return names
-  except:
-    names = list()
-    dot_pos = code.find('.')
-    
-    while dot_pos != -1:
-        dot_pos += 1
-        name = ""
-        while (dot_pos < len(code)) and (code[dot_pos].isalpha() or code[dot_pos].isdigit() or code[dot_pos] in {'(', '.'}):
-            if code[dot_pos] in {'(', '.'}:
-                names.append(name)
-                break
-            name += code[dot_pos]
+    try:
+        p = ast.parse(code.strip('`'))
+        names = sorted({node.attr for node in ast.walk(p) if isinstance(node, ast.Attribute)})
+        return names
+    except:
+        names = list()
+        dot_pos = code.find('.')
+        
+        while dot_pos != -1:
             dot_pos += 1
+            name = ""
+            while (dot_pos < len(code)) and (code[dot_pos].isalpha() or code[dot_pos].isdigit() or code[dot_pos] in {'(', '.'}):
+                if code[dot_pos] in {'(', '.'}:
+                    names.append(name)
+                    break
+                name += code[dot_pos]
+                dot_pos += 1
 
-        dot_pos = code.find('.', dot_pos)  
+            dot_pos = code.find('.', dot_pos)  
     
     return names
     
