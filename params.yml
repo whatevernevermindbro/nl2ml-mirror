@@ -1,12 +1,22 @@
 data:
   DATASET_PATH: ../data/clean_markup_data_2021-04-28.csv
-  model: ../models/crnn_codebert.pt
-  random_seed: 42
-  script_dir: /Users/negativex/School/research/nl2ml/models_scripts/commit_results.py
+  model: ../models/nbsvm_regex_graph_v7.0.sav
+  script_dir: /Users/negativex/School/research/nl2ml/models_scripts/./train_nb_svm.py
+kfold:
+  n_splits: 10
+  random_state: 42
+  shuffle: true
 model:
-  lin_size: 229
-  n_classes: 67
-  n_conv_layers: 2
-  n_features: 160
-  n_rnn_layers: 3
-  rnn_size: 228
+  nb:
+    alpha: 3.6568043398155936
+  svc:
+    C: 0.2057855201968876
+    kernel: linear
+    max_iter: 10000
+    random_state: 42
+tfidf:
+  max_df: 0.8640921017550839
+  min_df: 2
+  ngram_range: (1, 2)
+  smooth_idf: true
+  tokenizer: BPE
