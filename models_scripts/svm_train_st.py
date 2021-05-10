@@ -149,7 +149,7 @@ if __name__ == "__main__":
     print("loaded")
 
     kfold_params = {
-        "n_splits": 10,
+        "n_splits": 9,
         "random_state": RANDOM_STATE,
         "shuffle": True,
     }

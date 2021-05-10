@@ -20,17 +20,22 @@ data:
     ''Production.save_weights'']'
   model: ../models/linear_svm_regex_graph_v7.0.sav
   nrows: 4423
-  script_dir: svm_oversampling.py
+  script_dir: svm_train_lda_oversampling.py
 kfold:
-  n_splits: 9
+  n_splits: 10
   random_state: 42
   shuffle: true
+lda:
+  learning_decay: 0.82191300017563
+  n_components: 242
+  random_state: 42
 model:
-  C: 14.440896716106627
-  kernel: linear
+  C: 4.73140370851372
+  degree: 3
+  kernel: poly
   max_iter: 10000
   random_state: 42
 tfidf:
-  max_df: 0.2698606815312755
-  min_df: 2
+  max_df: 0.5760659358922635
+  min_df: 26
   smooth_idf: true
