@@ -260,7 +260,7 @@ CodeBlock.chunks = relationship('Chunk', order_by=Chunk.id, back_populates="code
 class Data(Base):
     """table with parsed data"""
 
-    __tablename__ = 'chunks_data'
+    __tablename__ = 'raw_data'
     id = Column(
         Integer,
         primary_key=True
@@ -280,7 +280,7 @@ class Data(Base):
     kaggle_id = Column(
         Integer
     )
-    ref = Column(
+    ref_link = Column(
         String(500)
     )
     data_sources = Column(
