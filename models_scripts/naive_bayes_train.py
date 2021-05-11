@@ -8,7 +8,7 @@ import numpy as np
 import optuna
 import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score
-from sklearn.model_selection import KFold
+from sklearn.model_selection import StratifiedKFold
 from sklearn.naive_bayes import MultinomialNB, ComplementNB
 
 from common.tools import *
@@ -45,7 +45,7 @@ HYPERPARAM_SPACE = {
 def cross_val_scores(kf, clf, X, y):
     f1s = []
     accuracies = []
-    for i, (train_index, test_index) in enumerate(kf.split(X)):
+    for i, (train_index, test_index) in enumerate(kf.split(X, y)):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
 
@@ -62,7 +62,7 @@ def cross_val_scores(kf, clf, X, y):
 
 class Objective:
     def __init__(self, df, kfold_params, cntvec_min_df, cntvec_max_df, nb_type, nb_alpha):
-        self.kf = KFold(**kfold_params)
+        self.kf = StratifiedKFold(**kfold_params)
         self.min_df_range = cntvec_min_df
         self.max_df_range = cntvec_max_df
         self.nbs = nb_type
@@ -142,7 +142,7 @@ if __name__ == "__main__":
     print("loaded")
 
     kfold_params = {
-        "n_splits": 10,
+        "n_splits": 6,
         "random_state": RANDOM_STATE,
         "shuffle": True,
     }
