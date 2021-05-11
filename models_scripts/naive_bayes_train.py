@@ -10,6 +10,7 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import StratifiedKFold
 from sklearn.naive_bayes import MultinomialNB, ComplementNB
+from tokenizers import Tokenizer
 
 from common.tools import *
 
@@ -22,6 +23,7 @@ args = parser.parse_args()
 GRAPH_VER = args.GRAPH_VER
 DATASET_PATH = args.DATASET_PATH
 
+TOKENIZER_PATH = "../models/bpe_tokenizer.json"
 MODEL_DIR = "../models/nb_graph_v{}.sav".format(GRAPH_VER)
 COUNTVEC_DIR = "../models/countvec_nb_graph_v{}.pickle".format(GRAPH_VER)
 
@@ -35,8 +37,8 @@ RANDOM_STATE = 42
 N_TRIALS = 100
 
 HYPERPARAM_SPACE = {
-    "cntvec_min_df": (1, 50),
-    "cntvec_max_df": (0.2, 1.0),
+    "tfidf_min_df": (1, 20),
+    "tfidf_max_df": (0.3, 1.0),
     "nb_type": ("ComplementNB", "MultinomialNB"),
     "nb_alpha": (1e-6, 10),
 }
@@ -61,20 +63,24 @@ def cross_val_scores(kf, clf, X, y):
 
 
 class Objective:
-    def __init__(self, df, kfold_params, cntvec_min_df, cntvec_max_df, nb_type, nb_alpha):
+    def __init__(self, df, kfold_params, tfidf_min_df, tfidf_max_df, nb_type, nb_alpha):
         self.kf = StratifiedKFold(**kfold_params)
-        self.min_df_range = cntvec_min_df
-        self.max_df_range = cntvec_max_df
+        self.min_df_range = tfidf_min_df
+        self.max_df_range = tfidf_max_df
         self.nbs = nb_type
         self.alpha_range = nb_alpha
         self.df = df
 
+        self.tokenizer = make_tokenizer(Tokenizer.from_file(TOKENIZER_PATH))
+
     def __call__(self, trial):
         tfidf_params = {
-            "min_df": trial.suggest_int("cntvec__min_df", *self.min_df_range),
-            "max_df": trial.suggest_loguniform("cntvec__max_df", *self.max_df_range),
+            "min_df": trial.suggest_int("tfidf__min_df", *self.min_df_range),
+            "max_df": trial.suggest_loguniform("tfidf__max_df", *self.max_df_range),
+            "smooth_idf": True,
+            "tokenizer": self.tokenizer,
         }
-        code_blocks_tfidf = count_fit_transform(self.df[CODE_COLUMN], tfidf_params)
+        code_blocks_tfidf = tfidf_fit_transform(self.df[CODE_COLUMN], tfidf_params)
         X, y = code_blocks_tfidf, self.df[TARGET_COLUMN].values
 
         nb_params = {
@@ -104,16 +110,19 @@ def select_hyperparams(df, kfold_params, cntvec_path, model_path):
 
     study.optimize(objective, n_trials=N_TRIALS)
 
-    best_cntvec_params = dict()
+    best_tfidf_params = {
+        "smooth_idf": True,
+        "tokenizer": make_tokenizer(Tokenizer.from_file(TOKENIZER_PATH)),
+    }
     best_nb_params = dict()
     for key, value in study.best_params.items():
         model_name, param_name = key.split("__")
-        if model_name == "cntvec":
-            best_cntvec_params[param_name] = value
+        if model_name == "tfidf":
+            best_tfidf_params[param_name] = value
         elif model_name == "nb":
             best_nb_params[param_name] = value
 
-    code_blocks_tfidf = count_fit_transform(df[CODE_COLUMN], best_cntvec_params, cntvec_path)
+    code_blocks_tfidf = tfidf_fit_transform(df[CODE_COLUMN], best_tfidf_params)
     X, y = code_blocks_tfidf, df[TARGET_COLUMN].values
 
     nb_type = best_nb_params["nb_type"]
@@ -129,9 +138,11 @@ def select_hyperparams(df, kfold_params, cntvec_path, model_path):
     clf.fit(X, y)
     pickle.dump(clf, open(model_path, "wb"))
 
+    best_tfidf_params["tokenizer"] = "BPE"
+
     metrics = dict(test_f1_score=f1_mean, test_accuracy=accuracy_mean)
 
-    return best_cntvec_params, best_nb_params, metrics
+    return best_tfidf_params, best_nb_params, metrics
 
 
 if __name__ == "__main__":
