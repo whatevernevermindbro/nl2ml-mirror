@@ -1,5 +1,5 @@
 data:
-  DATASET_PATH: /home/androzdova/Documents/nl2ml/data/clean_markup_oversample.csv
+  DATASET_PATH: /home/androzdova/nl2ml/data/markup_data_2021-05-06.csv
   label: '[''Hypothesis.statistical_test'', ''Environment.import_modules'', ''Environment.set_options'',
     ''Environment.get_options'', ''Data_Extraction.load_from_url'', ''Data_Extraction.load_from_sql'',
     ''Data_Extraction.load_from_disk'', ''Data_Extraction.load_from_csv'', ''EDA.show_table'',
@@ -18,22 +18,19 @@ data:
     ''Visualization.learning_history'', ''Visualization.distribution'', ''Visualization.wandb'',
     ''Visualization.missing_values'', ''Data_Export.save_to_csv'', ''Production.send_to_prod_environment'',
     ''Production.save_weights'']'
-  model: ../models/linear_svm_regex_graph_v7.0.sav
-  nrows: 4423
-  script_dir: svm_train_rff_oversampling.py
+  model: ../models/linear_svm_regex_graph_2_v7.0.sav
+  nrows: 4711
+  script_dir: svm_train_pseudo_student_smol.py
 kfold:
   n_splits: 9
   random_state: 42
   shuffle: true
 model:
-  C: 0.30819805053454163
+  C: 28.64770402924739
   kernel: linear
   max_iter: 10000
   random_state: 42
-rff:
-  n_features: 990
-  random_state: 42
 tfidf:
-  max_df: 0.20367527218317025
+  max_df: 0.8108330033423626
   min_df: 3
   smooth_idf: true
