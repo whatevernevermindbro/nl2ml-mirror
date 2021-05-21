@@ -31,12 +31,11 @@ data = pd.read_sql_query(sql, engine)
 print(data.shape)
 data.to_csv(f'../data/actual_graph_{date.today()}.csv', index=False)
 
-sql = '''select id, `ref`, comp_name, comp_type, description, metric, datatype, subject, problemtype, insert_ts
+sql = '''select id, ref_link, comp_name, comp_type, description, metric, datatype, subject, problemtype, insert_ts
 from competitions
 where metric is not NULL
 and metric != 'unkown metric'
-and `ref` is not NUll
-and comp_type != 'inClass' '''
+and ref_link is not NUll '''
 data = pd.read_sql_query(sql, engine)
 print(data.shape)
 data.to_csv(f'../data/competitions_{date.today()}.csv', index=False)

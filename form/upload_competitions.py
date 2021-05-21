@@ -11,11 +11,11 @@ def text_preparation4sql(text):
     return f"'`{ftext}`'"
 
 
-engine = create_engine("mysql+pymysql://root:$a8`k?B2y4nUxX2G@40.119.1.127:32006/nl2ml")
+engine = create_engine("mysql+pymysql://root:$a8`k?B2y4nUxX2G@40.119.1.127:32006/nl2ml_test")
 
 path2data = '../data'
-codeblocks_filename = f'{path2data}/competitions4db.csv'
-tableToWriteTo = 'good_competitions'
+codeblocks_filename = f'{path2data}/competitions_review_2021-05-18.csv'
+tableToWriteTo = 'competitions'
 
 
 for df in tqdm(pd.read_csv(codeblocks_filename, chunksize=1000)):
