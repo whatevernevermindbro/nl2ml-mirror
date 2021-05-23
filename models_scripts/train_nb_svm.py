@@ -43,27 +43,28 @@ CODE_COLUMN = "code_block"
 TARGET_COLUMN = "graph_vertex_id"
 
 RANDOM_STATE = 42
-N_TRIALS = 70
+N_TRIALS = 50
 MAX_ITER = 10000
 
 SEARCH_SPACE = {
-    "tfidf_min_df": (1, 10),
-    "tfidf_max_df": (0.5, 1.0),
+    "tfidf_min_df": (1, 5),
+    "tfidf_max_df": (0.8, 1.0),
     "nbsvc_alpha": (1e-3, 10),
+    "nbsvc_binarize": (True,),
     "svm_c": (1e-1, 1e3),
 }
 
 
 class NBSVC(BaseEstimator, ClassifierMixin):
-    def __init__(self, alpha, svm_params):
+    def __init__(self, alpha, svm_params, binarize=False):
         """
         :param alpha: smoothing parameter for Naive Bayes
-        :param clf_base: model that will learn on NB features
         """
         super(NBSVC, self).__init__()
 
         self.alpha = alpha
         self.svm_params = svm_params
+        self.binarize = binarize
 
     def _compute_ratios(self, X, y):
         """
@@ -80,6 +81,9 @@ class NBSVC(BaseEstimator, ClassifierMixin):
         self.ratios_ = sparse.csr_matrix(self.ratios_)
 
     def fit(self, X, y=None):
+        if self.binarize:
+            X = (X > 0).astype(np.float)
+
         self.label_encoder = LabelBinarizer()
         y = self.label_encoder.fit_transform(y)
 
@@ -94,6 +98,9 @@ class NBSVC(BaseEstimator, ClassifierMixin):
         return self
 
     def predict(self, X):
+        if self.binarize:
+            X = (X > 0).astype(np.float)
+
         decisions = np.zeros((X.shape[0], self.label_encoder.classes_.shape[0]))
 
         for i in range(len(self.label_encoder.classes_)):
@@ -125,9 +132,10 @@ class Objective:
             "random_state": RANDOM_STATE,
             "max_iter": MAX_ITER,
         }
-        alpha = trial.suggest_loguniform("nbsvc__alpha", *SEARCH_SPACE["nbsvc_alpha"])
 
-        clf = NBSVC(alpha, svm_params)
+        alpha = trial.suggest_loguniform("nbsvc__alpha", *SEARCH_SPACE["nbsvc_alpha"])
+        is_binarized = trial.suggest_categorical("nbsvc__binarize", SEARCH_SPACE["nbsvc_binarize"])
+        clf = NBSVC(alpha, svm_params, is_binarized)
 
         f1_mean, _ = cross_val_scores(self.kf, clf, X, y)
         return f1_mean
