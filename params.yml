@@ -8,15 +8,16 @@ kfold:
   shuffle: true
 model:
   nb:
-    alpha: 4.217691433673369
+    alpha: 0.2786685240069155
+    binarize: true
   svc:
-    C: 0.5031939994098586
+    C: 0.10050256979946501
     kernel: linear
     max_iter: 10000
     random_state: 42
 tfidf:
-  max_df: 0.942478927222569
-  min_df: 1
+  max_df: 0.9400543489101407
+  min_df: 3
   ngram_range: (1, 2)
   smooth_idf: true
   tokenizer: BPE
