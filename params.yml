@@ -26,11 +26,11 @@ kfold:
   random_state: 42
   shuffle: true
 model:
-  C: 318.3612604470029
-  kernel: rbf
+  C: 49.183217849970674
+  kernel: linear
   max_iter: 10000
   random_state: 42
 tfidf:
-  max_df: 0.4568305700265501
-  min_df: 5
+  max_df: 0.26704713829812515
+  min_df: 3
   smooth_idf: true
