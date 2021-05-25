@@ -1,7 +1,7 @@
 data:
   DATASET_PATH: ../data/markup_data_2021-05-06.csv
   label: ''
-  model: ../models/hyper_semi_most_acc_regex_graph_v7.sav
+  model: ../models/hyper_semi_random_regex_graph_v7.sav
   nrows: 4748
   script_dir: nl2ml/models_scripts/noisy_exp.ipynb
 kfold:
@@ -9,11 +9,11 @@ kfold:
   random_state: 42
   shuffle: true
 model:
-  C: 15.299954410577318
+  C: 17.455677139315696
   kernel: linear
   max_iter: 10000
   random_state: 42
 tfidf:
-  max_df: 0.25162783224208746
-  min_df: 5
+  max_df: 0.5327584678285417
+  min_df: 3
   smooth_idf: true
