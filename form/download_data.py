@@ -42,8 +42,14 @@ data.to_csv(f'../data/competitions_{date.today()}.csv', index=False)
 
 
 sql = '''
-select * from codeblocks c
-where id not in (select DISTINCT code_block_id from chunks c2)
+select 
+            t1.id as code_block_id,
+            code_block ,
+            kaggle_id,
+            competition_id
+from
+(select * from codeblocks c where id not in (select DISTINCT code_block_id from chunks c2)) t1
+left join notebooks n on t1.notebook_id = n.id 
 '''
 data = pd.read_sql_query(sql, engine)
 print(data.shape)
