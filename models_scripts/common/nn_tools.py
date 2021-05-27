@@ -84,6 +84,15 @@ class FocalLoss(nn.Module):
         return loss
 
 
+def to_device(data, device):
+    if isinstance(data, tuple) or isinstance(data, list):
+        result = []
+        for d in data:
+            result.append(d.to(device))
+        return result
+    return data.to(device)
+
+
 def train(model, device, dataloader, epoch, criterion, optimizer):
     model.train()
     batch_count = len(dataloader)
@@ -94,10 +103,10 @@ def train(model, device, dataloader, epoch, criterion, optimizer):
     f1_sum = 0
 
     for batch_id, data in enumerate(dataloader):
-        tokens, lengths, labels = data
-        tokens, lengths, labels = tokens.to(device), lengths.to("cpu"), labels.to(device)
+        input_data, labels = data
+        input_data, labels = to_device(input_data, device), to_device(labels, device)
 
-        output = model(tokens, lengths)
+        output = model(input_data)
         loss = criterion(output, labels)
 
         optimizer.zero_grad()
@@ -133,10 +142,10 @@ def test(model, device, dataloader, epoch, criterion):
 
     with torch.no_grad():
         for data in dataloader:
-            tokens, lengths, labels = data
-            tokens, lengths, labels = tokens.to(device), lengths.to("cpu"), labels.to(device)
+            input_data, labels = data
+            input_data, labels = to_device(input_data, device), to_device(labels, device)
 
-            output = model(tokens, lengths)
+            output = model(input_data)
             loss = criterion(output, labels)
 
             loss_sum += loss.item()
