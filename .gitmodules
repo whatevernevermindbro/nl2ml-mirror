@@ -1,0 +1,11 @@
+[submodule "pycode2vec"]
+	path = models_scripts/pycode2vec
+	url = https://github.com/NURx2/pycode2vec/
+
+[submodule "astminer"]
+	path = models_scripts/pycode2vec/astminer
+	url = https://github.com/JetBrains-Research/astminer
+
+[submodule "code2vec"]
+	path = models_scripts/pycode2vec/code2vec
+	url = https://github.com/tech-srl/code2vec
