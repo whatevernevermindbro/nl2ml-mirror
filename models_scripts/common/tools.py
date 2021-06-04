@@ -37,6 +37,7 @@ def tfidf_fit_transform(code_blocks: pd.DataFrame, tfidf_params: dict, tfidf_pat
     if tfidf_path is not None:
         pickle.dump(tfidf, open(tfidf_path, "wb"))
     code_blocks_tfidf = tfidf.transform(code_blocks)
+    code_blocks_tfidf.sort_indices()
     return code_blocks_tfidf
 
 
