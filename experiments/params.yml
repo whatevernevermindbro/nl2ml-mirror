@@ -1,5 +1,5 @@
 data:
-  DATASET_PATH: ../data/markup_data.csv
+  DATASET_PATH: /home/nastya/Documents/nl2ml/data/markup_data.csv
   label: '[''Hypothesis.statistical_test'', ''Environment.import_modules'', ''Environment.set_options'',
     ''Environment.get_options'', ''Data_Extraction.load_from_url'', ''Data_Extraction.load_from_sql'',
     ''Data_Extraction.load_from_disk'', ''Data_Extraction.load_from_csv'', ''EDA.show_table'',
@@ -18,20 +18,21 @@ data:
     ''Visualization.learning_history'', ''Visualization.distribution'', ''Visualization.wandb'',
     ''Visualization.missing_values'', ''Data_Export.save_to_csv'', ''Production.send_to_prod_environment'',
     ''Production.save_weights'']'
-  model: ../models/catboost_regex_graph_v7.0.sav
+  model: ../models/linear_svm_regex_graph_v7.0.sav
   nrows: 1453
-  script_dir: /Users/negativex/School/research/nl2ml/models_scripts/./boosting_train.py
+  script_dir: svm_train_rff.py
 kfold:
-  n_splits: 3
+  n_splits: 10
   random_state: 42
   shuffle: true
 model:
-  depth: 4
-  iterations: 1471
-  learning_rate: 0.6116064376739949
-  random_seed: 42
-  verbose: false
+  C: 0.8850315334159452
+  kernel: linear
+  max_iter: 10000
+  random_state: 42
+rff:
+  n_features: 890
 tfidf:
-  max_df: 0.4841180203699505
-  min_df: 1
+  max_df: 0.27216062685698317
+  min_df: 5
   smooth_idf: true
