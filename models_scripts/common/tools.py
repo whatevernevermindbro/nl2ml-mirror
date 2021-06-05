@@ -1,5 +1,6 @@
 import pickle
 import json
+import os
 
 import pandas as pd
 import numpy as np
@@ -74,6 +75,18 @@ def get_metrics(X, y, TAGS_TO_PREDICT, MODEL_DIR):
     print(f'F1-score {round(f1*100, 2)}%')
     metrics = {'test_accuracy': accuracy, 'test_f1_score': f1}
     return X, y, y_pred, metrics
+
+
+def create_path(path):
+    path_levels = path.split('/')
+    cur_path = ""
+    for path_seg in path_levels:
+        if len(cur_path):
+            cur_path = cur_path + "/" + path_seg
+        else:
+            cur_path = path_seg
+        if not os.path.exists(cur_path):
+            os.mkdir(cur_path)
 
 
 def cross_val_scores(kf, clf, X, y):
