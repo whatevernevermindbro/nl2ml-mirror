@@ -1,1 +1,10 @@
-{}
+data:
+  DATASET_PATH: ../data/markup_data_2021-05-06.csv
+  model: ../models/rnn_codebert_graph_v7.0.pt
+  random_seed: 42
+  script_dir: attention_rnn_pseudo_2.py
+model:
+  lin_size: 135
+  n_classes: 76
+  rnn_layers: 1
+  rnn_size: 100
