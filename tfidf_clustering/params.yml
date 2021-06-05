@@ -1,0 +1,6 @@
+DATASET_PATH: ../data/markup_data.csv
+completeness_score: 62
+label: '[''-'']'
+model: '[''-'']'
+nrows: 1458
+script_dir: clustering_tfidf.py
