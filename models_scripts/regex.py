@@ -16,7 +16,9 @@ def tokens_search(df, tokens, new_column_name):
         print(percents + '%\r', end='')
         row = df[CODE_COLUMN][i]
         for token in tokens:
-            result = re.search(token.replace('(','\('), row)
+            #print(row, '---', token)
+            #print('--------')
+            result = re.search(token.replace('(','\(').replace(')', '\)'), row)
             if result!=None:
                 df[new_column_name][i] = 1
                 break
@@ -44,7 +46,7 @@ except:
 
 OUTPUT_DATASET_PATH = '{}_regex_graph_v{}.csv'.format(DATASET_PATH[:-4], GRAPH_VER)
 CODE_COLUMN = 'code_block'
-GRAPH_DIR = './graph/graph_v{}.txt'.format(GRAPH_VER)
+GRAPH_DIR = '../graph/graph_v{}.txt'.format(GRAPH_VER)
 
 if __name__ == '__main__':
     df = pd.read_csv(DATASET_PATH, encoding='utf-8', sep=',')
@@ -70,7 +72,7 @@ if __name__ == '__main__':
     print('saved and finished')
     if evaluation:
         print('evaluating regex v{}'.format(GRAPH_VER))
-        VALIDATION_DATA_PATH = "./data/golden_884_set.csv"
+        VALIDATION_DATA_PATH = "../markup_data.csv"
         TAGS = vertices
         REGEX_TAGS = [el + '_regex_v{}'.format(GRAPH_VER) for el in TAGS]
         regexed_data = pd.read_csv(VALIDATION_DATA_PATH)
