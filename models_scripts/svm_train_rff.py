@@ -48,18 +48,20 @@ HYPERPARAM_SPACE = {
 
 
 class RFF:
-    def __init__(self, n_features=1000):
+    def __init__(self, n_features, random_state):
         self.n_features = n_features
+        self.random_state = random_state
 
     def fit(self, X, y):
-        pairs = np.random.choice(range(X.shape[0]), 10000)
-        pairs2 = np.random.choice(range(1, X.shape[0] - 2), 10000)
+        rng = np.random.default_rng(self.random_state)
+        pairs = rng.choice(range(X.shape[0]), 10000)
+        pairs2 = rng.choice(range(1, X.shape[0] - 2), 10000)
         pairs2 = (pairs + pairs2) % X.shape[0]
 
         if not isinstance(X, np.ndarray):
             X_new = np.array((X[pairs] - X[pairs2]).todense())
         else:
-            X_new = X.copy()
+            X_new = X[pairs] - X[pairs2]
         square_sums = []
         for row in X_new:
             s = 0
@@ -69,8 +71,8 @@ class RFF:
             square_sums.append(s)
         sigma2 = np.median(square_sums)
 
-        self.w = np.random.normal(0, 1.0/np.sqrt(sigma2), size=(self.n_features, X.shape[1]))
-        self.b = np.random.uniform(-np.pi, np.pi, size=(self.n_features, 1))
+        self.w = rng.normal(0, 1.0/np.sqrt(sigma2), size=(self.n_features, X.shape[1]))
+        self.b = rng.uniform(-np.pi, np.pi, size=(self.n_features, 1))
 
         return self
 
@@ -128,7 +130,7 @@ class Objective:
         rff_params = {
             "n_features": trial.suggest_int("rff__n_features", *self.rff_n_features),
         }
-        rff = RFF(rff_params["n_features"])
+        rff = RFF(rff_params["n_features"], RANDOM_STATE)
         X = rff.fit_transform(X, y)
 
 
@@ -166,7 +168,9 @@ def select_hyperparams(df, kfold_params, tfidf_path, model_path):
         "random_state": RANDOM_STATE,
         "max_iter": MAX_ITER,
     }
-    best_rff_params = {}
+    best_rff_params = {
+        "random_state": RANDOM_STATE,
+    }
     for key, value in study.best_params.items():
         model_name, param_name = key.split("__")
         if model_name == "tfidf":
@@ -178,7 +182,7 @@ def select_hyperparams(df, kfold_params, tfidf_path, model_path):
 
     code_blocks_tfidf = tfidf_fit_transform(df[CODE_COLUMN], best_tfidf_params, tfidf_path)
     X, y = code_blocks_tfidf, df[TARGET_COLUMN].values
-    rff = RFF(best_rff_params["n_features"])
+    rff = RFF(best_rff_params["n_features"], RANDOM_STATE)
 
     clf = SVC(**best_svm_params)
 

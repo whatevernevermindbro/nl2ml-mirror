@@ -3,14 +3,14 @@
 
 import pandas as pd
 import numpy as np
-import magic
+# import magic
 import sys
 from comment_parser import comment_parser
 
 filename = sys.argv[1]
 save_as = sys.argv[2]
 
-df = pd.read_csv(filename)
+df = pd.read_csv(filename, sep=',')
 df.head(5)
 
 
@@ -19,11 +19,13 @@ df.head(5)
 HEADER = df.columns
 HEADER = [col if ("Unnamed:" not in col) else "" for col in HEADER ]
 
-df.columns = df.iloc[0,:]
-df = df.drop(index=0)
+# df.columns = df.iloc[0,:]
+# df = df.drop(index=0)
 
-df.head(5)
-
+# df.head(5)
+graph_path = '../../data/actual_graph_2021-04-18.csv'
+graph = pd.read_csv(graph_path)
+df = df.merge(graph, left_on='graph_vertex_id', right_on='id', how='left')
 
 def get_dict(str_arr):
     name_lib_import = {}
@@ -131,18 +133,18 @@ def get_comments(text: str):
             pass
     return "\n".join([line for line in comments])
 
+df['comments'] = df['code_block'].apply(get_comments)
 
-df['comments'] = df.code_block.apply(get_comments)
-
-# For each 'notebook_id' do cell shift
-notebooks_ids = set([i for i in df['notebook_id'].values if str(i) != 'nan'])
+# For each 'kaggle_id' do cell shift
+notebooks_ids = set([i for i in df['kaggle_id'].values if str(i) != 'nan'])
 SHIFT_RANGE = 3
 all_temp_dfs = []
 
 # print(notebooks_ids)
 for not_id in notebooks_ids:
-    # get rows for one notebook_id
-    temp_df = df[df['notebook_id'] == not_id]
+    print('notebook id {}'.format(not_id))
+    # get rows for one kaggle_id
+    temp_df = df[df['kaggle_id'] == not_id]
     buf_graph_vertex = list(temp_df.graph_vertex.values)
     dicts = get_dict(temp_df.code_block.values)
 #     print(dicts)
@@ -153,6 +155,8 @@ for not_id in notebooks_ids:
     temp_df['libraries'] = buf_arr
     # shift down
     for i in range(1, SHIFT_RANGE + 1):
+        print(i, len([np.NaN] * i + buf_graph_vertex[0: -i]))
+        print([np.NaN] * i + buf_graph_vertex[0: -i])
         temp_df['graph_vertex_m' + str(i)] = [np.NaN] * i + buf_graph_vertex[0: -i]
     # shift up
     for i in range(1, SHIFT_RANGE + 1):
@@ -161,10 +165,10 @@ for not_id in notebooks_ids:
     
 # concatenate all shifted notebooks
 final_df = pd.concat(all_temp_dfs)
-final_df['notebook_id'] = final_df['notebook_id'].apply(int)
+final_df['kaggle_id'] = final_df['kaggle_id'].apply(int)
 final_df['chunk_id'] = final_df['chunk_id'].apply(int)
 
-final_df.sort_values(['notebook_id', 'chunk_id'], inplace=True)
+final_df.sort_values(['kaggle_id', 'chunk_id'], inplace=True)
 final_df.head()
 
 
