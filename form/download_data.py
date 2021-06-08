@@ -2,9 +2,11 @@ from sqlalchemy.orm import sessionmaker
 import pandas as pd
 import sqlalchemy
 from datetime import date
+from getpass import getpass
 
 # TODO config with paths and passwords
-engine = sqlalchemy.create_engine("mysql+pymysql://root:$a8`k?B2y4nUxX2G@40.119.1.127:32006/nl2ml")
+password = getpass()
+engine = sqlalchemy.create_engine(f"mysql+pymysql://root:{password}@40.119.1.127:32006/nl2ml")
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -16,7 +18,9 @@ sql = '''select
             errors,
             marks,
             kaggle_id,
-            competition_id
+            competition_id,
+            ch.username,
+            ch.created_on
 from chunks ch
 left join codeblocks c on ch.code_block_id  = c.id
 left join notebooks n on c.notebook_id = n.id'''
