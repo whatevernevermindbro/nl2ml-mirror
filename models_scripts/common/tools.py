@@ -1,11 +1,12 @@
 import pickle
 import json
+import os
 
 import pandas as pd
 import numpy as np
 import scipy
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics import f1_score
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from sklearn.metrics import f1_score, accuracy_score
 
 
 GRAPH_PATH = "../data/actual_graph.csv"
@@ -41,6 +42,20 @@ def tfidf_fit_transform(code_blocks: pd.DataFrame, tfidf_params: dict, tfidf_pat
     return code_blocks_tfidf
 
 
+def count_transform(code_blocks, countvec_path):
+    count_vec = pickle.load(open(countvec_path, "rb"))
+    features = count_vec.transform(code_blocks)
+    return features
+
+
+def count_fit_transform(code_blocks, countvec_params, countvec_path=None):
+    count_vec = CountVectorizer(**countvec_params).fit(code_blocks)
+    if countvec_path is not None:
+        pickle.dump(count_vec, open(countvec_path, "wb"))
+    counts = count_vec.transform(code_blocks)
+    return counts
+
+
 def mean_confidence_interval(data, confidence=0.95):
     a = 1.0 * np.array(data)
     n = len(a)
@@ -60,3 +75,45 @@ def get_metrics(X, y, TAGS_TO_PREDICT, MODEL_DIR):
     print(f'F1-score {round(f1*100, 2)}%')
     metrics = {'test_accuracy': accuracy, 'test_f1_score': f1}
     return X, y, y_pred, metrics
+
+
+def create_path(path):
+    path_levels = path.split('/')
+    cur_path = ""
+    for path_seg in path_levels:
+        if len(cur_path):
+            cur_path = cur_path + "/" + path_seg
+        else:
+            cur_path = path_seg
+        if not os.path.exists(cur_path):
+            os.mkdir(cur_path)
+
+
+def cross_val_scores(kf, clf, X, y):
+    f1s = []
+    accuracies = []
+    for i, (train_index, test_index) in enumerate(kf.split(X)):
+        X_train, X_test = X[train_index], X[test_index]
+        y_train, y_test = y[train_index], y[test_index]
+
+        clf.fit(X_train, y_train)
+
+        y_pred = clf.predict(X_test)
+        f1s.append(f1_score(y_test, y_pred, average="weighted"))
+        accuracies.append(accuracy_score(y_test, y_pred))
+
+    f1s = np.array(f1s)
+    accuracies = np.array(accuracies)
+    return f1s.mean(), accuracies.mean()
+
+
+def make_tokenizer(model):
+    """
+    This is supposed to work for tokenizers from huggingface lib
+    See: https://huggingface.co/docs/tokenizers/python/latest/api/reference.html#tokenizer
+    """
+    def tokenizer(s):
+        output = model.encode(s)
+        return output.tokens
+
+    return tokenizer
