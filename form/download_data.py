@@ -3,10 +3,19 @@ import pandas as pd
 import sqlalchemy
 from datetime import date
 from getpass import getpass
+import yaml
+
+def read_yaml(path):
+    with open(path) as f:
+        data = yaml.full_load(f)
+    return data
+
+def create_engine_link():
+    config = read_yaml('../db.yml')
+    return f"mysql+pymysql://{config.get('user')}:{config.get('password')}@40.119.1.127:32006/nl2ml"
 
 # TODO config with paths and passwords
-password = getpass()
-engine = sqlalchemy.create_engine(f"mysql+pymysql://root:{password}@40.119.1.127:32006/nl2ml")
+engine = sqlalchemy.create_engine(create_engine_link())
 Session = sessionmaker(bind=engine)
 session = Session()
 
