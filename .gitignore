@@ -18,3 +18,4 @@ data_external/
 /data
 /data_archived
 **catboost_info
+/corpus
