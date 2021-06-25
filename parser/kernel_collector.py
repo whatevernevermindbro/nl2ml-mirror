@@ -17,7 +17,7 @@ parser.add_argument("--process_id", dest="process_id", type=int, default=0)
 
 args = vars(parser.parse_args())
 
-pbar = tqdm.tqdm(total=int(args["--kernel_count"]))
+pbar = tqdm.tqdm(total=int(args["count"]))
 
 driver = KaggleWebDriver()
 driver.load()
