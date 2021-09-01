@@ -19,3 +19,4 @@ data_external/
 /data_archived
 **catboost_info
 /corpus
+**/.venv

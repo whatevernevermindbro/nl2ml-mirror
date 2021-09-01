@@ -1,3 +1,4 @@
+import ast
 import pickle
 import json
 import os
@@ -13,8 +14,10 @@ GRAPH_PATH = "../data/actual_graph.csv"
 
 
 def load_data(DATASET_PATH):
-    df = pd.read_csv(DATASET_PATH, encoding='utf-8', comment='#', sep=',')
+    df = pd.read_csv(DATASET_PATH, encoding='utf-8', comment='#', sep=',', header=0)
     df.dropna(axis=0, inplace=True)
+    if "context" in df.columns:
+        df["context"] = df["context"].apply(ast.literal_eval)
     return df
 
 
@@ -117,3 +120,20 @@ def make_tokenizer(model):
         return output.tokens
 
     return tokenizer
+
+def ohe_context(contexts, context_size, max_vertex_id):
+    data = []
+    rows = []
+    cols = []
+    for i, ctx in enumerate(contexts.tolist()):
+        if len(ctx) > context_size:
+            ctx = ctx[-context_size:]
+        for vertex_id in ctx:
+            data.append(1.0)
+            rows.append(i)
+            cols.append(vertex_id)
+
+    return scipy.sparse.csr_matrix(
+        (np.array(data), (np.array(rows), np.array(cols))), 
+        shape=(len(contexts), int(max_vertex_id) + 1)
+    )
