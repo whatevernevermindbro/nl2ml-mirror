@@ -1,10 +1,13 @@
 import pickle
+import cloudpickle
 import json
 import os
 
 import pandas as pd
 import numpy as np
 import scipy
+import ast
+import astunparse
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics import f1_score, accuracy_score
 
@@ -28,7 +31,7 @@ def get_graph_vertices(GRAPH_VER):
 
 
 def tfidf_transform(corpus, tfidf_params, TFIDF_DIR):
-    tfidf = pickle.load(open(TFIDF_DIR, 'rb'))
+    tfidf = cloudpickle.load(open(TFIDF_DIR, 'rb'))
     features = tfidf.transform(corpus)
     return features
 
@@ -36,7 +39,7 @@ def tfidf_transform(corpus, tfidf_params, TFIDF_DIR):
 def tfidf_fit_transform(code_blocks: pd.DataFrame, tfidf_params: dict, tfidf_path=None):
     tfidf = TfidfVectorizer(**tfidf_params).fit(code_blocks)
     if tfidf_path is not None:
-        pickle.dump(tfidf, open(tfidf_path, "wb"))
+        cloudpickle.dump(tfidf, open(tfidf_path, "wb"))
     code_blocks_tfidf = tfidf.transform(code_blocks)
     code_blocks_tfidf.sort_indices()
     return code_blocks_tfidf
@@ -117,3 +120,43 @@ def make_tokenizer(model):
         return output.tokens
 
     return tokenizer
+
+
+class Transformer(ast.NodeTransformer):
+    def __init__(self, masking_rate):
+        self.vars = dict()
+        self.count = 0
+        self.masking_rate = masking_rate
+        self.generator = np.random.default_rng(42)
+
+    def generic_visit(self, node):
+        if isinstance(node, ast.Name) and not isinstance(node.ctx, ast.Load):
+            node.id = "NODE"
+            if node.id not in self.vars:
+                if self.generator.random() > self.masking_rate:
+                    self.vars[node.id] = node.id
+                else:
+                    self.vars[node.id] = "[VAR" + str(self.count) + "]"
+                    self.count += 1
+            node.id = self.vars[node.id]
+        return node
+
+
+def mask(row, code_col, masking_rate):
+    source = row[code_col]
+
+    try:
+        root = ast.parse(source)
+        transformer = Transformer(masking_rate)
+        for node in ast.walk(root):
+            transformer.visit(node)
+        row[code_col] = astunparse.unparse(root)
+        return row
+    except SyntaxError:
+        return row
+
+
+def augment_mask(dataset, code_col, masking_rate):
+    augmented = dataset.copy()
+    augmented.apply(lambda row: mask(row, code_col, masking_rate), axis=1)
+    return augmented
