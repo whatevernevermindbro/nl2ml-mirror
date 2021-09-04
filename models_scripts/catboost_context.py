@@ -53,7 +53,7 @@ def cross_val_scores(kf, clf, X, y, cat_features=None):
     f1s = []
     accuracies = []
     for i, (train_index, test_index) in enumerate(kf.split(X, y)):
-        X_train, X_test = X[train_index], X[test_index]
+        X_train, X_test = X.reindex(train_index), X.reindex(test_index)
         y_train, y_test = y[train_index], y[test_index]
 
         train_pool = Pool(data=X_train, label=y_train, cat_features=cat_features)
@@ -86,9 +86,11 @@ class Objective:
         X, y = code_blocks_tfidf, self.df[TARGET_COLUMN].values
 
         context_size = trial.suggest_int("ctx__context_size", *self.hspace["context_size"])
-        X_ctx = ohe_context(self.df["context"], context_size, y.max())
+        X_ctx = categorical_context(self.df["context"], context_size)
+        cat_features = np.arange(X_ctx.shape[1]) + X.shape[1]
 
-        X = sp.hstack([X, X_ctx], format="csr")
+        X = pd.DataFrame(data=X.todense())
+        X[["ctx_{}".format(i) for i in range(X_ctx.shape[1])]] = X_ctx
 
         boosting_params = {
             "learning_rate": trial.suggest_loguniform("boosting__learning_rate", *self.hspace["catboost_lr"]),
@@ -103,7 +105,7 @@ class Objective:
 
         clf = CatBoostClassifier(**boosting_params)
 
-        f1_mean, _ = cross_val_scores(self.kf, clf, X, y)
+        f1_mean, _ = cross_val_scores(self.kf, clf, X, y, cat_features)
         return f1_mean
 
 
@@ -139,9 +141,15 @@ def select_hyperparams(df, kfold_params, tfidf_path, model_path):
 
     code_blocks_tfidf = tfidf_fit_transform(df[CODE_COLUMN], best_tfidf_params, tfidf_path)
     X, y = code_blocks_tfidf, df[TARGET_COLUMN].values
+    X_ctx = categorical_context(df["context"], best_ctx_params["context_size"])
+    cat_features = np.arange(X_ctx.shape[1]) + X.shape[1]
+
+    X = pd.DataFrame(data=X.todense())
+    X[["ctx_{}".format(i) for i in range(X_ctx.shape[1])]] = X_ctx
+
     clf = CatBoostClassifier(**best_boosting_params)
 
-    f1_mean, accuracy_mean = cross_val_scores(objective.kf, clf, X, y)
+    f1_mean, accuracy_mean = cross_val_scores(objective.kf, clf, X, y, cat_features)
 
     clf.fit(X, y)
     pickle.dump(clf, open(model_path, "wb"))

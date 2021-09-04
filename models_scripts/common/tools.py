@@ -137,3 +137,7 @@ def ohe_context(contexts, context_size, max_vertex_id):
         (np.array(data), (np.array(rows), np.array(cols))), 
         shape=(len(contexts), int(max_vertex_id) + 1)
     )
+
+def categorical_context(contexts, context_size):
+    contexts = contexts.apply(lambda x: x if len(x) <= context_size else x[-context_size:])
+    return pd.DataFrame(data=contexts.values.tolist(), index=contexts.index).values.astype(np.int16)

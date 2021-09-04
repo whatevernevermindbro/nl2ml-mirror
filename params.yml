@@ -1,5 +1,5 @@
 context:
-  context_size: 16
+  context_size: 2
 data:
   DATASET_PATH: ../data/context_clean_markup_data_2021-05-06.csv
   label: '[''Hypothesis.statistical_test'', ''Hyperparam_Tuning.choose_model_class'',
@@ -32,12 +32,12 @@ kfold:
   random_state: 42
   shuffle: true
 model:
-  depth: 6
-  iterations: 1451
-  learning_rate: 0.2113374585744406
+  depth: 4
+  iterations: 1296
+  learning_rate: 0.6306921123725189
   random_seed: 42
   verbose: false
 tfidf:
-  max_df: 0.20913648057995862
-  min_df: 11
+  max_df: 0.5261150850170223
+  min_df: 10
   smooth_idf: true
