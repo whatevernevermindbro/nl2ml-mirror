@@ -1,5 +1,5 @@
 context:
-  context_size: 2
+  context_size: 1
 data:
   DATASET_PATH: ../data/context_clean_markup_data_2021-05-06.csv
   label: '[''Hypothesis.statistical_test'', ''Hyperparam_Tuning.choose_model_class'',
@@ -24,20 +24,19 @@ data:
     ''Visualization.learning_history'', ''Visualization.distribution'', ''Visualization.wandb'',
     ''Visualization.missing_values'', ''Visualization.plot_predictions'', ''Data_Export.save_to_csv'',
     ''Production.send_to_prod_environment'', ''Production.save_weights'']'
-  model: ../models/catboost_regex_graph_v7.sav
+  model: ../models/hyper_svm_regex_graph_v7.sav
   nrows: 4284
-  script_dir: catboost_context.py
+  script_dir: svm_context.py
 kfold:
   n_splits: 3
   random_state: 42
   shuffle: true
 model:
-  depth: 4
-  iterations: 1296
-  learning_rate: 0.6306921123725189
-  random_seed: 42
-  verbose: false
+  C: 1.713271415927307
+  kernel: linear
+  max_iter: 10000
+  random_state: 42
 tfidf:
-  max_df: 0.5261150850170223
-  min_df: 10
+  max_df: 0.31217363021030653
+  min_df: 7
   smooth_idf: true
