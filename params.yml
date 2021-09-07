@@ -1,10 +1,11 @@
 data:
-  DATASET_PATH: ../data/markup_data_2021-05-06.csv
+  DATASET_PATH: ../data/clean_markup_data_2021-05-06.csv
   model: ../models/rnn_codebert_graph_v7.0.pt
   random_seed: 42
-  script_dir: attention_rnn_pseudo_2.py
+  script_dir: attention_rnn_augment_train.py
 model:
-  lin_size: 135
-  n_classes: 76
+  lin_size: 255
+  masking_rate: 0.9978617998679711
+  n_classes: 73
   rnn_layers: 1
-  rnn_size: 100
+  rnn_size: 169
