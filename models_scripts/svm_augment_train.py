@@ -38,7 +38,7 @@ CODE_COLUMN = "code_block"
 TARGET_COLUMN = "graph_vertex_id"
 
 RANDOM_STATE = 42
-N_TRIALS = 1
+N_TRIALS = 50
 MAX_ITER = 10000
 
 HYPERPARAM_SPACE = {
@@ -46,6 +46,7 @@ HYPERPARAM_SPACE = {
     "tfidf_min_df": (1, 10),
     "tfidf_max_df": (0.2, 0.7),
     "svm_kernel": ["linear", "poly", "rbf"],
+    # "svm_kernel": ["linear"],
     "svm_degree": (2, 6),  # in case of poly kernel
     "masking_rate": (0.5, 1.0)
 }
@@ -135,6 +136,7 @@ def select_hyperparams(df, kfold_params, tfidf_path, model_path):
     best_bagging_params = {
         "random_state": RANDOM_STATE
     }
+    best_masking_rate = 0
     for key, value in study.best_params.items():
         model_name, param_name = key.split("__")
         if model_name == "tfidf":
@@ -147,9 +149,13 @@ def select_hyperparams(df, kfold_params, tfidf_path, model_path):
             best_masking_rate = value
 
     X, y = df, df[TARGET_COLUMN].values
+
     clf = SVC(**best_svm_params)
 
     f1_mean, f1_std, accuracy_mean, accuracy_std = cross_val_scores(objective.kf, clf, X, y, best_tfidf_params, best_masking_rate)
+
+    X = augment_mask(X, CODE_COLUMN, best_masking_rate)
+    X = tfidf_fit_transform(X[CODE_COLUMN], tfidf_params, TFIDF_DIR).toarray()
 
     clf.fit(X, y)
     pickle.dump(clf, open(model_path, "wb"))

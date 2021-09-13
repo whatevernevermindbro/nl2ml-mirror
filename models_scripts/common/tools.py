@@ -1,4 +1,7 @@
 import pickle
+import random
+import string
+
 import cloudpickle
 import json
 import os
@@ -123,31 +126,35 @@ def make_tokenizer(model):
 
 
 class Transformer(ast.NodeTransformer):
-    def __init__(self, masking_rate):
+    def __init__(self, masking_rate, randomize=False):
         self.vars = dict()
         self.count = 0
         self.masking_rate = masking_rate
         self.generator = np.random.default_rng(42)
+        self.randomize = randomize
 
     def generic_visit(self, node):
         if isinstance(node, ast.Name) and not isinstance(node.ctx, ast.Load):
-            node.id = "NODE"
             if node.id not in self.vars:
                 if self.generator.random() > self.masking_rate:
                     self.vars[node.id] = node.id
                 else:
-                    self.vars[node.id] = "[VAR" + str(self.count) + "]"
-                    self.count += 1
+                    if not self.randomize:
+                        self.vars[node.id] = "[VAR" + str(self.count) + "]"
+                        self.count += 1
+                    else:
+                        self.vars[node.id] = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(7))
+                        self.count += 1
             node.id = self.vars[node.id]
         return node
 
 
-def mask(row, code_col, masking_rate):
+def mask(row, code_col, masking_rate, randomize=False):
     source = row[code_col]
 
     try:
         root = ast.parse(source)
-        transformer = Transformer(masking_rate)
+        transformer = Transformer(masking_rate, randomize)
         for node in ast.walk(root):
             transformer.visit(node)
         row[code_col] = astunparse.unparse(root)
