@@ -27,6 +27,7 @@ VOCAB_SIZE = 50000
 MIN_FREQ = 3
 DROPOUT = 0.15
 
+SPECIAL_TOKENS = []
 
 def make_corpus(df):
     print("Creating corpus")
@@ -48,7 +49,11 @@ if __name__ == "__main__":
     corpus_files = make_corpus(df)
 
     tokenizer = Tokenizer(BPE(dropout=DROPOUT))
-    trainer = BpeTrainer(vocab_size=VOCAB_SIZE, min_frequency=MIN_FREQ)
+
+    for i in range(50):
+        SPECIAL_TOKENS.append("[VAR" + str(i) + "]")
+
+    trainer = BpeTrainer(vocab_size=VOCAB_SIZE, min_frequency=MIN_FREQ, special_tokens=SPECIAL_TOKENS)
 
     tokenizer.pre_tokenizer = Whitespace()
 

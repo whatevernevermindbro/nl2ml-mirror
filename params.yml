@@ -1,10 +1,37 @@
 data:
-  DATASET_PATH: ../data/markup_data_2021-05-06.csv
-  model: ../models/rnn_codebert_graph_v7.0.pt
-  random_seed: 42
-  script_dir: attention_rnn_pseudo_2.py
+  DATASET_PATH: ../data/clean_markup_data_2021-05-06.csv
+  label: '[''Hypothesis.statistical_test'', ''Environment.import_modules'', ''Environment.set_options'',
+    ''Environment.get_options'', ''Data_Extraction.load_from_url'', ''Data_Extraction.load_from_sql'',
+    ''Data_Extraction.load_from_disk'', ''Data_Extraction.load_from_csv'', ''EDA.show_table'',
+    ''EDA.show_table_attributes'', ''EDA.count_missing_values'', ''EDA.count_duplicates'',
+    ''EDA.count_data_types'', ''Data_Transform.create_dataframe'', ''Data_Transform.remove_duplicates'',
+    ''Data_Transform.correct_missing_values'', ''Data_Transform.normalization'', ''Data_Transform.data_type_conversions'',
+    ''Data_Transform.randomize_order'', ''Data_Transform.split'', ''Data_Transform.filter'',
+    ''Data_Transform.concatenate'', ''Data_Transform.drop_column'', ''Data_Transform.sort_values'',
+    ''Data_Transform.feature_engineering'', ''Data_Transform.to_dummies'', ''Data_Transform.prepare_x_and_y'',
+    ''Data_Transform.categorify'', ''Model_Train.choose_model_class'', ''Model_Train.train_model'',
+    ''Model_Train.metric_computation'', ''Model_Train.predict'', ''Model_Evaluation.compute_test_metric'',
+    ''Model_Evaluation.predict_on_test'', ''Model_Interpretation.get_coefficients'',
+    ''Hyperparam_Tuning.find_best_score'', ''Hyperparam_Tuning.find_best_params'',
+    ''Hyperparam_Tuning.find_best_model_class'', ''Hyperparam_Tuning.train_on_grid'',
+    ''Hyperparam_Tuning.define_search_space'', ''Hyperparam_Tuning.fit_one_cycle'',
+    ''Visualization.learning_history'', ''Visualization.distribution'', ''Visualization.wandb'',
+    ''Visualization.missing_values'', ''Data_Export.save_to_csv'', ''Production.send_to_prod_environment'',
+    ''Production.save_weights'']'
+  model: ../models/hyper_svm_regex_graph_v7.0.sav
+  nrows: 4418
+  script_dir: svm_augment_train.py
+kfold:
+  n_splits: 15
+  random_state: 42
+  shuffle: true
+masking_rate: 0.9368133231041156
 model:
-  lin_size: 135
-  n_classes: 76
-  rnn_layers: 1
-  rnn_size: 100
+  C: 5.827256157539181
+  kernel: linear
+  max_iter: 10000
+  random_state: 42
+tfidf:
+  max_df: 0.30369577036783485
+  min_df: 2
+  smooth_idf: true

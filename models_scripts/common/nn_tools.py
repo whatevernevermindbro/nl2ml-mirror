@@ -5,6 +5,8 @@ from torch import Tensor
 import torch.nn as nn
 import torch.nn.functional as F
 
+from .tools import mask
+
 
 class FocalLoss(nn.Module):
     """ Focal Loss, as described in https://arxiv.org/abs/1708.02002.
@@ -131,6 +133,45 @@ def train(model, device, dataloader, epoch, criterion, optimizer):
     return mean_loss, accuracy, mean_f1
 
 
+def train_with_augment(model, device, dataloader, epoch, criterion, optimizer, code_column, masking_rate):
+    model.train()
+    batch_count = len(dataloader)
+    data_count = len(dataloader.dataset)
+
+    loss_sum = 0
+    correct_predictions = 0
+    f1_sum = 0
+
+    for batch_id, data in enumerate(dataloader):
+        input_data, labels = data
+
+        input_data, labels = to_device(input_data, device), to_device(labels, device)
+
+        output = model(input_data)
+        loss = criterion(output, labels)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        loss_sum += loss.item()
+
+        preds = output.argmax(dim=1)
+        f1_sum += f1(preds, labels, output.size(1), average="weighted").item()
+        correct_predictions += torch.sum((preds == labels).double()).item()
+
+        if (batch_id + 1) % 10 == 0 or batch_id + 1 == batch_count:
+            acc_score = torch.mean((preds == labels).double())
+            print("train epoch {} [{}/{}] - accuracy {:.6f} - loss {:.6f}".format(
+                epoch, batch_id + 1, batch_count, acc_score.item(), loss.item()
+            ))
+
+    mean_loss = loss_sum / batch_count
+    mean_f1 = f1_sum / batch_count
+    accuracy = correct_predictions / data_count
+    return mean_loss, accuracy, mean_f1
+
+
 def test(model, device, dataloader, epoch, criterion):
     model.eval()
     batch_count = len(dataloader)
@@ -162,3 +203,11 @@ def test(model, device, dataloader, epoch, criterion):
     ))
 
     return mean_loss, accuracy, mean_f1
+
+
+def augment_mask_list(batch, masking_rate):
+    augmented = []
+    for obj in batch:
+        augmented.append(mask(obj, "code", masking_rate, True))
+    return augmented
+
