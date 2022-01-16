@@ -15,6 +15,7 @@ data_external/
 **.DS_Store
 **.idea
 **__pycache__
+**.venv
 /data
 /data_archived
 **catboost_info
