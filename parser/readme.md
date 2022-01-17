@@ -1,5 +1,7 @@
 # Parser
 
+All public Kaggle kernels are distributed under [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
+
 ## Terminology
 
 Kaggle has a lot of references for its objects. Let's clarify the terminology.
